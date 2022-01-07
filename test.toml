@@ -1,4 +1,14 @@
-title = "Feedback Realisation Exeperimenten Automatisering Konfiguration"
+title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-01-07T14:24:08.058450
+created = 2022-01-07T15:40:18.951037
+
+[students.PelikaanSteven]
+FirstName = "Steven"
+MiddleName = " "
+LastName = "Pelikaan"
+
+[students.StudentTest]
+FirstName = "Test"
+MiddleName = " "
+LastName = "Student"

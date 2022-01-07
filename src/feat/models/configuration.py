@@ -21,27 +21,62 @@ class fileIO:
             open(self._conf_f, 'w').close()
 
         # initialize toml file with time and date of creation
-        init_dict = {'title': "Feedback Realisation Exeperimenten Automatisering Konfiguration", 
+        init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
                         "data": {"created": datetime.datetime.now()}}
 
+        # write init data to toml
+        self.dump_toml(init_dict)
+
+    def open_toml(self):
+        """Returns dictionary of data in toml file.
+
+        Returns:
+            dictionary: containing all data from toml file
+        """
+        config = toml.load(self._conf_f)
+        
+        return config
+
+    def dump_toml(self, dict):
         with open(self._conf_f, 'w') as f:
-            toml.dump(init_dict,f)
+            toml.dump(dict,f)
+
+    def update_toml(self, key, value):
+        # get data of toml file as dictionary
+        config = self.open_toml()
+        # add date to dictionary
+        config[key] = value
+        # write new dictionary to toml file
+        self.dump_toml(config)
+
+
+
+
 
 
 class configuration:
     def __init__(self):
 
-        fileio = fileIO()
+        self.fileio = fileIO()
 
         # initialise configuration toml
-        fileio.init_toml()
+        self.fileio.init_toml()
 
+        # add students to toml file
+        self.add_students()
+
+    def open_toml(self):
+        config = self.fileio.open_toml()
+        return config
         
+    def add_students(self):
+        # TODO: de namen invullen vanuit een bestandje 
+        # dictionary of student names
+        student_dict = {"PelikaanSteven": {"FirstName": "Steven", "MiddleName":" ", "LastName": "Pelikaan"}, "StudentTest" :{"FirstName": "Test", "MiddleName":" ", "LastName": "Student"}}
+        # write student names to toml file
+        self.fileio.update_toml("students", student_dict)
+ 
 
-
-
-        # config = toml.load('config.toml')
-        # print(config['project']['project2']['name'])
 
 if __name__ == "__main__":
     configuration()
