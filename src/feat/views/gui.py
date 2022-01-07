@@ -18,24 +18,51 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
 
-        # load student names to combobox
-        df_students = pd.read_csv("students_A-test.csv", sep=",", header=0, encoding='latin-1')
-        student_names = df_students['FirstName']+" "+df_students['MiddleName']+" "+df_students['LastName']
+        self.config = configuration()
 
-        self.student_comboBox.addItems(student_names)
+        # # load student names to combobox
+        # TODO: Een open deze file met studenten dingetje
+        # df_students = pd.read_csv("students_A-test.csv", sep=",", header=0, encoding='latin-1')
+
+        # load data from toml file
+        self.config_dict = self.config.open_toml()
+        
+        # add student names to combobox
+        for i,student in enumerate(self.config_dict['students']):
+
+            first = self.config_dict["students"][student]["FirstName"]
+            middle = self.config_dict["students"][student]["MiddleName"]
+            last = self.config_dict["students"][student]["LastName"]
+            
+            # TODO: dit misschien via fileio? veilig wegschrijven van dingen?
+            # add index to toml data 
+            self.config_dict["students"][student]["idx"] = i
+            
+            self.student_comboBox.addItem(first+" "+middle+" "+last)
+
+
 
         #slots and signals
         self.student_comboBox.currentTextChanged.connect(self.text_add)
 
-        self.config = configuration()
-
-
-        
-    def text_add(self):
-        test = self.student_comboBox.currentText()
-        self.read_only.append('Hoi ' + test + ',')
-
     
+    def text_add(self):
+        
+        # index of current selected student
+        idx = self.student_comboBox.currentIndex()
+
+        # Find out which student is selected
+        current_student = None
+        for student in self.config_dict['students']:
+            if idx == self.config_dict["students"][student]["idx"]:
+                current_student = student
+
+        # clear text field
+        self.read_only.clear()
+
+        # add text to text field
+        first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
+        self.read_only.append(first_line)
 
 
 
