@@ -2,7 +2,12 @@ import toml
 import datetime
 
 
+
+
 class fileIO:
+
+    _conf_f = 'test.toml'
+
     def __init__(self):
         pass
 
@@ -10,16 +15,16 @@ class fileIO:
         
         # Check if configuration toml already exist
         try:
-            open('test.toml', 'r').close()
+            open(self._conf_f, 'r').close()
         except IOError:
             # create configuration file
-            open('test.toml', 'w').close()
+            open(self._conf_f, 'w').close()
 
         # initialize toml file with time and date of creation
         init_dict = {'title': "Feedback Realisation Exeperimenten Automatisering Konfiguration", 
                         "data": {"created": datetime.datetime.now()}}
 
-        with open('test.toml', 'w') as f:
+        with open(self._conf_f, 'w') as f:
             toml.dump(init_dict,f)
 
 
@@ -27,7 +32,7 @@ class configuration:
     def __init__(self):
 
         fileio = fileIO()
-        
+
         # initialise configuration toml
         fileio.init_toml()
 
