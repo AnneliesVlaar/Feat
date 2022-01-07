@@ -1,0 +1,8 @@
+title = 'configuration file'
+
+[project]
+    [project.project1]
+    name = 'feat-test'
+
+    [project.project2]
+    name = 'Jalidadida'

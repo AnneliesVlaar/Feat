@@ -3,7 +3,11 @@ import pkg_resources
 
 from PyQt5 import QtWidgets, uic
 
+from feat.models.configuration import configuration
+
 import pandas as pd
+
+
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -22,10 +26,16 @@ class UserInterface(QtWidgets.QMainWindow):
 
         #slots and signals
         self.student_comboBox.currentTextChanged.connect(self.text_add)
+
+        self.config = configuration()
+
+
         
     def text_add(self):
         test = self.student_comboBox.currentText()
         self.read_only.append('Hoi ' + test + ',')
+
+    
 
 
 
