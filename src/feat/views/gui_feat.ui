@@ -24,6 +24,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="read_only">
+    <property name="geometry">
+     <rect>
+      <x>325</x>
+      <y>10</y>
+      <width>461</width>
+      <height>531</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

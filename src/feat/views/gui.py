@@ -14,12 +14,19 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
 
-        # load student names
+        # load student names to combobox
         df_students = pd.read_csv("students_A-test.csv", sep=",", header=0, encoding='latin-1')
-        print(df_students)
-        student_names = df_students['FirstName']+df_students['LastName']
-        # self.student_comboBox.addItems(df_students['FirstName']+df_students['LastName'])
+        student_names = df_students['FirstName']+" "+df_students['MiddleName']+" "+df_students['LastName']
+
         self.student_comboBox.addItems(student_names)
+
+        #slots and signals
+        self.student_comboBox.currentTextChanged.connect(self.text_add)
+        
+    def text_add(self):
+        test = self.student_comboBox.currentText()
+        self.read_only.append('Hoi ' + test + ',')
+
 
 
 
