@@ -1,5 +1,7 @@
 import toml
 import datetime
+import pandas as pd
+import csv
 
 
 
@@ -44,18 +46,15 @@ class fileIO:
     def update_toml(self, key, value):
         # get data of toml file as dictionary
         config = self.open_toml()
-        # add date to dictionary
+        # add data to dictionary
         config[key] = value
         # write new dictionary to toml file
         self.dump_toml(config)
 
 
 
-
-
-
 class configuration:
-    def __init__(self):
+    def __init__(self, filename):
 
         self.fileio = fileIO()
 
@@ -63,18 +62,19 @@ class configuration:
         self.fileio.init_toml()
 
         # add students to toml file
-        self.add_students()
+        self.add_students(filename)
 
     def open_toml(self):
         config = self.fileio.open_toml()
         return config
         
-    def add_students(self):
-        # TODO: de namen invullen vanuit een bestandje 
-        # dictionary of student names
-        student_dict = {"PelikaanSteven": {"FirstName": "Steven", "MiddleName":" ", "LastName": "Pelikaan"}, "StudentTest" :{"FirstName": "Test", "MiddleName":" ", "LastName": "Student"}}
+    def add_students(self, filename):
+        # create dictionary of student data were key is the FullName
+        header_list = ["FirstName", "FullName", "ID"]
+        students = pd.read_csv(filename, sep=",", header=0, names=header_list, index_col='FullName').T.to_dict()
+
         # write student names to toml file
-        self.fileio.update_toml("students", student_dict)
+        self.fileio.update_toml("students", students)
  
 
 
