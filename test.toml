@@ -1,14 +1,16 @@
 title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-01-07T15:40:18.951037
+created = 2022-01-12T17:12:30.963662
 
-[students.PelikaanSteven]
+[students." PelikaanSteven"]
 FirstName = "Steven"
-MiddleName = " "
-LastName = "Pelikaan"
+ID = 123456
 
-[students.StudentTest]
-FirstName = "Test"
-MiddleName = " "
-LastName = "Student"
+[students." VorstvanderKaatje"]
+FirstName = "Kaatje"
+ID = 134567
+
+[students." JohnElton"]
+FirstName = "Elton"
+ID = 98720
