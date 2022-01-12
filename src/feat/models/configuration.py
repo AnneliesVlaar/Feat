@@ -79,4 +79,4 @@ class configuration:
 
 
 if __name__ == "__main__":
-    configuration()
+    configuration('test-student.txt')
