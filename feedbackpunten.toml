@@ -1,0 +1,5 @@
+[Varname]
+VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+
+[Classes]
+CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."

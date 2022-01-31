@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>121</width>
+      <width>321</width>
       <height>22</height>
      </rect>
     </property>
@@ -33,6 +33,17 @@
       <height>551</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>29</y>
+      <width>311</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="vbox"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

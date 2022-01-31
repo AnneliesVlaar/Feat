@@ -6,6 +6,8 @@ from PyQt5 import QtWidgets, uic
 from feat.models.configuration import configuration
 
 
+import toml
+
 
 
 
@@ -17,6 +19,18 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
+
+        # add feedbacklines to interface
+        # self.fblines = self.config.open_toml('feedbackpunten.toml')
+        self.fblines = toml.load('feedbackpunten.toml')
+        button = {}
+        for head in self.fblines:
+            button[head] = QtWidgets.QLabel(head)
+            self.vbox.addWidget(button[head])
+            for line in self.fblines[head]:
+                button[line] = QtWidgets.QCheckBox(self.fblines[head][line])
+                self.vbox.addWidget(button[line])
+
 
         # load students names in toml file
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, filter="CSV files (*.csv *.txt)") 
@@ -48,7 +62,6 @@ class UserInterface(QtWidgets.QMainWindow):
         # add text to text field
         first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
         self.read_only.append(first_line)
-
 
 
 
