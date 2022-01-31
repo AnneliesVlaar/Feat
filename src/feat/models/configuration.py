@@ -29,13 +29,13 @@ class fileIO:
         # write init data to toml
         self.dump_toml(init_dict)
 
-    def open_toml(self):
+    def open_toml(self, tomlfile=_conf_f):
         """Returns dictionary of data in toml file.
 
         Returns:
             dictionary: containing all data from toml file
         """
-        config = toml.load(self._conf_f)
+        config = toml.load(tomlfile)
         
         return config
 
@@ -64,8 +64,11 @@ class configuration:
         # add students to toml file
         self.add_students(filename)
 
-    def open_toml(self):
-        config = self.fileio.open_toml()
+    def open_toml(self, tomlfile=None):
+        if tomlfile:
+            config = self.fileio.open_toml(tomlfile=tomlfile)
+        else:
+            config = self.fileio.open_toml()
         return config
         
     def add_students(self, filename):
