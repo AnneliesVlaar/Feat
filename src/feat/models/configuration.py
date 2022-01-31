@@ -24,7 +24,9 @@ class fileIO:
 
         # initialize toml file with time and date of creation
         init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
-                        "data": {"created": datetime.datetime.now()}}
+                        "data": {"created": datetime.datetime.now()},
+                        'students': {},
+                        'feedback': {}}
 
         # write init data to toml
         self.dump_toml(init_dict)
@@ -61,6 +63,8 @@ class configuration:
         # initialise configuration toml
         self.fileio.init_toml()
 
+        self.get_feedback()
+
     def open_toml(self, tomlfile=None):
         if tomlfile:
             config = self.fileio.open_toml(tomlfile=tomlfile)
@@ -68,7 +72,7 @@ class configuration:
             config = self.fileio.open_toml()
         return config
         
-    def add_students(self, filename):
+    def add_students(self, filename='test-student.txt'):
         # create dictionary of student data were key is the FullName
         header_list = ["FirstName", "FullName", "ID"]
         students = pd.read_csv(filename, sep=",", header=0, names=header_list, index_col='FullName').T.to_dict()
@@ -76,7 +80,15 @@ class configuration:
         # write student names to toml file
         self.fileio.update_toml("students", students)
  
+    def get_feedback(self):
+        config = self.open_toml()
+        return config['feedback']
+
+    def update_feedback(self, student, feedback):
+        feedback_all = self.get_feedback()
+        feedback_all[student] = feedback
+        self.fileio.update_toml('feedback', feedback_all)
 
 
 if __name__ == "__main__":
-    configuration('test-student.txt')
+    configuration()
