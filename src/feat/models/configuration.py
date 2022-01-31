@@ -63,8 +63,6 @@ class configuration:
         # initialise configuration toml
         self.fileio.init_toml()
 
-        self.get_feedback()
-
     def open_toml(self, tomlfile=None):
         if tomlfile:
             config = self.fileio.open_toml(tomlfile=tomlfile)
@@ -79,6 +77,10 @@ class configuration:
 
         # write student names to toml file
         self.fileio.update_toml("students", students)
+
+        # initialise feedback
+        for student in students:
+            self.update_feedback(student, [])
  
     def get_feedback(self):
         config = self.open_toml()

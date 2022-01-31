@@ -1,10 +1,12 @@
 title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-01-31T17:07:43.352203
+created = 2022-01-31T17:23:57.054534
 
 [feedback]
-" JohnElton" = [ "VARNAME01", "CLASSES01",]
+" PelikaanSteven" = [ "VARNAME01", "CLASSES01",]
+" VorstvanderKaatje" = [ "VARNAME01",]
+" JohnElton" = []
 
 [students." PelikaanSteven"]
 FirstName = "Steven"

@@ -60,6 +60,12 @@ class UserInterface(QtWidgets.QMainWindow):
         return current_student
 
     def change_student(self):
+        feedback = self.config.get_feedback()
+        current_student = self.current_student()
+        for box in self.button['check']:
+            self.button['check'][box].setChecked(False)
+            if box in feedback[current_student]:
+                self.button['check'][box].setChecked(True)
         self.text_add()
 
     
@@ -69,7 +75,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.read_only.clear()
 
         # index of current selected student
-        current_student = self.student_comboBox.currentText()
+        current_student = self.current_student()
 
         # add text to text field
         first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
