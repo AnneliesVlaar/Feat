@@ -54,15 +54,12 @@ class fileIO:
 
 
 class configuration:
-    def __init__(self, filename):
+    def __init__(self):
 
         self.fileio = fileIO()
 
         # initialise configuration toml
         self.fileio.init_toml()
-
-        # add students to toml file
-        self.add_students(filename)
 
     def open_toml(self, tomlfile=None):
         if tomlfile:

@@ -1,3 +1,4 @@
+import re
 import sys
 import pkg_resources
 
@@ -17,24 +18,25 @@ class UserInterface(QtWidgets.QMainWindow):
         # call __init__ of parent class
         super().__init__()
 
+        # configure toml file
+        self.config = configuration()
+
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
 
         # add feedbacklines to interface
-        # self.fblines = self.config.open_toml('feedbackpunten.toml')
-        self.fblines = toml.load('feedbackpunten.toml')
-        button = {}
+        self.fblines = self.config.open_toml('feedbackpunten.toml')
+        self.button = {'head': {}, 'check': {}}
         for head in self.fblines:
-            button[head] = QtWidgets.QLabel(head)
-            self.vbox.addWidget(button[head])
+            self.button['head'][head] = QtWidgets.QLabel(head)
+            self.vbox.addWidget(self.button['head'][head])
             for line in self.fblines[head]:
-                button[line] = QtWidgets.QCheckBox(self.fblines[head][line])
-                self.vbox.addWidget(button[line])
-
+                self.button['check'][line] = QtWidgets.QCheckBox(self.fblines[head][line])
+                self.vbox.addWidget(self.button['check'][line])
 
         # load students names in toml file
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, filter="CSV files (*.csv *.txt)") 
-        self.config = configuration(filename)        
+        self.config.add_students(filename)        
 
         # load data from toml file
         self.config_dict = self.config.open_toml()
@@ -49,6 +51,13 @@ class UserInterface(QtWidgets.QMainWindow):
 
         #slots and signals
         self.student_comboBox.currentTextChanged.connect(self.text_add)
+        for box in self.button['check']:
+            self.button['check'][box].stateChanged.connect(self.check_box)
+
+    def current_student(self):
+        # index of current selected student
+        current_student = self.student_comboBox.currentText()
+        return current_student
 
     
     def text_add(self):
@@ -62,6 +71,9 @@ class UserInterface(QtWidgets.QMainWindow):
         # add text to text field
         first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
         self.read_only.append(first_line)
+
+    def check_box(self):
+        print('helahola')
 
 
 
