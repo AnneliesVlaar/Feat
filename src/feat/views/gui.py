@@ -1,4 +1,3 @@
-import re
 import sys
 import pkg_resources
 
@@ -7,13 +6,12 @@ from PyQt5 import QtWidgets, uic
 from feat.models.configuration import configuration
 
 
-import toml
-
-
-
 
 
 class UserInterface(QtWidgets.QMainWindow):
+
+    _feedback_f = 'feedbackpunten.toml'
+
     def __init__(self):
         # call __init__ of parent class
         super().__init__()
@@ -25,7 +23,7 @@ class UserInterface(QtWidgets.QMainWindow):
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
 
         # add feedbacklines to interface
-        self.fblines = self.config.open_toml('feedbackpunten.toml')
+        self.fblines = self.config.open_toml(self._feedback_f)
         self.button = {'head': {}, 'check': {}}
         for head in self.fblines:
             self.button['head'][head] = QtWidgets.QLabel(head)

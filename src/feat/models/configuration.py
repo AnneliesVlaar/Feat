@@ -1,8 +1,6 @@
 import toml
 import datetime
 import pandas as pd
-import csv
-
 
 
 
@@ -68,8 +66,10 @@ class configuration:
 
     def open_toml(self, tomlfile=None):
         if tomlfile:
+            # open different toml file
             config = self.fileio.open_toml(tomlfile=tomlfile)
         else:
+            # open configuration toml
             config = self.fileio.open_toml()
         return config
         
@@ -81,9 +81,15 @@ class configuration:
         # write student names to toml file
         self.fileio.update_toml("students", students)
 
-        # # initialise feedback
-        # for student in students:
-        #     self.update_feedback(student, [])
+        # initialise feedback
+        feedback = self.get_feedback()
+        for student in students:
+            try:
+                # check if student feedback key excists
+                feedback[student]
+            except:
+                # create student feedback key if not already excist 
+                self.update_feedback(student, [])
  
     def get_feedback(self):
         config = self.open_toml()
