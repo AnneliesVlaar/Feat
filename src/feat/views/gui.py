@@ -57,6 +57,8 @@ class UserInterface(QtWidgets.QMainWindow):
         for box in self.button['check']:
             self.button['check'][box].stateChanged.connect(self.check_box)
 
+        self.copy_button.clicked.connect(self.copy)
+
     def current_student(self):
         # index of current selected student
         current_student = self.student_comboBox.currentText()
@@ -94,8 +96,6 @@ class UserInterface(QtWidgets.QMainWindow):
             if self.button['check'][line].isChecked():
                 self.read_only.append(self.button['check'][line].text() + "\r")
 
-        print(self.read_only.toPlainText())
-
     def check_box(self):
         current_student = self.current_student()
 
@@ -109,6 +109,10 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # update read_only text field
         self.text_add()
+
+    def copy(self):
+        self.read_only.selectAll()
+        self.read_only.copy()
 
 
 
