@@ -62,10 +62,14 @@ class UserInterface(QtWidgets.QMainWindow):
     def change_student(self):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
+        
+        # uncheck all checkboxes, check when checkbox name is in toml file
         for box in self.button['check']:
             self.button['check'][box].setChecked(False)
             if box in feedback[current_student]:
                 self.button['check'][box].setChecked(True)
+        
+        # update read_only text field
         self.text_add()
 
     
@@ -77,9 +81,14 @@ class UserInterface(QtWidgets.QMainWindow):
         # index of current selected student
         current_student = self.current_student()
 
-        # add text to text field
+        # add salutation text to text field
         first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
-        self.read_only.append(first_line)
+        self.read_only.append(first_line + "\r")
+
+        # add feedback lines to text field
+        for line in self.button['check']:
+            if self.button['check'][line].isChecked():
+                self.read_only.append(self.button['check'][line].text() + "\r")
 
     def check_box(self):
         current_student = self.current_student()
@@ -89,7 +98,11 @@ class UserInterface(QtWidgets.QMainWindow):
             if self.button['check'][box].isChecked():
                 feedback.append(box)
 
+        # save checked feedback lines in toml
         self.config.update_feedback(current_student, feedback)
+
+        # update read_only text field
+        self.text_add()
 
 
 
