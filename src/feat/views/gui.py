@@ -22,6 +22,9 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", 'gui_feat.ui'), self)
 
+        # Enable Text field edit
+        self.read_only.setReadOnly(True)
+
         # add feedbacklines to interface
         self.fblines = self.config.open_toml(self._feedback_f)
         self.button = {'head': {}, 'check': {}}
@@ -90,6 +93,8 @@ class UserInterface(QtWidgets.QMainWindow):
         for line in self.button['check']:
             if self.button['check'][line].isChecked():
                 self.read_only.append(self.button['check'][line].text() + "\r")
+
+        print(self.read_only.toPlainText())
 
     def check_box(self):
         current_student = self.current_student()
