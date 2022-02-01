@@ -18,18 +18,21 @@ class fileIO:
         # Check if configuration toml already exist
         try:
             open(self._conf_f, 'r').close()
+
+            # open toml to add time and date of last update
+            config = self.open_toml()
+            config['data']['last update'] = datetime.datetime.now()
+            self.dump_toml(config)
+
         except IOError:
-            # create configuration file
-            open(self._conf_f, 'w').close()
+            # initialize toml file with time, date of creation, key for students and feedback
+            init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
+                            "data": {"created": datetime.datetime.now()},
+                            'students': {},
+                            'feedback': {}}
+            self.dump_toml(init_dict)
 
-        # initialize toml file with time and date of creation
-        init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
-                        "data": {"created": datetime.datetime.now()},
-                        'students': {},
-                        'feedback': {}}
 
-        # write init data to toml
-        self.dump_toml(init_dict)
 
     def open_toml(self, tomlfile=_conf_f):
         """Returns dictionary of data in toml file.
@@ -78,9 +81,9 @@ class configuration:
         # write student names to toml file
         self.fileio.update_toml("students", students)
 
-        # initialise feedback
-        for student in students:
-            self.update_feedback(student, [])
+        # # initialise feedback
+        # for student in students:
+        #     self.update_feedback(student, [])
  
     def get_feedback(self):
         config = self.open_toml()

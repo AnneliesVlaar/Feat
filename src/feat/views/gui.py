@@ -47,10 +47,12 @@ class UserInterface(QtWidgets.QMainWindow):
             self.student_comboBox.addItem(student)
         
         # initialise text box
+        self.update_student()
         self.text_add()
 
+
         #slots and signals
-        self.student_comboBox.currentTextChanged.connect(self.change_student)
+        self.student_comboBox.currentTextChanged.connect(self.update_student)
         for box in self.button['check']:
             self.button['check'][box].stateChanged.connect(self.check_box)
 
@@ -59,7 +61,8 @@ class UserInterface(QtWidgets.QMainWindow):
         current_student = self.student_comboBox.currentText()
         return current_student
 
-    def change_student(self):
+    
+    def update_student(self):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
         
