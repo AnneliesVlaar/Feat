@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="read_only">
+   <widget class="QTextEdit" name="read_only">
     <property name="geometry">
      <rect>
       <x>325</x>
