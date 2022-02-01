@@ -2,11 +2,13 @@ title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
 created = 2022-02-01T12:08:15.977346
+update = 2022-02-01T12:19:56.522544
+"last update" = 2022-02-01T12:28:08.175215
 
 [feedback]
-" PelikaanSteven" = [ "VARNAME01", "CLASSES01",]
-" VorstvanderKaatje" = [ "VARNAME01", "CLASSES01",]
-" JohnElton" = []
+" PelikaanSteven" = [ "CLASSES01",]
+" VorstvanderKaatje" = [ "VARNAME01",]
+" JohnElton" = [ "VARNAME01", "CLASSES01",]
 
 [students." PelikaanSteven"]
 FirstName = "Steven"
