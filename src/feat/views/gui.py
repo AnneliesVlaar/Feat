@@ -28,14 +28,15 @@ class UserInterface(QtWidgets.QMainWindow):
         # add feedback lines and annotation fields to interface
         self.fblines = self.config.open_toml(self._feedback_f)
         self.headline = {'head': {}}
+        self.annotation = {'annot': {}}
         self.button = {'check': {}}
         for head in self.fblines:
             # add subject title to interface 
             self.headline['head'][head] = QtWidgets.QLabel(head)
             self.vbox.addWidget(self.headline['head'][head])
             # add annotation field per subject title
-            self.headline['head']['text' + head] = QtWidgets.QTextEdit()
-            self.vbox.addWidget(self.headline['head']['text' + head])
+            self.annotation['annot'][head] = QtWidgets.QTextEdit()
+            self.vbox.addWidget(self.annotation['annot'][head])
             # add checkboxes with feedback lines 
             for line in self.fblines[head]:
                 self.button['check'][line] = QtWidgets.QCheckBox(self.fblines[head][line])
@@ -60,9 +61,13 @@ class UserInterface(QtWidgets.QMainWindow):
 
         #slots and signals
         self.student_comboBox.currentTextChanged.connect(self.update_student)
+        
         for box in self.button['check']:
             self.button['check'][box].stateChanged.connect(self.check_box)
 
+        for field in self.annotation['annot']:
+            self.annotation['annot'][field].textChanged.connect(self.add_annotations)
+        
         self.copy_button.clicked.connect(self.copy)
 
     def current_student(self):
@@ -115,6 +120,12 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # update read_only text field
         self.text_add()
+
+    
+    def add_annotations(self):
+        
+        for field in self.annotation['annot']:
+            self.read_only.append(self.annotation['annot'][field].toPlainText())
 
     def copy(self):
         self.read_only.selectAll()
