@@ -25,12 +25,18 @@ class UserInterface(QtWidgets.QMainWindow):
         # Enable Text field edit
         self.read_only.setReadOnly(True)
 
-        # add feedbacklines to interface
+        # add feedback lines and annotation fields to interface
         self.fblines = self.config.open_toml(self._feedback_f)
-        self.button = {'head': {}, 'check': {}}
+        self.headline = {'head': {}}
+        self.button = {'check': {}}
         for head in self.fblines:
-            self.button['head'][head] = QtWidgets.QLabel(head)
-            self.vbox.addWidget(self.button['head'][head])
+            # add subject title to interface 
+            self.headline['head'][head] = QtWidgets.QLabel(head)
+            self.vbox.addWidget(self.headline['head'][head])
+            # add annotation field per subject title
+            self.headline['head']['text' + head] = QtWidgets.QTextEdit()
+            self.vbox.addWidget(self.headline['head']['text' + head])
+            # add checkboxes with feedback lines 
             for line in self.fblines[head]:
                 self.button['check'][line] = QtWidgets.QCheckBox(self.fblines[head][line])
                 self.vbox.addWidget(self.button['check'][line])

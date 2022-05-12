@@ -6,65 +6,87 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1366</width>
-    <height>1017</height>
+    <width>1116</width>
+    <height>879</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Feat</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="student_comboBox">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>321</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="read_only">
-    <property name="geometry">
-     <rect>
-      <x>325</x>
-      <y>0</y>
-      <width>461</width>
-      <height>551</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>29</y>
-      <width>311</width>
-      <height>521</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="vbox"/>
-   </widget>
-   <widget class="QPushButton" name="copy_button">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>560</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Copy</string>
-    </property>
-   </widget>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="font">
+       <font>
+        <family>Calibri</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Give feedback</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QVBoxLayout" name="vbox"/>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="0" alignment="Qt::AlignLeft">
+         <widget class="QComboBox" name="student_comboBox">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Show feedback</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QTextEdit" name="read_only"/>
+          </item>
+          <item alignment="Qt::AlignLeft">
+           <widget class="QPushButton" name="copy_button">
+            <property name="font">
+             <font>
+              <family>Calibri</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Copy to Clippy</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1366</width>
+     <width>1116</width>
      <height>21</height>
     </rect>
    </property>
