@@ -39,9 +39,10 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation['annot'][head] = QtWidgets.QTextEdit()
             self.vbox.addWidget(self.annotation['annot'][head])
             # add checkboxes with feedback lines 
+            self.button['check'][head] = {}
             for line in self.fblines[head]:
-                self.button['check'][line] = QtWidgets.QCheckBox(self.fblines[head][line])
-                self.vbox.addWidget(self.button['check'][line])
+                self.button['check'][head][line] = QtWidgets.QCheckBox(self.fblines[head][line])
+                self.vbox.addWidget(self.button['check'][head][line])
 
         # load students names in toml file
         filename, _ = QtWidgets.QFileDialog.getOpenFileName(self, filter="CSV files (*.csv *.txt)") 
@@ -54,17 +55,17 @@ class UserInterface(QtWidgets.QMainWindow):
         # add student names to combobox
         for student in self.config_dict['students']:
             self.student_comboBox.addItem(student)
-        
+             
         # initialise text box
         self.update_student()
         self.text_add()
 
-
         #slots and signals
         self.student_comboBox.currentTextChanged.connect(self.update_student)
         
-        for box in self.button['check']:
-            self.button['check'][box].stateChanged.connect(self.check_box)
+        for head in self.headline['head']: 
+            for box in self.button['check'][head]:
+                self.button['check'][head][box].stateChanged.connect(self.check_box)
 
         for field in self.annotation['annot']:
             self.annotation['annot'][field].textChanged.connect(self.add_annotations)
@@ -81,17 +82,20 @@ class UserInterface(QtWidgets.QMainWindow):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
         
-        # uncheck all checkboxes, check when checkbox name is in toml file
-        for box in self.button['check']:
-            self.button['check'][box].setChecked(False)
-            if box in feedback['checkbox'][current_student]:
-                self.button['check'][box].setChecked(True)
+        for head in self.headline['head']: 
+            # uncheck all checkboxes, check when checkbox name is in toml file
+            for box in self.button['check'][head]:
+                self.button['check'][head][box].setChecked(False)
+                if box in feedback['checkbox'][current_student]:
+                    self.button['check'][head][box].setChecked(True)
 
         # clear all annotations and show annotations from toml file
         for i, field in enumerate(self.annotation['annot']):
             self.annotation['annot'][field].clear()
-            
-            text = feedback['annotations'][current_student][i]
+            try:
+                text = feedback['annotations'][current_student][i]
+            except:
+                text = None
             self.annotation['annot'][field].append(text)
         
         # update read_only text field
@@ -110,21 +114,27 @@ class UserInterface(QtWidgets.QMainWindow):
         first_line = 'Hoi ' + self.config_dict["students"][current_student]["FirstName"] + ','
         self.read_only.append(first_line + "\r")
 
-        # add feedback lines to text field
-        for line in self.button['check']:
-            if self.button['check'][line].isChecked():
-                self.read_only.append(self.button['check'][line].text() + "\r")
+        # add headline to textfield
+        for head in self.headline['head']: 
+            self.read_only.append(f'[{head}]')
 
-        for field in self.annotation['annot']:
-            self.read_only.append(self.annotation['annot'][field].toPlainText())
+            # add annotations right under headline
+            self.read_only.append(self.annotation['annot'][head].toPlainText())
+            
+            # add feedback lines to text field
+            for line in self.button['check'][head]:
+                if self.button['check'][head][line].isChecked():
+                    self.read_only.append(self.button['check'][head][line].text() + "\r")
+            
 
     def check_box(self):
         current_student = self.current_student()
 
         feedback = []
-        for box in self.button['check']:
-            if self.button['check'][box].isChecked():
-                feedback.append(box)
+        for head in self.headline['head']: 
+            for box in self.button['check'][head]:
+                if self.button['check'][head][box].isChecked():
+                    feedback.append(box)
 
         # save checked feedback lines in toml
         self.config.update_feedback(current_student, 'checkbox', feedback)
