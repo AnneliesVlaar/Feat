@@ -125,6 +125,7 @@ class UserInterface(QtWidgets.QMainWindow):
     def add_annotations(self):
         
         for field in self.annotation['annot']:
+            self.read_only.clear()
             self.read_only.append(self.annotation['annot'][field].toPlainText())
 
     def copy(self):
