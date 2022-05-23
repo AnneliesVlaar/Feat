@@ -1,8 +1,8 @@
 title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-05-23T16:16:56.287912
-"last update" = 2022-05-23T16:35:24.040851
+created = 2022-05-23T17:07:05.906404
+"last update" = 2022-05-23T17:14:27.277864
 
 [students." PelikaanSteven"]
 FirstName = "Steven"
@@ -17,11 +17,11 @@ FirstName = "Elton"
 ID = 98720
 
 [feedback.checkbox]
-" PelikaanSteven" = [ "VARNAME01",]
-" VorstvanderKaatje" = [ "CLASSES01",]
+" PelikaanSteven" = []
+" VorstvanderKaatje" = []
 " JohnElton" = []
 
 [feedback.annotations]
-" PelikaanSteven" = [ "Je kan hier iets typen", "Maar we zien nog niks veranderen ",]
-" VorstvanderKaatje" = [ "", "",]
-" JohnElton" = [ "En als ik nu hier iets type", "Dan is het wel een beetje anders. ",]
+" PelikaanSteven" = [ "Zal het nog steeds werken?", "",]
+" VorstvanderKaatje" = [ "Ik hoop het wel ", "",]
+" JohnElton" = []

@@ -93,7 +93,7 @@ class configuration:
                 except:
                     # create student feedback key if not already excist 
                     self.update_feedback(student, type, [])
-    
+
     def get_feedback(self):
         config = self.open_toml()
         return config['feedback']
