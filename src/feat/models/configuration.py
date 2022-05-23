@@ -27,7 +27,7 @@ class fileIO:
             init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
                             "data": {"created": datetime.datetime.now()},
                             'students': {},
-                            'feedback': {}}
+                            'feedback': {"checkbox": {}, "annotations": {}}}
             self.dump_toml(init_dict)
 
 
@@ -81,23 +81,26 @@ class configuration:
         # write student names to toml file
         self.fileio.update_toml("students", students)
 
+        
         # initialise feedback
         feedback = self.get_feedback()
-        for student in students:
-            try:
-                # check if student feedback key excists
-                feedback[student]
-            except:
-                # create student feedback key if not already excist 
-                self.update_feedback(student, [])
- 
+        # for checkboxes and annotations
+        for type in feedback: 
+            for student in students:
+                try:
+                    # check if student feedback key excists
+                    feedback[type][student]
+                except:
+                    # create student feedback key if not already excist 
+                    self.update_feedback(student, type, [])
+    
     def get_feedback(self):
         config = self.open_toml()
         return config['feedback']
 
-    def update_feedback(self, student, feedback):
+    def update_feedback(self, student, type, feedback):
         feedback_all = self.get_feedback()
-        feedback_all[student] = feedback
+        feedback_all[type][student] = feedback
         self.fileio.update_toml('feedback', feedback_all)
 
 

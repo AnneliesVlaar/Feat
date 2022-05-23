@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 import pkg_resources
 
@@ -83,8 +84,15 @@ class UserInterface(QtWidgets.QMainWindow):
         # uncheck all checkboxes, check when checkbox name is in toml file
         for box in self.button['check']:
             self.button['check'][box].setChecked(False)
-            if box in feedback[current_student]:
+            if box in feedback['checkbox'][current_student]:
                 self.button['check'][box].setChecked(True)
+
+        # clear all annotations and show annotations from toml file
+        for i, field in enumerate(self.annotation['annot']):
+            self.annotation['annot'][field].clear()
+            
+            text = feedback['annotations'][current_student][i]
+            self.annotation['annot'][field].append(text)
         
         # update read_only text field
         self.text_add()
@@ -107,6 +115,9 @@ class UserInterface(QtWidgets.QMainWindow):
             if self.button['check'][line].isChecked():
                 self.read_only.append(self.button['check'][line].text() + "\r")
 
+        for field in self.annotation['annot']:
+            self.read_only.append(self.annotation['annot'][field].toPlainText())
+
     def check_box(self):
         current_student = self.current_student()
 
@@ -116,17 +127,25 @@ class UserInterface(QtWidgets.QMainWindow):
                 feedback.append(box)
 
         # save checked feedback lines in toml
-        self.config.update_feedback(current_student, feedback)
+        self.config.update_feedback(current_student, 'checkbox', feedback)
 
         # update read_only text field
         self.text_add()
 
     
     def add_annotations(self):
-        
+        current_student = self.current_student()
+
+        annotations = []
         for field in self.annotation['annot']:
-            self.read_only.clear()
-            self.read_only.append(self.annotation['annot'][field].toPlainText())
+            text = self.annotation['annot'][field].toPlainText()
+            annotations.append(text)
+
+        # save annotations in toml
+        self.config.update_feedback(current_student, 'annotations', annotations)
+
+        # update read_only text field
+        self.text_add()
 
     def copy(self):
         self.read_only.selectAll()
