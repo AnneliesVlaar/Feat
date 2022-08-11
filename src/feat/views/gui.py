@@ -1,13 +1,9 @@
-from __future__ import annotations
 import sys
 import pkg_resources
 
 from PyQt5 import QtWidgets, uic
 
 from feat.models.configuration import configuration
-
-
-
 
 class UserInterface(QtWidgets.QMainWindow):
 
@@ -160,7 +156,6 @@ class UserInterface(QtWidgets.QMainWindow):
     def copy(self):
         self.read_only.selectAll()
         self.read_only.copy()
-
 
 
 def main():
