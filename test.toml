@@ -2,7 +2,7 @@ title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
 created = 2022-05-23T17:07:05.906404
-"last update" = 2022-08-01T10:51:27.516842
+"last update" = 2022-05-23T17:14:27.277864
 
 [students." PelikaanSteven"]
 FirstName = "Steven"
@@ -17,7 +17,7 @@ FirstName = "Elton"
 ID = 98720
 
 [feedback.checkbox]
-" PelikaanSteven" = [ "CLASSES01",]
+" PelikaanSteven" = []
 " VorstvanderKaatje" = []
 " JohnElton" = []
 
