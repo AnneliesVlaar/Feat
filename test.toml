@@ -1,8 +1,7 @@
 title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-09-26T16:30:23.977145
-"last update" = 2022-09-26T16:31:16.698318
+created = 2022-09-26T16:43:20.794223
 
 [students."(2691938)"]
 first_name = "Marrit"
@@ -49,3 +48,9 @@ full_name = "Anne-Lotte Ruhl"
 "(2785919)" = []
 "(2784840)" = []
 "(1234567)" = []
+
+[feedbackform.Varname]
+VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+
+[feedbackform.Classes]
+CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
