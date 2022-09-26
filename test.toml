@@ -2,7 +2,7 @@ title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
 created = 2022-09-26T16:43:20.794223
-"last update" = 2022-09-26T17:04:10.920537
+"last update" = 2022-09-26T18:18:56.082706
 
 [students."(2691938)"]
 first_name = "Marrit"
@@ -35,20 +35,20 @@ last_name = "Ruhl"
 full_name = "Anne-Lotte Ruhl"
 
 [feedback.checkbox]
-"(2691938)" = []
+"(2691938)" = [ "VARNAME01",]
 "(2744675)" = []
 "(2766801)" = []
 "(2785919)" = []
-"(2784840)" = []
+"(2784840)" = [ "CLASSES01",]
 "(1234567)" = []
 
 [feedback.annotations]
-"(2691938)" = []
-"(2744675)" = []
-"(2766801)" = []
-"(2785919)" = []
-"(2784840)" = []
-"(1234567)" = []
+"(2691938)" = [ "Dit is een test. ", "",]
+"(2744675)" = [ "", "",]
+"(2766801)" = [ "", "",]
+"(2785919)" = [ "", "",]
+"(2784840)" = [ "", "Hier nog een test",]
+"(1234567)" = [ "", "",]
 
 [feedbackform.Varname]
 VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."

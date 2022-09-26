@@ -32,7 +32,7 @@ class fileIO:
         except IOError:
             # initialize toml file with time, date of creation, key for students and feedback
             init_dict = {
-                "title": "Feedback Realisatie Experimenten Automatisering Konfiguratie",
+                "title": "Feedback Realisatie Experiment Automatisering Konfiguratie",
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
@@ -50,7 +50,7 @@ class fileIO:
         return config
 
     def dump_toml(self, dict):
-        with open(self._conf_f, "w") as f:
+        with open(self._config_f, "w") as f:
             toml.dump(dict, f)
 
     def update_toml(self, key, value):
