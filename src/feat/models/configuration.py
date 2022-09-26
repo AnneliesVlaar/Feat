@@ -103,10 +103,11 @@ class configuration:
         self.fileio.update_toml("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
+        # add feedback form to toml file
         feedback_form = self.open_toml(feedback_filename)
-        print(feedback_form)
         self.fileio.update_toml("feedbackform", feedback_form)
-        # initialise feedback
+
+        # initialise feedback per student
         feedback = self.get_feedback()
         # for checkboxes and annotations
         for type in feedback:
@@ -117,6 +118,10 @@ class configuration:
                 except:
                     # create student feedback key if not already excist
                     self.update_feedback(student, type, [])
+
+    def get_feedback_form(self):
+        config = self.open_toml()
+        return config["feedbackform"]
 
     def get_feedback(self):
         config = self.open_toml()
