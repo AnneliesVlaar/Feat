@@ -1,36 +1,43 @@
 import toml
 import datetime
+import re
 import pandas as pd
+from pathlib import Path
 
+
+RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
 
 
 class fileIO:
 
-    _conf_f = 'test.toml'
+    _conf_f = "test.toml"
 
     def __init__(self):
         pass
 
     def init_toml(self):
-        
+
         # Check if configuration toml already exist
         try:
-            open(self._conf_f, 'r').close()
+            open(self._conf_f, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
-            config['data']['last update'] = datetime.datetime.now()
+            try:
+                config["data"]["last update"] = datetime.datetime.now()
+            except:
+                raise IOError
             self.dump_toml(config)
 
         except IOError:
             # initialize toml file with time, date of creation, key for students and feedback
-            init_dict = {'title': "Feedback Realisatie Experimenten Automatisering Konfiguratie", 
-                            "data": {"created": datetime.datetime.now()},
-                            'students': {},
-                            'feedback': {"checkbox": {}, "annotations": {}}}
+            init_dict = {
+                "title": "Feedback Realisatie Experimenten Automatisering Konfiguratie",
+                "data": {"created": datetime.datetime.now()},
+                "students": {},
+                "feedback": {"checkbox": {}, "annotations": {}},
+            }
             self.dump_toml(init_dict)
-
-
 
     def open_toml(self, tomlfile=_conf_f):
         """Returns dictionary of data in toml file.
@@ -39,12 +46,12 @@ class fileIO:
             dictionary: containing all data from toml file
         """
         config = toml.load(tomlfile)
-        
+
         return config
 
     def dump_toml(self, dict):
-        with open(self._conf_f, 'w') as f:
-            toml.dump(dict,f)
+        with open(self._conf_f, "w") as f:
+            toml.dump(dict, f)
 
     def update_toml(self, key, value):
         # get data of toml file as dictionary
@@ -55,7 +62,6 @@ class fileIO:
         self.dump_toml(config)
 
 
-
 class configuration:
     def __init__(self):
 
@@ -63,6 +69,8 @@ class configuration:
 
         # initialise configuration toml
         self.fileio.init_toml()
+        self.add_students()
+        self.init_feedback()
 
     def open_toml(self, tomlfile=None):
         if tomlfile:
@@ -72,36 +80,53 @@ class configuration:
             # open configuration toml
             config = self.fileio.open_toml()
         return config
-        
-    def add_students(self, filename='test-student.txt'):
-        # create dictionary of student data were key is the FullName
-        header_list = ["FirstName", "FullName", "ID"]
-        students = pd.read_csv(filename, sep=",", header=0, names=header_list, index_col='FullName').T.to_dict()
+
+    def add_students(self, filename="test2-studenten.txt"):
+        # create dictionary of student data were key is the sis_user_id
+        if Path(filename).is_file():
+            self.students = {}
+            with open(filename, "r") as f:
+                for line in f.readlines():
+                    m = re.match(RE_FIRST_LAST_NAME_ID, line)
+                    if m:
+                        first_name, last_name, sis_user_id = m.group(1, 2, 3)
+                        first_name = first_name.replace("_", " ")
+                        self.students[sis_user_id] = {
+                            "first_name": first_name,
+                            "last_name": last_name,
+                            "full_name": first_name + " " + last_name,
+                        }
+        else:
+            print(f"File {filename} does not exits, skipping.")
 
         # write student names to toml file
-        self.fileio.update_toml("students", students)
+        self.fileio.update_toml("students", self.students)
 
-        
+    def init_feedback(self, filename="feedbackpunten.toml"):
+
+        # self.fileio.update_toml(
+        #     "feedback",
+        # )
         # initialise feedback
         feedback = self.get_feedback()
         # for checkboxes and annotations
-        for type in feedback: 
-            for student in students:
+        for type in feedback:
+            for student in self.students:
                 try:
                     # check if student feedback key excists
                     feedback[type][student]
                 except:
-                    # create student feedback key if not already excist 
+                    # create student feedback key if not already excist
                     self.update_feedback(student, type, [])
 
     def get_feedback(self):
         config = self.open_toml()
-        return config['feedback']
+        return config["feedback"]
 
     def update_feedback(self, student, type, feedback):
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
-        self.fileio.update_toml('feedback', feedback_all)
+        self.fileio.update_toml("feedback", feedback_all)
 
 
 if __name__ == "__main__":
