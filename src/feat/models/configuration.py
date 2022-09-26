@@ -81,11 +81,11 @@ class configuration:
             config = self.fileio.open_toml()
         return config
 
-    def add_students(self, filename="test2-studenten.txt"):
+    def add_students(self, student_filename="test2-studenten.txt"):
         # create dictionary of student data were key is the sis_user_id
-        if Path(filename).is_file():
+        if Path(student_filename).is_file():
             self.students = {}
-            with open(filename, "r") as f:
+            with open(student_filename, "r") as f:
                 for line in f.readlines():
                     m = re.match(RE_FIRST_LAST_NAME_ID, line)
                     if m:
@@ -97,16 +97,15 @@ class configuration:
                             "full_name": first_name + " " + last_name,
                         }
         else:
-            print(f"File {filename} does not exits, skipping.")
+            print(f"File {student_filename} does not exits, skipping.")
 
         # write student names to toml file
         self.fileio.update_toml("students", self.students)
 
-    def init_feedback(self, filename="feedbackpunten.toml"):
-
-        # self.fileio.update_toml(
-        #     "feedback",
-        # )
+    def init_feedback(self, feedback_filename="feedbackpunten.toml"):
+        feedback_form = self.open_toml(feedback_filename)
+        print(feedback_form)
+        self.fileio.update_toml("feedbackform", feedback_form)
         # initialise feedback
         feedback = self.get_feedback()
         # for checkboxes and annotations
