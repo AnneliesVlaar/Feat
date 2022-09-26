@@ -1,27 +1,51 @@
 title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
 
 [data]
-created = 2022-05-23T17:07:05.906404
-"last update" = 2022-09-23T11:29:11.278341
+created = 2022-09-26T16:30:23.977145
+"last update" = 2022-09-26T16:31:16.698318
 
-[students." PelikaanSteven"]
-FirstName = "Steven"
-ID = 123456
+[students."(2691938)"]
+first_name = "Marrit"
+last_name = "Adema"
+full_name = "Marrit Adema"
 
-[students." VorstvanderKaatje"]
-FirstName = "Kaatje"
-ID = 1535013
+[students."(2744675)"]
+first_name = "Farah"
+last_name = "Adouti"
+full_name = "Farah Adouti"
 
-[students." JohnElton"]
-FirstName = "Elton"
-ID = 98720
+[students."(2766801)"]
+first_name = "Niels"
+last_name = "Baan"
+full_name = "Niels Baan"
+
+[students."(2785919)"]
+first_name = "Dana"
+last_name = "van Beem"
+full_name = "Dana van Beem"
+
+[students."(2784840)"]
+first_name = "Pepijn"
+last_name = "Beentjes"
+full_name = "Pepijn Beentjes"
+
+[students."(1234567)"]
+first_name = "Anne-Lotte"
+last_name = "Ruhl"
+full_name = "Anne-Lotte Ruhl"
 
 [feedback.checkbox]
-" PelikaanSteven" = [ "VARNAME01", "CLASSES01",]
-" VorstvanderKaatje" = []
-" JohnElton" = []
+"(2691938)" = []
+"(2744675)" = []
+"(2766801)" = []
+"(2785919)" = []
+"(2784840)" = []
+"(1234567)" = []
 
 [feedback.annotations]
-" PelikaanSteven" = [ "Zal het nog steeds werken?", "ik hoop het",]
-" VorstvanderKaatje" = [ "Ik hoop het wel, maar denk het niet", "misschien ",]
-" JohnElton" = [ "Allicht"]
+"(2691938)" = []
+"(2744675)" = []
+"(2766801)" = []
+"(2785919)" = []
+"(2784840)" = []
+"(1234567)" = []
