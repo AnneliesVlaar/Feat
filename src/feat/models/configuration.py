@@ -10,16 +10,16 @@ RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
 
 class fileIO:
 
-    _conf_f = "test.toml"
+    _config_f = "test.toml"
 
     def __init__(self):
         pass
 
-    def init_toml(self):
+    def init_toml(self, conf_f=_config_f):
 
         # Check if configuration toml already exist
         try:
-            open(self._conf_f, "r").close()
+            open(conf_f, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
@@ -39,7 +39,7 @@ class fileIO:
             }
             self.dump_toml(init_dict)
 
-    def open_toml(self, tomlfile=_conf_f):
+    def open_toml(self, tomlfile=_config_f):
         """Returns dictionary of data in toml file.
 
         Returns:
