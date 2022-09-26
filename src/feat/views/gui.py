@@ -8,9 +8,6 @@ from feat.models.configuration import configuration
 
 
 class UserInterface(QtWidgets.QMainWindow):
-
-    _feedback_f = "feedbackpunten.toml"
-
     def __init__(self):
         # call __init__ of parent class
         super().__init__()
@@ -21,12 +18,29 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
+        # ## open new file
+        # # load students names in toml file
+        # _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+        #     self, filter="txt files (*.txt)"
+        # )
+        # self.config.add_students(_student_f)
+
+        # # load feedback file in toml file
+        # _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+        #     self, filter="toml files (*.toml)"
+        # )
+        # self.config.init_feedback(_feedback_f)
+
+        ## open file
+        # load data from toml file
+        self.config_dict = self.config.open_toml()
+
         # Enable Text field edit
         self.read_only.setReadOnly(True)
 
         # add feedback lines and annotation fields to interface
-        self.fblines = self.config.open_toml(
-            self._feedback_f
+        self.fblines = (
+            self.config.get_feedback_form()
         )  # TODO: This must come after loading feedback file
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
@@ -46,25 +60,10 @@ class UserInterface(QtWidgets.QMainWindow):
                 )
                 self.vbox.addWidget(self.button["check"][head][line])
 
-        ## open new file
-        # load students names in toml file
-        _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="txt files (*.txt)"
-        )
-        self.config.add_students(_student_f)
-
-        # load feedback file in toml file
-        _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="toml files (*.toml)"
-        )
-        self.config.init_feedback(_feedback_f)
-
-        # load data from toml file
-        self.config_dict = self.config.open_toml()
-
         # add student names to combobox
         for student in self.config_dict["students"]:
-            self.student_comboBox.addItem(student)
+            full_name = self.config_dict["students"][student]["full_name"]
+            self.student_comboBox.addItem(full_name, student)
 
         # initialise text box
         self.update_student()
@@ -84,7 +83,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
     def current_student(self):
         # index of current selected student
-        current_student = self.student_comboBox.currentText()
+        current_student = self.student_comboBox.currentData()
         return current_student
 
     def update_student(self):
@@ -120,7 +119,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # add salutation text to text field
         first_line = (
-            "Hoi " + self.config_dict["students"][current_student]["FirstName"] + ","
+            "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
 
