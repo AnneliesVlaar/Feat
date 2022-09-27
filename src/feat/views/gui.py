@@ -70,6 +70,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
         # slots and signals
+        self.actionOpen.triggered.connect(self.open_file)
         self.student_comboBox.currentTextChanged.connect(self.update_student)
 
         for head in self.headline["head"]:
@@ -80,6 +81,20 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].textChanged.connect(self.add_annotations)
 
         self.copy_button.clicked.connect(self.copy)
+
+    def open_file(self):
+        ## open new file
+        # load students names in toml file
+        _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, filter="txt files (*.txt)"
+        )
+        self.config.add_students(_student_f)
+
+        # load feedback file in toml file
+        _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, filter="toml files (*.toml)"
+        )
+        self.config.init_feedback(_feedback_f)
 
     def current_student(self):
         # index of current selected student
