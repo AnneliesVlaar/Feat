@@ -3,3 +3,12 @@ VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat h
 
 [Classes]
 CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
+
+[test1]
+test101 = "Een eerste test"
+test102 = "Meer testen."
+
+[test2]
+test201 = "Een tweede test"
+test202 = "We blijven testen"
+test203 = "Ik wil meer hokjes"

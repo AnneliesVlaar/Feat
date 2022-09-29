@@ -4,7 +4,7 @@ import pkg_resources
 
 from PyQt5 import QtWidgets, uic
 
-from feat.models.configuration import configuration
+from feat.models import configuration
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -12,87 +12,79 @@ class UserInterface(QtWidgets.QMainWindow):
         # call __init__ of parent class
         super().__init__()
 
-        # configure toml file
-        self.config = configuration()
-
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
-        # ## open new file
-        # # load students names in toml file
-        # _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-        #     self, filter="txt files (*.txt)"
-        # )
-        # self.config.add_students(_student_f)
+        # ## open file
+        # # load data from toml file
+        # self.config_dict = self.config.open_toml()
 
-        # # load feedback file in toml file
-        # _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-        #     self, filter="toml files (*.toml)"
-        # )
-        # self.config.init_feedback(_feedback_f)
+        # # Enable Text field edit
+        # self.read_only.setReadOnly(True)
 
-        ## open file
-        # load data from toml file
-        self.config_dict = self.config.open_toml()
+        # # add feedback lines and annotation fields to interface
+        # self.fblines = (
+        #     self.config.get_feedback_form()
+        # )  # TODO: This must come after loading feedback file
+        # self.headline = {"head": {}}
+        # self.annotation = {"annot": {}}
+        # self.button = {"check": {}}
+        # for head in self.fblines:
+        #     # add subject title to interface
+        #     self.headline["head"][head] = QtWidgets.QLabel(head)
+        #     self.vbox.addWidget(self.headline["head"][head])
+        #     # add annotation field per subject title
+        #     self.annotation["annot"][head] = QtWidgets.QTextEdit()
+        #     self.vbox.addWidget(self.annotation["annot"][head])
+        #     # add checkboxes with feedback lines
+        #     self.button["check"][head] = {}
+        #     for line in self.fblines[head]:
+        #         self.button["check"][head][line] = QtWidgets.QCheckBox(
+        #             self.fblines[head][line]
+        #         )
+        #         self.vbox.addWidget(self.button["check"][head][line])
 
-        # Enable Text field edit
-        self.read_only.setReadOnly(True)
+        # # add student names to combobox
+        # for student in self.config_dict["students"]:
+        #     full_name = self.config_dict["students"][student]["full_name"]
+        #     self.student_comboBox.addItem(full_name, student)
 
-        # add feedback lines and annotation fields to interface
-        self.fblines = (
-            self.config.get_feedback_form()
-        )  # TODO: This must come after loading feedback file
-        self.headline = {"head": {}}
-        self.annotation = {"annot": {}}
-        self.button = {"check": {}}
-        for head in self.fblines:
-            # add subject title to interface
-            self.headline["head"][head] = QtWidgets.QLabel(head)
-            self.vbox.addWidget(self.headline["head"][head])
-            # add annotation field per subject title
-            self.annotation["annot"][head] = QtWidgets.QTextEdit()
-            self.vbox.addWidget(self.annotation["annot"][head])
-            # add checkboxes with feedback lines
-            self.button["check"][head] = {}
-            for line in self.fblines[head]:
-                self.button["check"][head][line] = QtWidgets.QCheckBox(
-                    self.fblines[head][line]
-                )
-                self.vbox.addWidget(self.button["check"][head][line])
-
-        # add student names to combobox
-        for student in self.config_dict["students"]:
-            full_name = self.config_dict["students"][student]["full_name"]
-            self.student_comboBox.addItem(full_name, student)
-
-        # initialise text box
-        self.update_student()
-        self.text_add()
+        # # initialise text box
+        # self.update_student()
+        # self.text_add()
 
         # slots and signals
-        self.actionOpen.triggered.connect(self.open_file)
-        self.student_comboBox.currentTextChanged.connect(self.update_student)
+        self.actionNew.triggered.connect(self.new_file)
+        # self.actionOpen.triggered.connect(self.new_file)
+        # self.student_comboBox.currentTextChanged.connect(self.update_student)
 
-        for head in self.headline["head"]:
-            for box in self.button["check"][head]:
-                self.button["check"][head][box].stateChanged.connect(self.check_box)
+        # for head in self.headline["head"]:
+        #     for box in self.button["check"][head]:
+        #         self.button["check"][head][box].stateChanged.connect(self.check_box)
 
-        for field in self.annotation["annot"]:
-            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
+        # for field in self.annotation["annot"]:
+        #     self.annotation["annot"][field].textChanged.connect(self.add_annotations)
 
-        self.copy_button.clicked.connect(self.copy)
+        # self.copy_button.clicked.connect(self.copy)
 
-    def open_file(self):
+    def new_file(self):
         ## open new file
+        # get save filename for configuration file
+        _config_f, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, caption="Save feat file", filter="toml files (*.toml)"
+        )
+        # configure toml file
+        self.config = configuration(_config_f)
+
         # load students names in toml file
         _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="txt files (*.txt)"
+            self, caption="Select student list", filter="txt files (*.txt)"
         )
         self.config.add_students(_student_f)
 
         # load feedback file in toml file
         _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="toml files (*.toml)"
+            self, caption="Select feedback form", filter="toml files (*.toml)"
         )
         self.config.init_feedback(_feedback_f)
 

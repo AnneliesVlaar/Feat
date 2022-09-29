@@ -1,8 +1,7 @@
-title = "Feedback Realisatie Experimenten Automatisering Konfiguratie"
+title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
 
 [data]
-created = 2022-09-26T16:43:20.794223
-"last update" = 2022-09-27T17:20:43.307507
+created = 2022-09-29T13:01:03.511933
 
 [students."(2691938)"]
 first_name = "Marrit"
@@ -35,23 +34,32 @@ last_name = "Ruhl"
 full_name = "Anne-Lotte Ruhl"
 
 [feedback.checkbox]
-"(2691938)" = [ "VARNAME01",]
+"(2691938)" = []
 "(2744675)" = []
 "(2766801)" = []
 "(2785919)" = []
-"(2784840)" = [ "CLASSES01",]
+"(2784840)" = []
 "(1234567)" = []
 
 [feedback.annotations]
-"(2691938)" = [ "Dit is een test. ", "",]
-"(2744675)" = [ "", "",]
-"(2766801)" = [ "", "",]
-"(2785919)" = [ "", "",]
-"(2784840)" = [ "", "Hier nog een test",]
-"(1234567)" = [ "", "",]
+"(2691938)" = []
+"(2744675)" = []
+"(2766801)" = []
+"(2785919)" = []
+"(2784840)" = []
+"(1234567)" = []
 
 [feedbackform.Varname]
 VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
 
 [feedbackform.Classes]
 CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
+
+[feedbackform.test1]
+test101 = "Een eerste test"
+test102 = "Meer testen."
+
+[feedbackform.test2]
+test201 = "Een tweede test"
+test202 = "We blijven testen"
+test203 = "Ik wil meer hokjes"
