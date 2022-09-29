@@ -13,7 +13,7 @@ class UserInterface(QtWidgets.QMainWindow):
         super().__init__()
 
         # configure toml file
-        self.config = configuration()
+        self.config = configuration("test299.toml")
 
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)

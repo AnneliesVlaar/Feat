@@ -9,17 +9,15 @@ RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
 
 
 class fileIO:
-
-    _config_f = "test.toml"
-
-    def __init__(self):
+    def __init__(self, IOfile="test.toml"):
+        self._config_f = IOfile
         pass
 
-    def init_toml(self, conf_f=_config_f):
+    def init_toml(self):
 
         # Check if configuration toml already exist
         try:
-            open(conf_f, "r").close()
+            open(self._config_f, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
@@ -39,13 +37,13 @@ class fileIO:
             }
             self.dump_toml(init_dict)
 
-    def open_toml(self, tomlfile=_config_f):
+    def open_toml(self):
         """Returns dictionary of data in toml file.
 
         Returns:
             dictionary: containing all data from toml file
         """
-        config = toml.load(tomlfile)
+        config = toml.load(self._config_f)
 
         return config
 
@@ -63,19 +61,19 @@ class fileIO:
 
 
 class configuration:
-    def __init__(self):
+    def __init__(self, toml_f):
 
-        self.fileio = fileIO()
+        self.toml_f = toml_f
+        self.fileioToml = fileIO(IOfile=toml_f)
 
         # initialise configuration toml
-        self.fileio.init_toml()
-        self.add_students()
-        self.init_feedback()
+        self.fileioToml.init_toml()
 
     def open_toml(self, tomlfile=None):
         if tomlfile:
             # open different toml file
-            config = self.fileio.open_toml(tomlfile=tomlfile)
+            self.fileioFB = fileIO(tomlfile)
+            config = self.fileioFB.open_toml()
         else:
             # open configuration toml
             config = self.fileio.open_toml()
