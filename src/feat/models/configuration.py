@@ -76,7 +76,7 @@ class configuration:
             config = self.fileioFB.open_toml()
         else:
             # open configuration toml
-            config = self.fileio.open_toml()
+            config = self.fileioToml.open_toml()
         return config
 
     def add_students(self, student_filename="test2-studenten.txt"):
@@ -98,12 +98,12 @@ class configuration:
             print(f"File {student_filename} does not exits, skipping.")
 
         # write student names to toml file
-        self.fileio.update_toml("students", self.students)
+        self.fileioToml.update_toml("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         # add feedback form to toml file
         feedback_form = self.open_toml(feedback_filename)
-        self.fileio.update_toml("feedbackform", feedback_form)
+        self.fileioToml.update_toml("feedbackform", feedback_form)
 
         # initialise feedback per student
         feedback = self.get_feedback()
@@ -128,7 +128,7 @@ class configuration:
     def update_feedback(self, student, type, feedback):
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
-        self.fileio.update_toml("feedback", feedback_all)
+        self.fileioToml.update_toml("feedback", feedback_all)
 
 
 if __name__ == "__main__":
