@@ -74,7 +74,8 @@ class UserInterface(QtWidgets.QMainWindow):
             self, caption="Save feat file", filter="toml files (*.toml)"
         )
         # configure toml file
-        self.config = configuration(_config_f)
+        self.config = configuration.configuration()
+        self.config.init_conf_toml(_config_f)
 
         # load students names in toml file
         _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
