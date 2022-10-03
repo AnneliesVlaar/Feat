@@ -102,7 +102,8 @@ class configuration:
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         # add feedback form to toml file
-        feedback_form = self.open_toml(feedback_filename)
+        self.fileioFB = fileIO(feedback_filename)
+        feedback_form = self.fileioFB.open_toml()
         self.fileioToml.update_toml("feedbackform", feedback_form)
 
         # initialise feedback per student
