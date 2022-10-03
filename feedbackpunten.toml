@@ -4,7 +4,7 @@ VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat h
 [Classes]
 CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
 
-[test1]
+[Test1]
 test101 = "Een eerste test"
 test102 = "Meer testen."
 
@@ -12,3 +12,32 @@ test102 = "Meer testen."
 test201 = "Een tweede test"
 test202 = "We blijven testen"
 test203 = "Ik wil meer hokjes"
+
+["Een titel met spaties"]
+spaties01 = "zin met spaties"
+spaties02 = "Ach ja"
+spaties03 = "Ach ja"
+spaties04 = "Ach ja"
+spaties05 = "Ach ja"
+
+["Meer testen"]
+meertest1 = "meer"
+meertest2 = "nog meer"
+meertest3 = "Als maar meer"
+
+["meer feedback nog meer feedback!"]
+special01 = "test uitroepteken"
+special02 = "dan werkt % vast ook"
+special03 = "meer meer meer hokjesssss"
+special04 = "meer meer meer hokjesssss"
+special05 = "5 meer meer meer hokjesssss"
+special06 = "6 meer meer meer hokjesssss"
+special07 = "7 meer meer meer hokjesssss"
+special08 = "8 meer meer meer hokjesssss"
+special09 = "9 meer meer meer hokjesssss"
+special10 = "10 meer meer meer hokjesssss"
+special11 = "11 meer meer meer hokjesssss"
+special12 = "12 meer meer meer hokjesssss"
+special13 = "13 meer meer meer hokjesssss"
+special14 = "14 meer meer meer hokjesssss"
+special15 = "15 meer meer meer hokjesssss"

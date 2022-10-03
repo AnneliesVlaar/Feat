@@ -2,9 +2,12 @@ from __future__ import annotations
 import sys
 import pkg_resources
 
+from PyQt5.QtGui import QFont
 from PyQt5 import QtWidgets, uic
 
 from feat.models.configuration import configuration
+
+FONT_STYLE = QFont("Agency FB", 12, QFont.Bold)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -26,7 +29,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.copy_button.clicked.connect(self.copy)
 
     def open_feat_file(self):
-        ## open file
+        # open file
         self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feat file", filter="feat files (*.feat)"
         )
@@ -37,7 +40,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.init_feat()
 
     def new_feat_file(self):
-        # # Get file location of toml file
+        # Get file location of toml file
         self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
             self, caption="Choose save location", filter="feat files (*.feat)"
         )
@@ -76,6 +79,7 @@ class UserInterface(QtWidgets.QMainWindow):
         for head in self.fblines:
             # add subject title to interface
             self.headline["head"][head] = QtWidgets.QLabel(head)
+            self.headline["head"][head].setFont(FONT_STYLE)
             self.vbox.addWidget(self.headline["head"][head])
             # add annotation field per subject title
             self.annotation["annot"][head] = QtWidgets.QTextEdit()
@@ -87,6 +91,12 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.fblines[head][line]
                 )
                 self.vbox.addWidget(self.button["check"][head][line])
+
+        # add greeting text field
+        self.greetings_title = QtWidgets.QLabel("Afsluitingstekst")
+        self.vbox.addWidget(self.greetings_title)
+        self.greetings_textfield = QtWidgets.QTextEdit()
+        self.vbox.addWidget(self.greetings_textfield)
 
         # add student names to combobox
         for student in self.config_dict["students"]:
@@ -160,6 +170,9 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.read_only.append(
                         self.button["check"][head][line].text() + "\r"
                     )
+
+        # add sign-off
+        self.read_only.append(self.greetings_textfield.toPlainText())
 
     def check_box(self):
         current_student = self.current_student()
