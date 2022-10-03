@@ -11,25 +11,37 @@ FONT_STYLE = QFont("Agency FB", 12, QFont.Bold)
 
 
 class UserInterface(QtWidgets.QMainWindow):
+    """Feat application can construct fast feedback text, based on a list of students and a feedback form. In annotations fields the user can add personal feedback."""
+
     def __init__(self):
+        """Load design of feat app and add basic slots and signals.
+
+        Slots and signals for feedback form and annotation fields are coupled in method init_feat.
+        """
         # call __init__ of parent class
         super().__init__()
 
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
+        # Enable Text field edit
+        self.read_only.setReadOnly(True)
+
         # slots and signals
+        # menu
         self.actionOpen.triggered.connect(self.open_feat_file)
         self.actionNew.triggered.connect(self.new_feat_file)
         self.actionSave.triggered.connect(self.save_feat_file)
 
+        # student selection
         self.student_comboBox.currentTextChanged.connect(self.update_student)
-
         self.NextButton.clicked.connect(self.next_student)
 
+        # buttons
         self.copy_button.clicked.connect(self.copy)
 
     def open_feat_file(self):
+        """Menu option New. Open .feat file to construct windows with list of students, feedback form and annotation fields."""
         # open file
         self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feat file", filter="feat files (*.feat)"
@@ -41,6 +53,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.init_feat()
 
     def new_feat_file(self):
+        """Menu option New. Create a new .feat file.
+
+        3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
+        """
         # Get file location of toml file
         self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
             self, caption="Choose save location", filter="feat files (*.feat)"
@@ -54,7 +70,7 @@ class UserInterface(QtWidgets.QMainWindow):
         )
         self.config.add_students(_student_f)
 
-        # load feedback file in toml fileft.
+        # load feedback file in toml file.
         _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feedback form", filter="toml files (*.toml)"
         )
@@ -64,6 +80,11 @@ class UserInterface(QtWidgets.QMainWindow):
         self.init_feat()
 
     def save_feat_file(self):
+        """Menu option Save. Feat application auto-saves adjustments immediately.
+
+        This save option is for the user to have a sense of control.
+        """
+
         # save configurations of check-boxes
         self.check_box()
         # save annotations
@@ -72,14 +93,14 @@ class UserInterface(QtWidgets.QMainWindow):
         self.add_sign_off()
 
     def config_toml(self):
+        """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
         # configure toml file
         self.config = configuration(self.config_file)
 
     def init_feat(self):
+        """Initialize feat application."""
         # load data from toml file
         self.config_dict = self.config.fileioToml.open_toml()
-        # Enable Text field edit
-        self.read_only.setReadOnly(True)
         # add feedback lines and annotation fields to interface
         self.fblines = self.config.get_feedback_form()
         self.headline = {"head": {}}
