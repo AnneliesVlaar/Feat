@@ -1,0 +1,57 @@
+title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
+
+[data]
+created = 2022-10-03T12:07:50.209680
+"last update" = 2022-10-03T12:08:59.255258
+
+[students."(2691938)"]
+first_name = "Marrit"
+last_name = "Adema"
+full_name = "Marrit Adema"
+
+[students."(2744675)"]
+first_name = "Farah"
+last_name = "Adouti"
+full_name = "Farah Adouti"
+
+[students."(2766801)"]
+first_name = "Niels"
+last_name = "Baan"
+full_name = "Niels Baan"
+
+[students."(2785919)"]
+first_name = "Dana"
+last_name = "van Beem"
+full_name = "Dana van Beem"
+
+[students."(2784840)"]
+first_name = "Pepijn"
+last_name = "Beentjes"
+full_name = "Pepijn Beentjes"
+
+[students."(1234567)"]
+first_name = "Anne-Lotte"
+last_name = "Ruhl"
+full_name = "Anne-Lotte Ruhl"
+
+[feedback.checkbox]
+"(2691938)" = []
+"(2744675)" = []
+"(2766801)" = [ "VARNAME01", "CLASSES01",]
+"(2785919)" = []
+"(2784840)" = [ "VARNAME01",]
+"(1234567)" = []
+
+[feedback.annotations]
+"(2691938)" = [ "Alles is nu anders!", "",]
+"(2744675)" = []
+"(2766801)" = [ "Maar ik vind het grappig", "",]
+"(2785919)" = []
+"(2784840)" = [ "", "Natuurlijk vinden mensen dit gek",]
+"(1234567)" = []
+
+[feedbackform.Varname]
+VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+
+[feedbackform.Classes]
+CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
