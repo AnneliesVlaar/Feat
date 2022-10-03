@@ -98,7 +98,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.config = configuration(self.config_file)
 
     def init_feat(self):
-        """Initialize feat application."""
+        """Initialize feat application.
+
+        From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add students to combobox. Displays feedback in text field based on .feat file.
+        Slots and signals for check boxes and annotation fields are coupled."""
         # load data from toml file
         self.config_dict = self.config.fileioToml.open_toml()
         # add feedback lines and annotation fields to interface
@@ -154,11 +157,20 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].textChanged.connect(self.add_annotations)
 
     def current_student(self):
+        """Retrieve student_id of selected student in combobox.
+
+        Returns:
+            current_student: student_id of current selected student
+        """
         # index of current selected student
         current_student = self.student_comboBox.currentData()
         return current_student
 
     def update_student(self):
+        """Checks boxes and add annotation to annotation fields based on information in .feat file.
+
+        Display of feedback text in read_only field is done by self.text_add()
+        """
         feedback = self.config.get_feedback()
         current_student = self.current_student()
 
@@ -182,7 +194,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def text_add(self):
+        """Add text to display feedback text in read-only field.
 
+        Based on the check boxes and annotation field the feedback text is constructed.
+        """
         # clear text field
         self.read_only.clear()
 
@@ -213,6 +228,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.read_only.append("\r" + self.annotation_sign_off.toPlainText())
 
     def check_box(self):
+        """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
         current_student = self.current_student()
 
         feedback = []
@@ -228,6 +244,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def add_annotations(self):
+        """Create list of annotations from annotation fields. Save annotation list to .feat file. Display annotations in read-only field with self.text_add()."""
         current_student = self.current_student()
 
         annotations = []
@@ -242,6 +259,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def add_sign_off(self):
+        """Save sign-off to .feat file and use self.text_add() to display sign-off in read-only field."""
         # get sign-off text and save to toml
         sign_off = self.annotation_sign_off.toPlainText()
         self.config.save_sign_off(sign_off)
@@ -249,6 +267,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def next_student(self):
+        """Displays feedback for next student below current student.
+
+        If last student in the row is selected the next student is top one.
+        """
         index = self.student_comboBox.currentIndex()
         index += 1
         max_index = self.student_comboBox.count()
@@ -259,6 +281,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.student_comboBox.setCurrentIndex(index)
 
     def copy(self):
+        """The displayed feedback in the read-only field is copied to the clipboard"""
         self.read_only.selectAll()
         self.read_only.copy()
 

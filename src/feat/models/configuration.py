@@ -9,12 +9,20 @@ RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
 
 
 class fileIO:
+    """Handle input and output of toml-structured files like .feat files."""
+
     def __init__(self, IOfile="test.toml"):
         self._config_f = IOfile
         pass
 
     def init_toml(self):
+        """Creates a structure in .feat file to add new information.
 
+        If file exists, it updates time and data of last update.
+
+        Raises:
+            IOError: If new file is initialized, to create data structure.
+        """
         # Check if configuration toml already exist
         try:
             open(self._config_f, "r").close()
@@ -49,10 +57,23 @@ class fileIO:
         return config
 
     def dump_toml(self, dict):
+        """Writes data from dict to configuration file.
+
+        Args:
+            dict (dictionary): All data to write in configuration file.
+        """
         with open(self._config_f, "w") as f:
             toml.dump(dict, f)
 
     def update_toml(self, key, value):
+        """Add information to configuration file.
+
+        If information is added to a subkey of the configuration file. The key must be the name of the main key in the configuration file. And the value must be a dictionary containing all information belonging to that main key.
+
+        Args:
+            key (string): Name of the main key in configuration file
+            value (string or dictionary): information to add to file
+        """
         # get data of toml file as dictionary
         config = self.open_toml()
         # add data to dictionary
@@ -62,7 +83,14 @@ class fileIO:
 
 
 class configuration:
+    """Get information from toml-structured files like .feat file. Return specific information read from .feat file. Feedback lines, student specific feedback and sign-off text."""
+
     def __init__(self, toml_f):
+        """Initialize .feat file and create instance of fileIO to change information in .feat file.
+
+        Args:
+            toml_f (string): file location of the .feat file
+        """
 
         self.toml_f = toml_f
         self.fileioToml = fileIO(IOfile=toml_f)
@@ -71,6 +99,11 @@ class configuration:
         self.fileioToml.init_toml()
 
     def add_students(self, student_filename="test2-studenten.txt"):
+        """_summary_
+
+        Args:
+            student_filename (str, optional): List of students names with sis_user_ids. Structure: first_name lastname (student_id). Lines with # will be skipped. First names with spaces must be connected with "_" . Defaults to "test2-studenten.txt".
+        """
         # create dictionary of student data were key is the sis_user_id
         if Path(student_filename).is_file():
             self.students = {}
@@ -87,11 +120,17 @@ class configuration:
                         }
         else:
             print(f"File {student_filename} does not exits, skipping.")
+        # TODO if file does not exists it can't be skipped and will raise errors. Create better error handeling.
 
         # write student names to toml file
         self.fileioToml.update_toml("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
+        """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
+
+        Args:
+            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields. In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
+        """
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
@@ -109,24 +148,57 @@ class configuration:
                     # create student feedback key if not already excist
                     self.update_feedback(student, type, [])
 
+        # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
+
     def get_feedback_form(self):
+        """Read feedback form from .feat file.
+
+        Returns:
+            dictionary: Containing feedback subject (mean key) and feedback lines (key) -> dict[subject][line]
+        """
         config = self.fileioToml.open_toml()
         return config["feedbackform"]
 
     def get_feedback(self):
+        """Read configurations of checkboxes and annotations from all students in .feat file.
+
+        Returns:
+            dictionary: containing per student list of checked boxes and annotations to construct feedback.
+        """
         config = self.fileioToml.open_toml()
         return config["feedback"]
 
     def update_feedback(self, student, type, feedback):
+        """Update the feedback in .feat file.
+
+        Read feedback in .feat file. Update feedback and write it to .feat file. For 1 student and 1 feedback type (checkbox or annotations) at the time.
+
+        Args:
+            student (int): student_id of student to update feedback
+            type (str): key of feedback type, checkbox or annotations
+            feedback (str): value of the feedback
+        """
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
         self.fileioToml.update_toml("feedback", feedback_all)
 
     def get_sign_off(self):
+        """Return sign-off string saved in .feat file.
+
+        Sign-off text is not student specific.
+
+        Returns:
+            str: Sign-off string from .feat file
+        """
         config = self.fileioToml.open_toml()
         return config["general text"]["sign-off"]
 
     def save_sign_off(self, sign_off):
+        """Save sign-off text in .feat file.
+
+        Args:
+            sign_off (str): Sign-off text to send your kind regards to students.
+        """
         sign_off_dict = {"sign-off": sign_off}
         self.fileioToml.update_toml("general text", sign_off_dict)
 
