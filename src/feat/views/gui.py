@@ -18,14 +18,8 @@ class UserInterface(QtWidgets.QMainWindow):
         # slots and signals
         self.actionOpen.triggered.connect(self.open_feat_file)
         self.actionNew.triggered.connect(self.new_feat_file)
+
         self.student_comboBox.currentTextChanged.connect(self.update_student)
-
-        for head in self.headline["head"]:
-            for box in self.button["check"][head]:
-                self.button["check"][head][box].stateChanged.connect(self.check_box)
-
-        for field in self.annotation["annot"]:
-            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
 
         self.copy_button.clicked.connect(self.copy)
 
@@ -36,6 +30,7 @@ class UserInterface(QtWidgets.QMainWindow):
         )
         # configure feat file
         self.config_toml()
+
         # initialise feedback windows
         self.init_feat()
 
@@ -66,16 +61,14 @@ class UserInterface(QtWidgets.QMainWindow):
     def config_toml(self):
         # configure toml file
         self.config = configuration(self.config_file)
-        # load data from toml file
-        self.config_dict = self.config.fileioToml.open_toml()
 
     def init_feat(self):
+        # load data from toml file
+        self.config_dict = self.config.fileioToml.open_toml()
         # Enable Text field edit
         self.read_only.setReadOnly(True)
         # add feedback lines and annotation fields to interface
-        self.fblines = (
-            self.config.get_feedback_form()
-        )  # TODO: This must come after loading feedback file
+        self.fblines = self.config.get_feedback_form()
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
@@ -102,6 +95,14 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise text box
         self.update_student()
         self.text_add()
+
+        # slots and signals
+        for head in self.headline["head"]:
+            for box in self.button["check"][head]:
+                self.button["check"][head][box].stateChanged.connect(self.check_box)
+
+        for field in self.annotation["annot"]:
+            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
 
     def current_student(self):
         # index of current selected student
