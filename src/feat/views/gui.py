@@ -21,6 +21,8 @@ class UserInterface(QtWidgets.QMainWindow):
 
         self.student_comboBox.currentTextChanged.connect(self.update_student)
 
+        self.NextButton.clicked.connect(self.next_student)
+
         self.copy_button.clicked.connect(self.copy)
 
     def open_feat_file(self):
@@ -42,14 +44,13 @@ class UserInterface(QtWidgets.QMainWindow):
         # configure feat file
         self.config_toml()
 
-        # ## open new file
-        # # load students names in toml file
+        # load students names in toml file
         _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open student list", filter="txt files (*.txt)"
         )
         self.config.add_students(_student_f)
 
-        # # load feedback file in toml file
+        # load feedback file in toml fileft.
         _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feedback form", filter="toml files (*.toml)"
         )
@@ -188,6 +189,16 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # update read_only text field
         self.text_add()
+
+    def next_student(self):
+        index = self.student_comboBox.currentIndex()
+        index += 1
+        max_index = self.student_comboBox.count()
+        if index < max_index:
+            pass
+        else:
+            index = 0
+        self.student_comboBox.setCurrentIndex(index)
 
     def copy(self):
         self.read_only.selectAll()
