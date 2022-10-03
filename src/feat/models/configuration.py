@@ -69,16 +69,6 @@ class configuration:
         # initialise configuration toml
         self.fileioToml.init_toml()
 
-    def open_toml(self, tomlfile=None):
-        if tomlfile:
-            # open different toml file
-            self.fileioFB = fileIO(tomlfile)
-            config = self.fileioFB.open_toml()
-        else:
-            # open configuration toml
-            config = self.fileioToml.open_toml()
-        return config
-
     def add_students(self, student_filename="test2-studenten.txt"):
         # create dictionary of student data were key is the sis_user_id
         if Path(student_filename).is_file():
@@ -119,11 +109,11 @@ class configuration:
                     self.update_feedback(student, type, [])
 
     def get_feedback_form(self):
-        config = self.open_toml()
+        config = self.fileioToml.open_toml()
         return config["feedbackform"]
 
     def get_feedback(self):
-        config = self.open_toml()
+        config = self.fileioToml.open_toml()
         return config["feedback"]
 
     def update_feedback(self, student, type, feedback):

@@ -21,19 +21,19 @@ class UserInterface(QtWidgets.QMainWindow):
         # ## open new file
         # # load students names in toml file
         _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="txt files (*.txt)"
+            self, caption="Open student list", filter="txt files (*.txt)"
         )
         self.config.add_students(_student_f)
 
         # # load feedback file in toml file
         _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, filter="toml files (*.toml)"
+            self, caption="Open feedback form", filter="toml files (*.toml)"
         )
         self.config.init_feedback(_feedback_f)
 
         ## open file
         # load data from toml file
-        self.config_dict = self.config.open_toml()
+        self.config_dict = self.config.fileioToml.open_toml()
 
         # Enable Text field edit
         self.read_only.setReadOnly(True)
