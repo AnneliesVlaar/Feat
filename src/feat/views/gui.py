@@ -94,6 +94,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # add greeting text field
         self.greetings_title = QtWidgets.QLabel("Afsluitingstekst")
+        self.greetings_title.setFont(FONT_STYLE)
         self.vbox.addWidget(self.greetings_title)
         self.greetings_textfield = QtWidgets.QTextEdit()
         self.vbox.addWidget(self.greetings_textfield)
@@ -172,7 +173,7 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        self.read_only.append(self.greetings_textfield.toPlainText())
+        self.read_only.append("\r" + self.greetings_textfield.toPlainText())
 
     def check_box(self):
         current_student = self.current_student()
