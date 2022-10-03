@@ -28,7 +28,7 @@ class UserInterface(QtWidgets.QMainWindow):
     def open_feat_file(self):
         ## open file
         self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, caption="Open feat file", filter="toml files (*.toml)"
+            self, caption="Open feat file", filter="feat files (*.feat)"
         )
         # configure feat file
         self.config_toml()
@@ -39,7 +39,7 @@ class UserInterface(QtWidgets.QMainWindow):
     def new_feat_file(self):
         # # Get file location of toml file
         self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, caption="Choose save location", filter="toml files (*.toml)"
+            self, caption="Choose save location", filter="feat files (*.feat)"
         )
         # configure feat file
         self.config_toml()
