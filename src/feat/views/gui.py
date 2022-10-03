@@ -15,10 +15,36 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
+        # slots and signals
+        self.actionOpen.triggered.connect(self.open_feat_file)
+        self.actionNew.triggered.connect(self.new_feat_file)
+        self.student_comboBox.currentTextChanged.connect(self.update_student)
+
+        for head in self.headline["head"]:
+            for box in self.button["check"][head]:
+                self.button["check"][head][box].stateChanged.connect(self.check_box)
+
+        for field in self.annotation["annot"]:
+            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
+
+        self.copy_button.clicked.connect(self.copy)
+
+    def open_feat_file(self):
+        ## open file
+        self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, caption="Open feat file", filter="toml files (*.toml)"
+        )
+        # configure feat file
+        self.config_toml()
+        # initialise feedback windows
+        self.init_feat()
+
+    def new_feat_file(self):
         # # Get file location of toml file
         self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, caption="Save", filter="toml files (*.toml)"
+            self, caption="Choose save location", filter="toml files (*.toml)"
         )
+        # configure feat file
         self.config_toml()
 
         # ## open new file
@@ -34,33 +60,18 @@ class UserInterface(QtWidgets.QMainWindow):
         )
         self.config.init_feedback(_feedback_f)
 
-        ## open file
-        # load data from toml file
-        self.config_dict = self.config.fileioToml.open_toml()
-
-        # Enable Text field edit
-        self.read_only.setReadOnly(True)
-
         # initialise feedback windows
         self.init_feat()
-
-        # slots and signals
-        self.student_comboBox.currentTextChanged.connect(self.update_student)
-
-        for head in self.headline["head"]:
-            for box in self.button["check"][head]:
-                self.button["check"][head][box].stateChanged.connect(self.check_box)
-
-        for field in self.annotation["annot"]:
-            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
-
-        self.copy_button.clicked.connect(self.copy)
 
     def config_toml(self):
         # configure toml file
         self.config = configuration(self.config_file)
+        # load data from toml file
+        self.config_dict = self.config.fileioToml.open_toml()
 
     def init_feat(self):
+        # Enable Text field edit
+        self.read_only.setReadOnly(True)
         # add feedback lines and annotation fields to interface
         self.fblines = (
             self.config.get_feedback_form()
