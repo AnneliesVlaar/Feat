@@ -9,13 +9,15 @@ RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
 
 
 class fileIO:
-    def __init__(self):
+    def __init__(self, IOfile="test.toml"):
+        self._config_f = IOfile
         pass
 
-    def init_toml(self, conf_f):
+    def init_toml(self):
+
         # Check if configuration toml already exist
         try:
-            open(conf_f, "r").close()
+            open(self._config_f, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
@@ -23,7 +25,7 @@ class fileIO:
                 config["data"]["last update"] = datetime.datetime.now()
             except:
                 raise IOError
-            self.dump_toml(config, conf_f)
+            self.dump_toml(config)
 
         except IOError:
             # initialize toml file with time, date of creation, key for students and feedback
@@ -33,50 +35,39 @@ class fileIO:
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
             }
-            self.dump_toml(init_dict, conf_f)
+            self.dump_toml(init_dict)
 
-    def open_toml(self, conf_f):
+    def open_toml(self):
         """Returns dictionary of data in toml file.
 
         Returns:
             dictionary: containing all data from toml file
         """
-        config = toml.load(conf_f)
+        config = toml.load(self._config_f)
 
         return config
 
-    def dump_toml(self, dict, conf_f):
-        with open(conf_f, "w") as f:
+    def dump_toml(self, dict):
+        with open(self._config_f, "w") as f:
             toml.dump(dict, f)
 
-    def update_toml(self, conf_f, key, value):
+    def update_toml(self, key, value):
         # get data of toml file as dictionary
-        config = self.open_toml(conf_f)
+        config = self.open_toml()
         # add data to dictionary
         config[key] = value
         # write new dictionary to toml file
-        self.dump_toml(config, conf_f)
+        self.dump_toml(config)
 
 
 class configuration:
-    def __init__(self):
-        self.fileio = fileIO()
-        self.init_conf_toml()
-        self.add_students()
-        pass
+    def __init__(self, toml_f):
 
-    def init_conf_toml(self, conf_f="test299.toml"):
+        self.toml_f = toml_f
+        self.fileioToml = fileIO(IOfile=toml_f)
+
         # initialise configuration toml
-        self.fileio.init_toml(conf_f)
-
-    def open_toml(self, tomlfile=None):
-        if tomlfile:
-            # open different toml file
-            config = self.fileio.open_toml(tomlfile=tomlfile)
-        else:
-            # open configuration toml
-            config = self.fileio.open_toml()
-        return config
+        self.fileioToml.init_toml()
 
     def add_students(self, student_filename="test2-studenten.txt"):
         # create dictionary of student data were key is the sis_user_id
@@ -97,13 +88,13 @@ class configuration:
             print(f"File {student_filename} does not exits, skipping.")
 
         # write student names to toml file
-        print(self.students)
-        self.fileio.update_toml(student_filename, "students", self.students)
+        self.fileioToml.update_toml("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         # add feedback form to toml file
-        feedback_form = self.open_toml(feedback_filename)
-        self.fileio.update_toml("feedbackform", feedback_form)
+        self.fileioFB = fileIO(feedback_filename)
+        feedback_form = self.fileioFB.open_toml()
+        self.fileioToml.update_toml("feedbackform", feedback_form)
 
         # initialise feedback per student
         feedback = self.get_feedback()
@@ -117,23 +108,18 @@ class configuration:
                     # create student feedback key if not already excist
                     self.update_feedback(student, type, [])
 
-
-class feedback:
-    def __init__(self):
-        pass
-
     def get_feedback_form(self):
-        config = self.open_toml()
+        config = self.fileioToml.open_toml()
         return config["feedbackform"]
 
     def get_feedback(self):
-        config = self.open_toml()
+        config = self.fileioToml.open_toml()
         return config["feedback"]
 
     def update_feedback(self, student, type, feedback):
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
-        self.fileio.update_toml("feedback", feedback_all)
+        self.fileioToml.update_toml("feedback", feedback_all)
 
 
 if __name__ == "__main__":
