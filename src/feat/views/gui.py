@@ -21,6 +21,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # slots and signals
         self.actionOpen.triggered.connect(self.open_feat_file)
         self.actionNew.triggered.connect(self.new_feat_file)
+        self.actionSave.triggered.connect(self.save_feat_file)
 
         self.student_comboBox.currentTextChanged.connect(self.update_student)
 
@@ -62,6 +63,14 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise feedback windows
         self.init_feat()
 
+    def save_feat_file(self):
+        # save configurations of check-boxes
+        self.check_box()
+        # save annotations
+        self.add_annotations()
+        # save sign-off text
+        self.add_sign_off()
+
     def config_toml(self):
         # configure toml file
         self.config = configuration(self.config_file)
@@ -93,11 +102,16 @@ class UserInterface(QtWidgets.QMainWindow):
                 self.vbox.addWidget(self.button["check"][head][line])
 
         # add greeting text field
-        self.greetings_title = QtWidgets.QLabel("Afsluitingstekst")
-        self.greetings_title.setFont(FONT_STYLE)
-        self.vbox.addWidget(self.greetings_title)
-        self.greetings_textfield = QtWidgets.QTextEdit()
-        self.vbox.addWidget(self.greetings_textfield)
+        self.headline_sign_off = QtWidgets.QLabel("Afscheidsgroet")
+        self.headline_sign_off.setFont(FONT_STYLE)
+        self.vbox.addWidget(self.headline_sign_off)
+        self.annotation_sign_off = QtWidgets.QTextEdit()
+        sign_off_text = self.config.get_sign_off()
+        if sign_off_text:
+            self.annotation_sign_off.append(sign_off_text)
+        else:
+            self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
+        self.vbox.addWidget(self.annotation_sign_off)
 
         # add student names to combobox
         for student in self.config_dict["students"]:
@@ -109,6 +123,8 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
         # slots and signals
+        self.annotation_sign_off.textChanged.connect(self.add_sign_off)
+
         for head in self.headline["head"]:
             for box in self.button["check"][head]:
                 self.button["check"][head][box].stateChanged.connect(self.check_box)
@@ -173,7 +189,7 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        self.read_only.append("\r" + self.greetings_textfield.toPlainText())
+        self.read_only.append("\r" + self.annotation_sign_off.toPlainText())
 
     def check_box(self):
         current_student = self.current_student()
@@ -202,6 +218,13 @@ class UserInterface(QtWidgets.QMainWindow):
         self.config.update_feedback(current_student, "annotations", annotations)
 
         # update read_only text field
+        self.text_add()
+
+    def add_sign_off(self):
+        # get sign-off text and save to toml
+        sign_off = self.annotation_sign_off.toPlainText()
+        self.config.save_sign_off(sign_off)
+        # add sign-off to read_only text field
         self.text_add()
 
     def next_student(self):
