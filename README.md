@@ -1,2 +1,2 @@
 # Feat
- Feedback Experimenten Automatisering Tool
+ Feedback Experiment Automatisering Tool

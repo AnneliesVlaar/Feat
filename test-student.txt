@@ -1,4 +1,0 @@
-FirstName, RepresentativeName, sis-user-ID
-Steven, PelikaanSteven, 123456
-Kaatje, VorstvanderKaatje, 1535013
-Elton, JohnElton, 098720
