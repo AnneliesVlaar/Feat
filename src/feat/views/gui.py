@@ -12,11 +12,14 @@ class UserInterface(QtWidgets.QMainWindow):
         # call __init__ of parent class
         super().__init__()
 
-        # configure toml file
-        self.config = configuration("test299.toml")
-
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
+
+        # # Get file location of toml file
+        self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, caption="Save", filter="toml files (*.toml)"
+        )
+        self.config_toml()
 
         # ## open new file
         # # load students names in toml file
@@ -38,6 +41,26 @@ class UserInterface(QtWidgets.QMainWindow):
         # Enable Text field edit
         self.read_only.setReadOnly(True)
 
+        # initialise feedback windows
+        self.init_feat()
+
+        # slots and signals
+        self.student_comboBox.currentTextChanged.connect(self.update_student)
+
+        for head in self.headline["head"]:
+            for box in self.button["check"][head]:
+                self.button["check"][head][box].stateChanged.connect(self.check_box)
+
+        for field in self.annotation["annot"]:
+            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
+
+        self.copy_button.clicked.connect(self.copy)
+
+    def config_toml(self):
+        # configure toml file
+        self.config = configuration(self.config_file)
+
+    def init_feat(self):
         # add feedback lines and annotation fields to interface
         self.fblines = (
             self.config.get_feedback_form()
@@ -68,18 +91,6 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise text box
         self.update_student()
         self.text_add()
-
-        # slots and signals
-        self.student_comboBox.currentTextChanged.connect(self.update_student)
-
-        for head in self.headline["head"]:
-            for box in self.button["check"][head]:
-                self.button["check"][head][box].stateChanged.connect(self.check_box)
-
-        for field in self.annotation["annot"]:
-            self.annotation["annot"][field].textChanged.connect(self.add_annotations)
-
-        self.copy_button.clicked.connect(self.copy)
 
     def current_student(self):
         # index of current selected student
