@@ -34,6 +34,7 @@ class fileIO:
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
+                "general text": {"sign-off": {}},
             }
             self.dump_toml(init_dict)
 
@@ -120,6 +121,14 @@ class configuration:
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
         self.fileioToml.update_toml("feedback", feedback_all)
+
+    def get_sign_off(self):
+        config = self.fileioToml.open_toml()
+        return config["general text"]["sign-off"]
+
+    def save_sign_off(self, sign_off):
+        sign_off_dict = {"sign-off": sign_off}
+        self.fileioToml.update_toml("general text", sign_off_dict)
 
 
 if __name__ == "__main__":
