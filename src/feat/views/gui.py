@@ -7,7 +7,8 @@ from PyQt5 import QtWidgets, uic
 
 from feat.models.configuration import configuration
 
-FONT_STYLE = QFont("Agency FB", 12, QFont.Bold)
+FONT_STYLE_BUTTONS = QFont("Agency FB", 12, QFont.Bold)
+FONT_STYLE_TEXT = QFont("MS Shell Dlg 2", 12)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -26,6 +27,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # Enable Text field edit
         self.read_only.setReadOnly(True)
+        self.read_only.setFont(FONT_STYLE_TEXT)
 
         # slots and signals
         # menu
@@ -112,10 +114,11 @@ class UserInterface(QtWidgets.QMainWindow):
         for head in self.fblines:
             # add subject title to interface
             self.headline["head"][head] = QtWidgets.QLabel(head)
-            self.headline["head"][head].setFont(FONT_STYLE)
+            self.headline["head"][head].setFont(FONT_STYLE_BUTTONS)
             self.vbox.addWidget(self.headline["head"][head])
             # add annotation field per subject title
             self.annotation["annot"][head] = QtWidgets.QTextEdit()
+            self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
             self.vbox.addWidget(self.annotation["annot"][head])
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
@@ -123,13 +126,15 @@ class UserInterface(QtWidgets.QMainWindow):
                 self.button["check"][head][line] = QtWidgets.QCheckBox(
                     self.fblines[head][line]
                 )
+                self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
                 self.vbox.addWidget(self.button["check"][head][line])
 
         # add greeting text field
         self.headline_sign_off = QtWidgets.QLabel("Afscheidsgroet")
-        self.headline_sign_off.setFont(FONT_STYLE)
+        self.headline_sign_off.setFont(FONT_STYLE_BUTTONS)
         self.vbox.addWidget(self.headline_sign_off)
         self.annotation_sign_off = QtWidgets.QTextEdit()
+        self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
         sign_off_text = self.config.get_sign_off()
         if sign_off_text:
             self.annotation_sign_off.append(sign_off_text)
