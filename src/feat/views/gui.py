@@ -38,6 +38,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # student selection
         self.student_comboBox.currentTextChanged.connect(self.update_student)
         self.NextButton.clicked.connect(self.next_student)
+        self.PreviousButton.clicked.connect(self.previous_student)
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
@@ -284,6 +285,22 @@ class UserInterface(QtWidgets.QMainWindow):
         else:
             index = 0
         self.student_comboBox.setCurrentIndex(index)
+        self.update_student()
+
+    def previous_student(self):
+        """Displays feedback for previous student above current student.
+
+        If first student in the row is selected the previous student is bottom one.
+        """
+        index = self.student_comboBox.currentIndex()
+        max_index = self.student_comboBox.count()
+        if index == 0:
+            index = max_index
+        else:
+            pass
+        index -= 1
+        self.student_comboBox.setCurrentIndex(index)
+        self.update_student()
 
     def copy(self):
         """The displayed feedback in the read-only field is copied to the clipboard"""

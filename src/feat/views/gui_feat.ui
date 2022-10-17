@@ -24,13 +24,7 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="QLabel" name="label_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QPushButton" name="PreviousButton">
         <property name="font">
          <font>
           <family>Agency FB</family>
@@ -40,7 +34,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Student:</string>
+         <string>&lt;- Previous</string>
         </property>
        </widget>
       </item>
