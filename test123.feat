@@ -1,0 +1,110 @@
+title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
+
+[data]
+created = 2022-11-07T11:53:44.369897
+
+[students."(123)"]
+first_name = "Renco"
+last_name = "Hoefnagel"
+full_name = "Renco Hoefnagel"
+
+[students."(456)"]
+first_name = "Nouh"
+last_name = "Zielman"
+full_name = "Nouh Zielman"
+
+[students."(789)"]
+first_name = "Mario"
+last_name = "Meij"
+full_name = "Mario Meij"
+
+[students."(101)"]
+first_name = "Beerd"
+last_name = "Rodriguez"
+full_name = "Beerd Rodriguez"
+
+[students."(102)"]
+first_name = "Pytsje"
+last_name = "Zevenbergen"
+full_name = "Pytsje Zevenbergen"
+
+[students."(304)"]
+first_name = "Kathelijn"
+last_name = "Masselink"
+full_name = "Kathelijn Masselink"
+
+[students."(509)"]
+first_name = "Alida"
+last_name = "Eppink"
+full_name = "Alida Eppink"
+
+[students."(6789)"]
+first_name = "Oumnia"
+last_name = "Lemmen"
+full_name = "Oumnia Lemmen"
+
+[feedback.checkbox]
+"(123)" = []
+"(456)" = []
+"(789)" = []
+"(101)" = []
+"(102)" = []
+"(304)" = []
+"(509)" = []
+"(6789)" = []
+
+[feedback.annotations]
+"(123)" = []
+"(456)" = []
+"(789)" = []
+"(101)" = []
+"(102)" = []
+"(304)" = []
+"(509)" = []
+"(6789)" = []
+
+["general text".sign-off]
+
+[feedbackform.Varname]
+VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+
+[feedbackform.Classes]
+CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
+
+[feedbackform.Test1]
+test101 = "Een eerste test"
+test102 = "Meer testen."
+
+[feedbackform.test2]
+test201 = "Een tweede test"
+test202 = "We blijven testen"
+test203 = "Ik wil meer hokjes"
+
+[feedbackform."Een titel met spaties"]
+spaties01 = "zin met spaties"
+spaties02 = "Ach ja"
+spaties03 = "Ach ja"
+spaties04 = "Ach ja"
+spaties05 = "Ach ja"
+
+[feedbackform."Meer testen"]
+meertest1 = "meer"
+meertest2 = "nog meer"
+meertest3 = "Als maar meer"
+
+[feedbackform."meer feedback nog meer feedback!"]
+special01 = "test uitroepteken"
+special02 = "dan werkt % vast ook"
+special03 = "meer meer meer hokjesssss"
+special04 = "meer meer meer hokjesssss"
+special05 = "5 meer meer meer hokjesssss"
+special06 = "6 meer meer meer hokjesssss"
+special07 = "7 meer meer meer hokjesssss"
+special08 = "8 meer meer meer hokjesssss"
+special09 = "9 meer meer meer hokjesssss"
+special10 = "10 meer meer meer hokjesssss"
+special11 = "11 meer meer meer hokjesssss"
+special12 = "12 meer meer meer hokjesssss"
+special13 = "13 meer meer meer hokjesssss"
+special14 = "14 meer meer meer hokjesssss"
+special15 = "15 meer meer meer hokjesssss"
