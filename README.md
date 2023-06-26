@@ -18,4 +18,4 @@ Open Feat with ft.
 ```
 ft.
 ```
-Select file->new; select the location and give the name of the new file; select the student file; select the feedbackfile
+Select **file>new**; select the location and give the name of the new file; select the student file; select the feedbackfile
