@@ -115,3 +115,4 @@ dmypy.json
 
 # Feat specific
 *.feat
+bfg-1.14.0.jar
