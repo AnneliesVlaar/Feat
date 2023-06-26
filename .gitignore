@@ -114,4 +114,4 @@ dmypy.json
 .pyre/
 
 # Feat specific
-.feat
+*.feat
