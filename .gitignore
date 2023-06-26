@@ -113,4 +113,3 @@ dmypy.json
 # Pyre type checker
 .pyre/
 bfg-1.14.0.jar
-*.feat
