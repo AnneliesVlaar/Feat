@@ -133,7 +133,7 @@
                <x>0</x>
                <y>0</y>
                <width>377</width>
-               <height>241</height>
+               <height>243</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -296,8 +296,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Agency FB</family>
-          <pointsize>16</pointsize>
+          <family>FiraCode NF</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -333,8 +333,14 @@
      <x>0</x>
      <y>0</y>
      <width>1079</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>FiraCode NF</family>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="font">

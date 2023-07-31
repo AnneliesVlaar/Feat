@@ -6,8 +6,8 @@ from PyQt5 import QtWidgets, uic
 
 from feat.models.configuration import configuration
 
-FONT_STYLE_BUTTONS = QFont("Agency FB", 12, QFont.Bold)
-FONT_STYLE_TEXT = QFont("MS Shell Dlg 2", 12)
+FONT_STYLE_BUTTONS = QFont("Firacode NF", 12, QFont.Bold)
+FONT_STYLE_TEXT = QFont("Firacode NF", 9)
 
 
 class UserInterface(QtWidgets.QMainWindow):
