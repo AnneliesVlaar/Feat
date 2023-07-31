@@ -6,85 +6,42 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1129</width>
-    <height>862</height>
+    <width>1079</width>
+    <height>686</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>FiraCode NF</family>
+    <pointsize>11</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Feat</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
-      </property>
-      <item>
-       <widget class="QPushButton" name="PreviousButton">
-        <property name="font">
-         <font>
-          <family>Agency FB</family>
-          <pointsize>16</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>&lt;- Previous</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="student_comboBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Agency FB</family>
-          <pointsize>16</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="insertPolicy">
-         <enum>QComboBox::InsertAtBottom</enum>
-        </property>
-        <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="NextButton">
-        <property name="font">
-         <font>
-          <family>Agency FB</family>
-          <pointsize>16</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Next -&gt;</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <property name="leftMargin">
+     <number>20</number>
+    </property>
+    <property name="topMargin">
+     <number>20</number>
+    </property>
+    <property name="rightMargin">
+     <number>20</number>
+    </property>
+    <property name="bottomMargin">
+     <number>20</number>
+    </property>
+    <property name="spacing">
+     <number>20</number>
+    </property>
     <item row="2" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -106,7 +63,7 @@
               </property>
               <property name="font">
                <font>
-                <family>Agency FB</family>
+                <family>FiraCode NF</family>
                 <pointsize>16</pointsize>
                 <weight>75</weight>
                 <bold>true</bold>
@@ -114,6 +71,36 @@
               </property>
               <property name="text">
                <string>Give Feedback</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PreviousButton">
+              <property name="font">
+               <font>
+                <family>FiraCode NF</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&lt;</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="NextButton">
+              <property name="font">
+               <font>
+                <family>FiraCode NF</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>&gt;</string>
               </property>
              </widget>
             </item>
@@ -145,8 +132,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>383</width>
-               <height>325</height>
+               <width>377</width>
+               <height>241</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -156,26 +143,6 @@
              </layout>
             </widget>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="vbox_old">
-            <property name="sizeConstraint">
-             <enum>QLayout::SetNoConstraint</enum>
-            </property>
-           </layout>
           </item>
          </layout>
         </item>
@@ -195,7 +162,7 @@
             </property>
             <property name="font">
              <font>
-              <family>Agency FB</family>
+              <family>FiraCode NF</family>
               <pointsize>16</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -203,6 +170,36 @@
             </property>
             <property name="text">
              <string>Show Feedback</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="PreviousButton2">
+            <property name="font">
+             <font>
+              <family>FiraCode NF</family>
+              <pointsize>16</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>&lt;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="NextButton2">
+            <property name="font">
+             <font>
+              <family>FiraCode NF</family>
+              <pointsize>16</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>&gt;</string>
             </property>
            </widget>
           </item>
@@ -223,6 +220,9 @@
         </item>
         <item>
          <widget class="QTextEdit" name="read_only"/>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2"/>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -249,13 +249,13 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>167</width>
+              <width>220</width>
               <height>16777215</height>
              </size>
             </property>
             <property name="font">
              <font>
-              <family>Agency FB</family>
+              <family>FiraCode NF</family>
               <pointsize>16</pointsize>
               <weight>75</weight>
               <bold>true</bold>
@@ -272,6 +272,59 @@
       </widget>
      </widget>
     </item>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QComboBox" name="student_comboBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>173</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Agency FB</family>
+          <pointsize>16</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="insertPolicy">
+         <enum>QComboBox::InsertAtBottom</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToContents</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -279,11 +332,16 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1129</width>
-     <height>21</height>
+     <width>1079</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
+    <property name="font">
+     <font>
+      <family>FiraCode NF</family>
+     </font>
+    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -298,15 +356,30 @@
    <property name="text">
     <string>Open</string>
    </property>
+   <property name="font">
+    <font>
+     <family>FiraCode NF</family>
+    </font>
+   </property>
   </action>
   <action name="actionNew">
    <property name="text">
     <string>New</string>
    </property>
+   <property name="font">
+    <font>
+     <family>FiraCode NF</family>
+    </font>
+   </property>
   </action>
   <action name="actionSave">
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>FiraCode NF</family>
+    </font>
    </property>
   </action>
  </widget>
