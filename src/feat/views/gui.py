@@ -37,7 +37,9 @@ class UserInterface(QtWidgets.QMainWindow):
         # student selection
         self.student_comboBox.currentTextChanged.connect(self.update_student)
         self.NextButton.clicked.connect(self.next_student)
+        self.NextButton2.clicked.connect(self.next_student)
         self.PreviousButton.clicked.connect(self.previous_student)
+        self.PreviousButton2.clicked.connect(self.previous_student)
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
