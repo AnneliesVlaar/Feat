@@ -117,10 +117,16 @@ class UserInterface(QtWidgets.QMainWindow):
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
 
+        # add salutation
+        self.headline_salutation = QtWidgets.QLabel("Hoi Student,")
+        self.headline_salutation.setFont(FONT_STYLE_BUTTONS)
+        self.vbox.addWidget(self.headline_salutation)
+
         # add main annotation
         self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
         self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
         self.vbox.addWidget(self.annotation["annot"]["main"])
+
         for head in self.fblines:
             # add subject title to interface
             self.headline["head"][head] = QtWidgets.QLabel(head)
@@ -190,6 +196,12 @@ class UserInterface(QtWidgets.QMainWindow):
         """
         feedback = self.config.get_feedback()
         current_student = self.current_student()
+
+        # add salutation in feedback field
+        first_line = (
+            "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
+        )
+        self.headline_salutation.setText(first_line)
 
         for head in self.headline["head"]:
             # uncheck all checkboxes, check when checkbox name is in toml file
