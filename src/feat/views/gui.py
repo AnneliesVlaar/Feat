@@ -196,7 +196,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         Display of feedback text in read_only field is done by self.text_add()
         """
-        feedback = self.config.get_feedback()
+        feedback = self.config.get_feedback(self.feat_total)
         current_student = self.current_student()
 
         for head in self.headline["head"]:
@@ -222,6 +222,8 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def update_give_feedback_field(self):
+        """The name of the student is displayed in the give feedback field. If there is no main annotation a placeholder text is set. 
+        """        
         
         current_student = self.current_student()
 
@@ -282,7 +284,10 @@ class UserInterface(QtWidgets.QMainWindow):
                     feedback.append(box)
 
         # save checked feedback lines in toml
-        self.config.update_feedback(current_student, "checkbox", feedback)
+        feat_new = self.config.update_feedback(self.feat_total, current_student, "checkbox", feedback)
+
+        # update feat data
+        self.feat_total = feat_new
 
         # update read_only text field
         self.text_add()
@@ -297,7 +302,10 @@ class UserInterface(QtWidgets.QMainWindow):
             annotations.append(text)
 
         # save annotations in toml
-        self.config.update_feedback(current_student, "annotations", annotations)
+        feat_new = self.config.update_feedback(self.feat_total, current_student, "annotations", annotations)
+        
+        # update feat data 
+        self.feat_total = feat_new
 
         # update read_only text field
         self.text_add()

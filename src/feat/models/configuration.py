@@ -161,16 +161,15 @@ class configuration:
         
         return feat["feedbackform"]
 
-    def get_feedback(self):
+    def get_feedback(self,feat):
         """Read configurations of checkboxes and annotations from all students in .feat file.
 
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
         """
-        config = self.fileioToml.open_toml()
-        return config["feedback"]
+        return feat["feedback"]
 
-    def update_feedback(self, student, type, feedback):
+    def update_feedback(self, feat, student, type, feedback):
         """Update the feedback in .feat file.
 
         Read feedback in .feat file. Update feedback and write it to .feat file. For 1 student and 1 feedback type (checkbox or annotations) at the time.
@@ -180,9 +179,9 @@ class configuration:
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
         """
-        feedback_all = self.get_feedback()
-        feedback_all[type][student] = feedback
-        self.fileioToml.update_toml("feedback", feedback_all)
+        feat["feedback"][type][student] = feedback
+        self.fileioToml.dump_toml(feat)
+        return feat
 
     def get_sign_off(self, feat):
         """Return sign-off string saved in .feat file.
