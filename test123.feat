@@ -2,7 +2,7 @@ title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
 
 [data]
 created = 2022-11-07T11:53:44.369897
-"last update" = 2023-08-03T12:12:30.691802
+"last update" = 2023-08-03T14:02:58.719661
 
 [students."(123)"]
 first_name = "Rénco"
@@ -45,7 +45,7 @@ last_name = "Lemmen"
 full_name = "Oumnia Lemmen"
 
 [feedback.checkbox]
-"(123)" = [ "VARNAME01",]
+"(123)" = [ "VARNAME01", "CLASSES01",]
 "(456)" = []
 "(789)" = []
 "(101)" = []

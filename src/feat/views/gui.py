@@ -108,6 +108,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add students to combobox. Displays feedback in text field based on .feat file.
         Slots and signals for check boxes and annotation fields are coupled."""
+
         # load data from toml file
         self.config_dict = self.config.fileioToml.open_toml()
         # add feedback lines and annotation fields to interface
@@ -115,6 +116,11 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
+
+        # add main annotation
+        self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
+        self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
+        self.vbox.addWidget(self.annotation["annot"]["main"])
         for head in self.fblines:
             # add subject title to interface
             self.headline["head"][head] = QtWidgets.QLabel(head)
@@ -220,6 +226,7 @@ class UserInterface(QtWidgets.QMainWindow):
             "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
+        self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
 
         # add headline to textfield
         for head in self.headline["head"]:
