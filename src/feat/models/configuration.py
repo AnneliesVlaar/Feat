@@ -52,7 +52,9 @@ class fileIO:
         Returns:
             dictionary: containing all data from toml file
         """
-        config = toml.load(self._config_f)
+        print("hellupie")
+        with open(self._config_f, "r", encoding="utf-8") as f:
+            config = toml.load(f)
 
         return config
 
@@ -62,7 +64,7 @@ class fileIO:
         Args:
             dict (dictionary): All data to write in configuration file.
         """
-        with open(self._config_f, "w") as f:
+        with open(self._config_f, "w", encoding="utf-8") as f:
             toml.dump(dict, f)
 
     def update_toml(self, key, value):

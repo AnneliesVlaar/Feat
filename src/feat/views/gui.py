@@ -4,6 +4,8 @@ import pkg_resources
 from PyQt5.QtGui import QFont
 from PyQt5 import QtWidgets, uic
 
+import textwrap
+
 from feat.models.configuration import configuration
 
 FONT_STYLE_BUTTONS = QFont("Firacode NF", 12, QFont.Bold)
@@ -125,8 +127,10 @@ class UserInterface(QtWidgets.QMainWindow):
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
             for line in self.fblines[head]:
+                text = self.fblines[head][line]
+                split_text = textwrap.wrap(text, width=50)
                 self.button["check"][head][line] = QtWidgets.QCheckBox(
-                    self.fblines[head][line]
+                    "\n".join(split_text)
                 )
                 self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
                 self.vbox.addWidget(self.button["check"][head][line])
