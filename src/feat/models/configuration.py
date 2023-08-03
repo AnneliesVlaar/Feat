@@ -203,7 +203,14 @@ class configuration:
         sign_off_dict = {"sign-off": sign_off}
         self.fileioToml.update_toml("general text", sign_off_dict)
 
+    def get_main_annotation(self, feat, student):
+        """Return main annotation string saved in .feat file.
 
+        Returns:
+            str: main annotation string from .feat file
+        """
+        print(feat["feedback"]["annotations"][student][0])
+        return feat["feedback"]["annotations"][student][0]
 
 
 

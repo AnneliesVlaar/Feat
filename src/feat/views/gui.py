@@ -199,12 +199,6 @@ class UserInterface(QtWidgets.QMainWindow):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
 
-        # add salutation in feedback fields
-        first_line = (
-            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
-        )
-        self.headline_salutation.setText(first_line)
-
         for head in self.headline["head"]:
             # uncheck all checkboxes, check when checkbox name is in toml file
             for box in self.button["check"][head]:
@@ -221,8 +215,26 @@ class UserInterface(QtWidgets.QMainWindow):
                 text = None
             self.annotation["annot"][field].append(text)
 
+        # set salutations and main annotation in give feedback field
+        self.update_give_feedback_field()
+
         # update read_only text field
         self.text_add()
+
+    def update_give_feedback_field(self):
+        
+        current_student = self.current_student()
+
+        # add salutation in give feedback field
+        first_line = ("Hoi " + self.feat_total["students"][current_student]["first_name"] + ",")
+        self.headline_salutation.setText(first_line)
+
+        # set text in main annotation
+        main = self.config.get_main_annotation(self.feat_total, current_student)
+
+        if main == '':
+            self.annotation["annot"]["main"].setPlaceholderText("Laat in een of twee regels weten wat je algehele indruk is.")
+
 
     def text_add(self):
         """Add text to display feedback text in read-only field.
