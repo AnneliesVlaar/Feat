@@ -110,9 +110,9 @@ class UserInterface(QtWidgets.QMainWindow):
         Slots and signals for check boxes and annotation fields are coupled."""
 
         # load data from toml file
-        self.config_dict = self.config.fileioToml.open_toml()
+        self.feat_total = self.config.fileioToml.open_toml()
         # add feedback lines and annotation fields to interface
-        self.fblines = self.config.get_feedback_form()
+        self.fblines = self.config.get_feedback_form(self.feat_total)
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
@@ -141,9 +141,8 @@ class UserInterface(QtWidgets.QMainWindow):
             for line in self.fblines[head]:
                 text = self.fblines[head][line]
                 split_text = textwrap.wrap(text, width=65)
-                self.button["check"][head][line] = QtWidgets.QCheckBox(
-                    "\n".join(split_text)
-                )
+                combine_text = "\n".join(split_text)
+                self.button["check"][head][line] = QtWidgets.QCheckBox(combine_text)
                 self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
                 self.vbox.addWidget(self.button["check"][head][line])
 
@@ -151,9 +150,11 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_sign_off = QtWidgets.QLabel("Afscheidsgroet")
         self.headline_sign_off.setFont(FONT_STYLE_BUTTONS)
         self.vbox.addWidget(self.headline_sign_off)
+        
         self.annotation_sign_off = QtWidgets.QTextEdit()
         self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
-        sign_off_text = self.config.get_sign_off()
+
+        sign_off_text = self.config.get_sign_off(self.feat_total)
         if sign_off_text:
             self.annotation_sign_off.append(sign_off_text)
         else:
@@ -161,8 +162,8 @@ class UserInterface(QtWidgets.QMainWindow):
         self.vbox.addWidget(self.annotation_sign_off)
 
         # add student names to combobox
-        for student in self.config_dict["students"]:
-            full_name = self.config_dict["students"][student]["full_name"]
+        for student in self.feat_total["students"]:
+            full_name = self.feat_total["students"][student]["full_name"]
             self.student_comboBox.addItem(full_name, student)
 
         # initialise text box
@@ -200,7 +201,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # add salutation in feedback fields
         first_line = (
-            "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
+            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.headline_salutation.setText(first_line)
 
@@ -236,7 +237,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # add salutation text to text field
         first_line = (
-            "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
+            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
         self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
@@ -252,7 +253,7 @@ class UserInterface(QtWidgets.QMainWindow):
             for line in self.button["check"][head]:
                 if self.button["check"][head][line].isChecked():
                     self.read_only.append(
-                        self.config_dict["feedbackform"][head][line] + "\r"
+                        self.feat_total["feedbackform"][head][line] + "\r"
                     )
 
         # add sign-off

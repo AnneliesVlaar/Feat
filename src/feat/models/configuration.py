@@ -152,14 +152,14 @@ class configuration:
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
-    def get_feedback_form(self):
+    def get_feedback_form(self, feat):
         """Read feedback form from .feat file.
 
         Returns:
-            dictionary: Containing feedback subject (mean key) and feedback lines (key) -> dict[subject][line]
+            dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
         """
-        config = self.fileioToml.open_toml()
-        return config["feedbackform"]
+        
+        return feat["feedbackform"]
 
     def get_feedback(self):
         """Read configurations of checkboxes and annotations from all students in .feat file.
@@ -184,7 +184,7 @@ class configuration:
         feedback_all[type][student] = feedback
         self.fileioToml.update_toml("feedback", feedback_all)
 
-    def get_sign_off(self):
+    def get_sign_off(self, feat):
         """Return sign-off string saved in .feat file.
 
         Sign-off text is not student specific.
@@ -192,8 +192,7 @@ class configuration:
         Returns:
             str: Sign-off string from .feat file
         """
-        config = self.fileioToml.open_toml()
-        return config["general text"]["sign-off"]
+        return feat["general text"]["sign-off"]
 
     def save_sign_off(self, sign_off):
         """Save sign-off text in .feat file.
@@ -203,6 +202,9 @@ class configuration:
         """
         sign_off_dict = {"sign-off": sign_off}
         self.fileioToml.update_toml("general text", sign_off_dict)
+
+
+
 
 
 if __name__ == "__main__":
