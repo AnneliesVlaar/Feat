@@ -282,10 +282,12 @@ class UserInterface(QtWidgets.QMainWindow):
 
         If last student in the row is selected the next student is top one.
         """
+        count = self.student_comboBox.count()
+        if count == 0:
+            return
         index = self.student_comboBox.currentIndex()
         index += 1
-        max_index = self.student_comboBox.count()
-        if index < max_index:
+        if index < count:
             pass
         else:
             index = 0
@@ -297,10 +299,12 @@ class UserInterface(QtWidgets.QMainWindow):
 
         If first student in the row is selected the previous student is bottom one.
         """
+        count = self.student_comboBox.count()
+        if count == 0:
+            return
         index = self.student_comboBox.currentIndex()
-        max_index = self.student_comboBox.count()
         if index == 0:
-            index = max_index
+            index = count
         else:
             pass
         index -= 1
