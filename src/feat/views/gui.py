@@ -140,7 +140,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self.button["check"][head] = {}
             for line in self.fblines[head]:
                 text = self.fblines[head][line]
-                split_text = textwrap.wrap(text, width=50)
+                split_text = textwrap.wrap(text, width=65)
                 self.button["check"][head][line] = QtWidgets.QCheckBox(
                     "\n".join(split_text)
                 )
@@ -251,7 +251,7 @@ class UserInterface(QtWidgets.QMainWindow):
             for line in self.button["check"][head]:
                 if self.button["check"][head][line].isChecked():
                     self.read_only.append(
-                        self.button["check"][head][line].text() + "\r"
+                        self.config_dict["feedbackform"][head][line] + "\r"
                     )
 
         # add sign-off
