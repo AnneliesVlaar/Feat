@@ -167,6 +167,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # initialise text box
         self.update_student()
+        self.add_sign_off()
         self.text_add()
 
         # slots and signals
@@ -197,7 +198,7 @@ class UserInterface(QtWidgets.QMainWindow):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
 
-        # add salutation in feedback field
+        # add salutation in feedback fields
         first_line = (
             "Hoi " + self.config_dict["students"][current_student]["first_name"] + ","
         )
