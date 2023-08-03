@@ -1,8 +1,10 @@
 import sys
 import pkg_resources
 
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5 import QtWidgets, uic
+
+from importlib import resources
 
 import textwrap
 
@@ -25,6 +27,11 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
+
+        # # set icon
+        self.setWindowIcon(
+                    QIcon("FT-logo128.jpg")
+                )
 
         # Enable Text field edit
         self.read_only.setReadOnly(True)
@@ -356,7 +363,6 @@ class UserInterface(QtWidgets.QMainWindow):
         """The displayed feedback in the read-only field is copied to the clipboard"""
         self.read_only.selectAll()
         self.read_only.copy()
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)

@@ -144,7 +144,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>358</width>
+               <width>513</width>
                <height>248</height>
               </rect>
              </property>
@@ -370,6 +370,7 @@
     <property name="font">
      <font>
       <family>FiraCode NF</family>
+      <pointsize>9</pointsize>
      </font>
     </property>
     <property name="title">
