@@ -37,6 +37,7 @@ class NewFileWindow(QtWidgets.QWidget):
         self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
             self, caption="Choose save location", filter="feat files (*.feat)"
         )
+        self.line_save_location.setText(self.config_file)
 
 
 class UserInterface(QtWidgets.QMainWindow):
