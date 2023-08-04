@@ -219,7 +219,6 @@ class configuration:
         Returns:
             str: main annotation string from .feat file for the specific student
         """              
-        print(feat["feedback"]["annotations"][student][0])
         return feat["feedback"]["annotations"][student][0]
     
     def save_feat_file(self, feat):

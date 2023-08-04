@@ -92,19 +92,6 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise feedback windows
         self.init_feat()
 
-    def save_feat_file(self):
-        """Menu option Save. Feat application auto-saves adjustments immediately.
-
-        This save option is for the user to have a sense of control.
-        """
-
-        # save configurations of check-boxes
-        self.check_box()
-        # save annotations
-        self.add_annotations()
-        # save sign-off text
-        self.add_sign_off()
-
     def config_toml(self):
         """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
         # configure toml file
@@ -363,6 +350,15 @@ class UserInterface(QtWidgets.QMainWindow):
         """The displayed feedback in the read-only field is copied to the clipboard"""
         self.read_only.selectAll()
         self.read_only.copy()
+
+    def save_feat_file(self):
+        """Menu option Save. Feat application auto-saves adjustments immediately.
+
+        This save option is for the user to have a sense of control.
+        """
+
+        # save configurations of check-boxes
+        self.config.save_feat_file(self.feat_total)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
