@@ -14,8 +14,7 @@ FONT_STYLE_TEXT = QFont("Firacode NF", 9)
 
 class NewFileWindow(QtWidgets.QWidget):
     """
-    This "window" is a QWidget. If it has no parent, it
-    will appear as a free-floating window as we want.
+    This window appears when new file is selected from the menu.
     """
 
     def __init__(self):
@@ -29,12 +28,6 @@ class NewFileWindow(QtWidgets.QWidget):
 
         # # set icon
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
-
-        # super().__init__()
-        # layout = QtWidgets.QVBoxLayout()
-        # self.label = QtWidgets.QLabel("Another Window")
-        # layout.addWidget(self.label)
-        # self.setLayout(layout)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -84,11 +77,14 @@ class UserInterface(QtWidgets.QMainWindow):
         self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feat file", filter="feat files (*.feat)"
         )
-        # configure feat file
-        self.config_toml()
+        if self.config_file == "":
+            return
+        else:
+            # configure feat file
+            self.config_toml()
 
-        # initialise feedback windows
-        self.init_feat()
+            # initialise feedback windows
+            self.init_feat()
 
     def new_feat_file(self):
         """Menu option New. Create a new .feat file.

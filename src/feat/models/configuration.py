@@ -122,7 +122,6 @@ class configuration:
                         }
         else:
             print(f"File {student_filename} does not exits, skipping.")
-        # TODO if file does not exists it can't be skipped and will raise errors. Create better error handeling.
 
         # write student names to toml file
         self.fileioToml.update_toml("students", self.students)
@@ -161,10 +160,10 @@ class configuration:
         Returns:
             dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
         """
-        
+
         return feat["feedbackform"]
 
-    def get_feedback(self,feat):
+    def get_feedback(self, feat):
         """Read configurations of checkboxes and annotations from all students in .feat file.
 
         Args:
@@ -172,7 +171,7 @@ class configuration:
 
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
-        """        
+        """
         return feat["feedback"]
 
     def update_feedback(self, feat, student, type, feedback):
@@ -218,17 +217,16 @@ class configuration:
 
         Returns:
             str: main annotation string from .feat file for the specific student
-        """              
+        """
         return feat["feedback"]["annotations"][student][0]
-    
+
     def save_feat_file(self, feat):
-        """Save the information to the feat file. 
+        """Save the information to the feat file.
 
         Args:
             feat (dict): dictionary of the feat file
-        """        
+        """
         self.fileioToml.dump_toml(feat)
-
 
 
 if __name__ == "__main__":
