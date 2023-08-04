@@ -4,14 +4,26 @@ import pkg_resources
 from PyQt5.QtGui import QFont, QIcon
 from PyQt5 import QtWidgets, uic
 
-from importlib import resources
-
 import textwrap
 
 from feat.models.configuration import configuration
 
 FONT_STYLE_BUTTONS = QFont("Firacode NF", 12, QFont.Bold)
 FONT_STYLE_TEXT = QFont("Firacode NF", 9)
+
+
+class NewFileWindow(QtWidgets.QWidget):
+    """
+    This "window" is a QWidget. If it has no parent, it
+    will appear as a free-floating window as we want.
+    """
+
+    def __init__(self):
+        super().__init__()
+        layout = QtWidgets.QVBoxLayout()
+        self.label = QtWidgets.QLabel("Another Window")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -29,9 +41,7 @@ class UserInterface(QtWidgets.QMainWindow):
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
         # # set icon
-        self.setWindowIcon(
-                    QIcon("FT-logo128.jpg")
-                )
+        self.setWindowIcon(QIcon("FT-logo128.jpg"))
 
         # Enable Text field edit
         self.read_only.setReadOnly(True)
@@ -39,7 +49,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # slots and signals
         # menu
-        self.actionOpen.triggered.connect(self.open_feat_file)
+        # self.actionOpen.triggered.connect(self.open_feat_file)
         self.actionNew.triggered.connect(self.new_feat_file)
         self.actionSave.triggered.connect(self.save_feat_file)
 
@@ -52,6 +62,13 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
+
+        self.actionOpen.triggered.connect(self.show_new_window)
+        # self.setCentralWidget(self.actionOpen)
+
+    def show_new_window(self, checked):
+        self.w = NewFileWindow()
+        self.w.show()
 
     def open_feat_file(self):
         """Menu option New. Open .feat file to construct windows with list of students, feedback form and annotation fields."""
@@ -144,7 +161,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_sign_off = QtWidgets.QLabel("Afscheidsgroet")
         self.headline_sign_off.setFont(FONT_STYLE_BUTTONS)
         self.vbox.addWidget(self.headline_sign_off)
-        
+
         self.annotation_sign_off = QtWidgets.QTextEdit()
         self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
 
@@ -216,21 +233,23 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def update_give_feedback_field(self):
-        """The name of the student is displayed in the give feedback field. If there is no main annotation a placeholder text is set. 
-        """        
-        
+        """The name of the student is displayed in the give feedback field. If there is no main annotation a placeholder text is set."""
+
         current_student = self.current_student()
 
         # add salutation in give feedback field
-        first_line = ("Hoi " + self.feat_total["students"][current_student]["first_name"] + ",")
+        first_line = (
+            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
+        )
         self.headline_salutation.setText(first_line)
 
         # set text in main annotation
         main = self.config.get_main_annotation(self.feat_total, current_student)
 
-        if main == '':
-            self.annotation["annot"]["main"].setPlaceholderText("Laat in een of twee regels weten wat je algehele indruk is.")
-
+        if main == "":
+            self.annotation["annot"]["main"].setPlaceholderText(
+                "Laat in een of twee regels weten wat je algehele indruk is."
+            )
 
     def text_add(self):
         """Add text to display feedback text in read-only field.
@@ -278,7 +297,9 @@ class UserInterface(QtWidgets.QMainWindow):
                     feedback.append(box)
 
         # save checked feedback lines in toml
-        feat_new = self.config.update_feedback(self.feat_total, current_student, "checkbox", feedback)
+        feat_new = self.config.update_feedback(
+            self.feat_total, current_student, "checkbox", feedback
+        )
 
         # update feat data
         self.feat_total = feat_new
@@ -296,9 +317,11 @@ class UserInterface(QtWidgets.QMainWindow):
             annotations.append(text)
 
         # save annotations in toml
-        feat_new = self.config.update_feedback(self.feat_total, current_student, "annotations", annotations)
-        
-        # update feat data 
+        feat_new = self.config.update_feedback(
+            self.feat_total, current_student, "annotations", annotations
+        )
+
+        # update feat data
         self.feat_total = feat_new
 
         # update read_only text field
@@ -359,6 +382,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # save configurations of check-boxes
         self.config.save_feat_file(self.feat_total)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
