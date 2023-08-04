@@ -19,11 +19,22 @@ class NewFileWindow(QtWidgets.QWidget):
     """
 
     def __init__(self):
+        # call __init__ of parent class
         super().__init__()
-        layout = QtWidgets.QVBoxLayout()
-        self.label = QtWidgets.QLabel("Another Window")
-        layout.addWidget(self.label)
-        self.setLayout(layout)
+
+        # load feat gui design
+        uic.loadUi(
+            pkg_resources.resource_stream("feat.views", "gui_feat_new_file.ui"), self
+        )
+
+        # # set icon
+        self.setWindowIcon(QIcon("FT-logo128.jpg"))
+
+        # super().__init__()
+        # layout = QtWidgets.QVBoxLayout()
+        # self.label = QtWidgets.QLabel("Another Window")
+        # layout.addWidget(self.label)
+        # self.setLayout(layout)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -49,8 +60,8 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # slots and signals
         # menu
-        # self.actionOpen.triggered.connect(self.open_feat_file)
-        self.actionNew.triggered.connect(self.new_feat_file)
+        self.actionOpen.triggered.connect(self.open_feat_file)
+        self.actionNew.triggered.connect(self.show_new_window)
         self.actionSave.triggered.connect(self.save_feat_file)
 
         # student selection
@@ -62,9 +73,6 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
-
-        self.actionOpen.triggered.connect(self.show_new_window)
-        # self.setCentralWidget(self.actionOpen)
 
     def show_new_window(self, checked):
         self.w = NewFileWindow()
