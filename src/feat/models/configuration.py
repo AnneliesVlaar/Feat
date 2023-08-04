@@ -91,7 +91,7 @@ class configuration:
         """Initialize .feat file and create instance of fileIO to change information in .feat file.
 
         Args:
-            toml_f (string): file location of the .feat file
+            feat_f (string): file location of the .feat file
         """
 
         self.toml_f = feat_f
@@ -100,7 +100,7 @@ class configuration:
         # initialise configuration toml
         self.fileioToml.init_toml()
 
-    def add_students(self, student_filename="test2-studenten.txt"):
+    def add_students(self, student_filename="teststudenten.txt"):
         """_summary_
 
         Args:
@@ -155,6 +155,9 @@ class configuration:
     def get_feedback_form(self, feat):
         """Read feedback form from .feat file.
 
+        Args:
+            feat (dict): dictonary of feat file
+
         Returns:
             dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
         """
@@ -164,9 +167,12 @@ class configuration:
     def get_feedback(self,feat):
         """Read configurations of checkboxes and annotations from all students in .feat file.
 
+        Args:
+            feat (dict): dictonary of feat file
+
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
-        """
+        """        
         return feat["feedback"]
 
     def update_feedback(self, feat, student, type, feedback):
@@ -175,6 +181,7 @@ class configuration:
         Read feedback in .feat file. Update feedback and write it to .feat file. For 1 student and 1 feedback type (checkbox or annotations) at the time.
 
         Args:
+            feat (dict): dictonary of feat file
             student (int): student_id of student to update feedback
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
@@ -205,11 +212,23 @@ class configuration:
     def get_main_annotation(self, feat, student):
         """Return main annotation string saved in .feat file.
 
+        Args:
+            feat (dict): dictonary of feat file
+            student (str): student_id of student
+
         Returns:
-            str: main annotation string from .feat file
-        """
+            str: main annotation string from .feat file for the specific student
+        """              
         print(feat["feedback"]["annotations"][student][0])
         return feat["feedback"]["annotations"][student][0]
+    
+    def save_feat_file(self, feat):
+        """Save the information to the feat file. 
+
+        Args:
+            feat (dict): dictionary of the feat file
+        """        
+        self.fileioToml.dump_toml(feat)
 
 
 
