@@ -31,13 +31,21 @@ class NewFileWindow(QtWidgets.QWidget):
 
         # slots and signals
         self.save_location.clicked.connect(self.file_location)
+        self.students_location.clicked.connect(self.get_student_location)
 
     def file_location(self):
         # Get file location of toml file
-        self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+        _save_loc, _ = QtWidgets.QFileDialog.getSaveFileName(
             self, caption="Choose save location", filter="feat files (*.feat)"
         )
-        self.line_save_location.setText(self.config_file)
+        self.line_save_location.setText(_save_loc)
+
+    def get_student_location(self):
+        # load students names in toml file
+        _student_loc, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, caption="Open student list", filter="txt files (*.txt)"
+        )
+        self.line_students.setText(_student_loc)
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -101,10 +109,10 @@ class UserInterface(QtWidgets.QMainWindow):
 
         3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
         """
-        # Get file location of toml file
-        self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-            self, caption="Choose save location", filter="feat files (*.feat)"
-        )
+        # # Get file location of toml file
+        # self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+        #     self, caption="Choose save location", filter="feat files (*.feat)"
+        # )
         # configure feat file
         self.config_toml()
 
