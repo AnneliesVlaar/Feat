@@ -26,8 +26,17 @@ class NewFileWindow(QtWidgets.QWidget):
             pkg_resources.resource_stream("feat.views", "gui_feat_new_file.ui"), self
         )
 
-        # # set icon
+        # set icon
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
+
+        # slots and signals
+        self.save_location.clicked.connect(self.file_location)
+
+    def file_location(self):
+        # Get file location of toml file
+        self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, caption="Choose save location", filter="feat files (*.feat)"
+        )
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -44,7 +53,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
-        # # set icon
+        # set icon
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
 
         # Enable Text field edit
