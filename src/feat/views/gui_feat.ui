@@ -392,6 +392,9 @@
      <family>FiraCode NF</family>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionNew">
    <property name="text">
@@ -402,6 +405,9 @@
      <family>FiraCode NF</family>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionSave">
    <property name="text">
@@ -411,6 +417,9 @@
     <font>
      <family>FiraCode NF</family>
     </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
