@@ -100,6 +100,9 @@ class configuration:
         # initialise configuration toml
         self.fileioToml.init_toml()
 
+    def open_toml(self):
+        return self.fileioToml.open_toml()
+
     def add_students(self, student_filename="teststudenten.txt"):
         """_summary_
 
@@ -122,6 +125,7 @@ class configuration:
                         }
         else:
             print(f"File {student_filename} does not exits, skipping.")
+            # TODO: create a good error message and return to main window
 
         # write student names to toml file
         self.fileioToml.update_toml("students", self.students)
@@ -135,10 +139,14 @@ class configuration:
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
+        # TODO: create a good error message and return to main window
+
         self.fileioToml.update_toml("feedbackform", feedback_form)
+        feat = self.fileioToml.open_toml()
 
         # initialise feedback per student
-        feedback = self.get_feedback()
+        feedback = self.get_feedback(feat)
+        print(feedback)
         # for checkboxes and annotations
         for type in feedback:
             for student in self.students:
@@ -147,7 +155,7 @@ class configuration:
                     feedback[type][student]
                 except:
                     # create student feedback key if not already excist
-                    self.update_feedback(student, type, [])
+                    self.update_feedback(feat, student, type, [])
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
@@ -218,7 +226,12 @@ class configuration:
         Returns:
             str: main annotation string from .feat file for the specific student
         """
-        return feat["feedback"]["annotations"][student][0]
+        try:
+            main = feat["feedback"]["annotations"][student][0]
+        except IndexError:
+            main = ""
+
+        return main
 
     def save_feat_file(self, feat):
         """Save the information to the feat file.

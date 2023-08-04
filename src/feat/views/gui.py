@@ -30,10 +30,12 @@ class NewFileWindow(QtWidgets.QWidget):
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
 
         # slots and signals
-        self.save_location.clicked.connect(self.file_location)
+        self.save_location.clicked.connect(self.get_file_location)
         self.students_location.clicked.connect(self.get_student_location)
+        self.feedbackform_location.clicked.connect(self.get_feedbackform_location)
+        # self.create_new_file.clicked.connect(self.get_files)
 
-    def file_location(self):
+    def get_file_location(self):
         # Get file location of toml file
         _save_loc, _ = QtWidgets.QFileDialog.getSaveFileName(
             self, caption="Choose save location", filter="feat files (*.feat)"
@@ -46,6 +48,21 @@ class NewFileWindow(QtWidgets.QWidget):
             self, caption="Open student list", filter="txt files (*.txt)"
         )
         self.line_students.setText(_student_loc)
+
+    def get_feedbackform_location(self):
+        # load feedback file in toml file.
+        _feedbackform_loc, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, caption="Open feedback form", filter="toml files (*.toml)"
+        )
+        self.line_feedbackform.setText(_feedbackform_loc)
+
+    def get_files(self):
+        self.files_locations = {
+            "save": self.line_save_location.text(),
+            "students": self.line_students.text(),
+            "feedbackform": self.line_feedbackform.text(),
+        }
+        return self.files_locations
 
 
 class UserInterface(QtWidgets.QMainWindow):
@@ -85,9 +102,34 @@ class UserInterface(QtWidgets.QMainWindow):
         # buttons
         self.copy_button.clicked.connect(self.copy)
 
-    def show_new_window(self, checked):
+    def show_new_window(self):
         self.w = NewFileWindow()
         self.w.show()
+        self.w.create_new_file.clicked.connect(self.new_feat_file)
+
+    def new_feat_file(self):
+        """Menu option New. Create a new .feat file.
+
+        3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
+        """
+
+        files_locs = self.w.get_files()
+        print(files_locs)
+
+        # # create .feat file
+        self.config_toml(files_locs["save"])
+
+        # # load students names in toml file
+        self.config.add_students(files_locs["students"])
+
+        # # load feedback file in toml file.
+        self.config.init_feedback(files_locs["feedbackform"])
+
+        # # initialise feedback windows
+        self.init_feat()
+
+        # close new file window
+        self.w.close()
 
     def open_feat_file(self):
         """Menu option New. Open .feat file to construct windows with list of students, feedback form and annotation fields."""
@@ -99,51 +141,24 @@ class UserInterface(QtWidgets.QMainWindow):
             return
         else:
             # configure feat file
-            self.config_toml()
+            self.config_toml(file_path=self.config_file)
 
             # initialise feedback windows
             self.init_feat()
 
-    def new_feat_file(self):
-        """Menu option New. Create a new .feat file.
-
-        3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
-        """
-        # # Get file location of toml file
-        # self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-        #     self, caption="Choose save location", filter="feat files (*.feat)"
-        # )
-        # configure feat file
-        self.config_toml()
-
-        # load students names in toml file
-        _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, caption="Open student list", filter="txt files (*.txt)"
-        )
-        self.config.add_students(_student_f)
-
-        # load feedback file in toml file.
-        _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-            self, caption="Open feedback form", filter="toml files (*.toml)"
-        )
-        self.config.init_feedback(_feedback_f)
-
-        # initialise feedback windows
-        self.init_feat()
-
-    def config_toml(self):
+    def config_toml(self, file_path):
         """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
         # configure toml file
-        self.config = configuration(self.config_file)
+        self.config = configuration(file_path)
 
     def init_feat(self):
         """Initialize feat application.
 
         From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add students to combobox. Displays feedback in text field based on .feat file.
         Slots and signals for check boxes and annotation fields are coupled."""
-
         # load data from toml file
-        self.feat_total = self.config.fileioToml.open_toml()
+        self.feat_total = self.config.open_toml()
+
         # add feedback lines and annotation fields to interface
         self.fblines = self.config.get_feedback_form(self.feat_total)
         self.headline = {"head": {}}
