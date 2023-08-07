@@ -252,6 +252,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
             # add annotations right under headline
             self.read_only.append(self.annotation["annot"][head].toPlainText())
+            # TODO: read annotations from feat file
 
             # add feedback lines to text field
             for line in self.button["check"][head]:
@@ -261,7 +262,7 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        self.read_only.append("\r" + self.annotation_sign_off.toPlainText())
+        self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
 
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
