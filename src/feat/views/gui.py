@@ -206,11 +206,13 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_salutation.setText(first_line)
 
         for head in self.headline["head"]:
-            # uncheck all checkboxes, check when checkbox name is in toml file
+            # check when checkbox name is in toml file, uncheck otherwise
             for box in self.button["check"][head]:
-                self.button["check"][head][box].setChecked(False)
                 if box in feedback["checkbox"][current_student]:
                     self.button["check"][head][box].setChecked(True)
+
+                else:
+                    self.button["check"][head][box].setChecked(False)
 
         # clear all annotations and show annotations from toml file
         for i, field in enumerate(self.annotation["annot"]):
