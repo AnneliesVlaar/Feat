@@ -152,6 +152,13 @@ class configuration:
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
+    def get_feat(self):
+        return self.feat
+    
+    def read_feat(self):
+        self.feat = self.fileioToml.open_toml()
+        return self.feat
+    
     def get_feedback_form(self, feat):
         """Read feedback form from .feat file.
 
@@ -167,7 +174,7 @@ class configuration:
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
         """
-        config = self.fileioToml.open_toml()
+        config = self.read_feat()
         return config["feedback"]
 
     def update_feedback(self, student, type, feedback):
