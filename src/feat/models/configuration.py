@@ -151,9 +151,6 @@ class configuration:
                     self.update_feedback(student, type, [])
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
-
-    def get_feat(self):
-        return self.feat
     
     def read_feat(self):
         self.feat = self.fileioFeat.open_toml()
@@ -161,6 +158,12 @@ class configuration:
     
     def write_feat(self, key, value):
         self.fileioFeat.update_toml(key, value)
+
+     def set_feat(self, new_feat):
+        self.feat = new_feat
+
+    def get_feat(self):
+        return self.feat
     
     def get_feedback_form(self, feat):
         """Read feedback form from .feat file.
