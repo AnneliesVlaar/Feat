@@ -112,7 +112,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # load data from toml file
         self.feat_total = self.config.read_feat()
         # add feedback lines and annotation fields to interface
-        self.fblines = self.config.get_feedback_form(self.feat_total)
+        self.fblines = self.config.get_feedback_form()
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
         self.button = {"check": {}}

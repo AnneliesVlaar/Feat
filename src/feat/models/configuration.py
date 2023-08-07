@@ -164,14 +164,14 @@ class configuration:
     def get_feat(self):
         return self.feat
     
-    def get_feedback_form(self, feat):
+    def get_feedback_form(self):
         """Read feedback form from .feat file.
 
         Returns:
             dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
         """
-        
-        return feat["feedbackform"]
+         
+        return self.feat["feedbackform"]
 
     def get_feedback(self):
         """Read configurations of checkboxes and annotations from all students in .feat file.
