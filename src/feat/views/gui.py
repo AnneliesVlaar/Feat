@@ -122,10 +122,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_salutation.setFont(FONT_STYLE_BUTTONS)
         self.vbox.addWidget(self.headline_salutation)
 
-        # add main annotation
-        self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
-        self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
-        self.vbox.addWidget(self.annotation["annot"]["main"])
+        # # add main annotation
+        # self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
+        # self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
+        # self.vbox.addWidget(self.annotation["annot"]["main"])
 
         for head in self.fblines:
             # add subject title to interface
@@ -214,7 +214,7 @@ class UserInterface(QtWidgets.QMainWindow):
                 else:
                     self.button["check"][head][box].setChecked(False)
 
-        # show annotations from feat file, clear annotation otherwise
+        # clear annotation and show annotations from feat file
         for i, field in enumerate(self.annotation["annot"]):
             self.annotation["annot"][field].clear()
             try:
@@ -243,7 +243,8 @@ class UserInterface(QtWidgets.QMainWindow):
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
-        self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
+        # print(self.feat_total["feedback"]["annotations"][current_student][0])
+        # self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
 
         # add headline to textfield
         for head in self.headline["head"]:
