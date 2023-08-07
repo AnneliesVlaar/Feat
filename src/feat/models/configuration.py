@@ -214,6 +214,7 @@ class configuration:
             sign_off (str): Sign-off text to send your kind regards to students.
         """
         sign_off_dict = {"sign-off": sign_off}
+        self.update_feat("general text", sign_off_dict)
         self.write_feat("general text", sign_off_dict)
 
 
