@@ -110,7 +110,8 @@ class UserInterface(QtWidgets.QMainWindow):
         Slots and signals for check boxes and annotation fields are coupled."""
 
         # load data from toml file
-        self.feat_total = self.config.fileioToml.open_toml()
+        self.feat_total = self.config.fileioFeat.open_toml()
+        # TODO: do not access FileIO from here, create pathway trough config. 
         # add feedback lines and annotation fields to interface
         self.fblines = self.config.get_feedback_form(self.feat_total)
         self.headline = {"head": {}}

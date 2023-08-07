@@ -95,10 +95,10 @@ class configuration:
         """
 
         self.toml_f = feat_f
-        self.fileioToml = fileIO(IOfile=feat_f)
+        self.fileioFeat = fileIO(IOfile=feat_f)
 
         # initialise configuration toml
-        self.fileioToml.init_toml()
+        self.fileioFeat.init_toml()
 
     def add_students(self, student_filename="test2-studenten.txt"):
         """_summary_
@@ -125,7 +125,7 @@ class configuration:
         # TODO if file does not exists it can't be skipped and will raise errors. Create better error handeling.
 
         # write student names to toml file
-        self.fileioToml.update_toml("students", self.students)
+        self.fileioFeat.update_toml("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
@@ -136,7 +136,7 @@ class configuration:
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
-        self.fileioToml.update_toml("feedbackform", feedback_form)
+        self.fileioFeat.update_toml("feedbackform", feedback_form)
 
         # initialise feedback per student
         feedback = self.get_feedback()
@@ -156,8 +156,11 @@ class configuration:
         return self.feat
     
     def read_feat(self):
-        self.feat = self.fileioToml.open_toml()
+        self.feat = self.fileioFeat.open_toml()
         return self.feat
+    
+    def write_feat(self, key, value):
+        self.fileioFeat.update_toml(key, value)
     
     def get_feedback_form(self, feat):
         """Read feedback form from .feat file.
@@ -189,7 +192,7 @@ class configuration:
         """
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
-        self.fileioToml.update_toml("feedback", feedback_all)
+        self.write_feat("feedback", feedback_all)
 
     def get_sign_off(self, feat):
         """Return sign-off string saved in .feat file.
@@ -208,7 +211,7 @@ class configuration:
             sign_off (str): Sign-off text to send your kind regards to students.
         """
         sign_off_dict = {"sign-off": sign_off}
-        self.fileioToml.update_toml("general text", sign_off_dict)
+        self.fileioFeat.update_toml("general text", sign_off_dict)
 
 
 
