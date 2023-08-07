@@ -206,7 +206,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_salutation.setText(first_line)
 
         for head in self.headline["head"]:
-            # check when checkbox name is in toml file, uncheck otherwise
+            # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
                 if box in feedback["checkbox"][current_student]:
                     self.button["check"][head][box].setChecked(True)
@@ -214,14 +214,15 @@ class UserInterface(QtWidgets.QMainWindow):
                 else:
                     self.button["check"][head][box].setChecked(False)
 
-        # clear all annotations and show annotations from toml file
+        # show annotations from feat file, clear annotation otherwise
         for i, field in enumerate(self.annotation["annot"]):
             self.annotation["annot"][field].clear()
             try:
                 text = feedback["annotations"][current_student][i]
+                self.annotation["annot"][field].append(text)
             except:
                 text = None
-            self.annotation["annot"][field].append(text)
+            
 
         # update read_only text field
         self.text_add()
