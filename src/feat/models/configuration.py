@@ -158,8 +158,8 @@ class configuration:
     def write_feat(self, key, value):
         self.fileioFeat.update_toml(key, value)
 
-    def set_feat(self, new_feat):
-        self.feat = new_feat
+    def update_feat(self, key, value):
+        self.feat[key] = value
 
     def get_feat(self):
         return self.feat
@@ -194,6 +194,7 @@ class configuration:
         """
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
+        self.update_feat("feedback", feedback_all)
         self.write_feat("feedback", feedback_all)
 
     def get_sign_off(self):

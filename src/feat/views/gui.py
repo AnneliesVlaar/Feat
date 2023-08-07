@@ -235,6 +235,9 @@ class UserInterface(QtWidgets.QMainWindow):
         # clear text field
         self.read_only.clear()
 
+        # get dictionary
+        self.feat_total = self.config.get_feat()
+
         # index of current selected student
         current_student = self.current_student()
 
