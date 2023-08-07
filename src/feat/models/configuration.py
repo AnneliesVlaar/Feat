@@ -12,10 +12,10 @@ class fileIO:
     """Handle input and output of toml-structured files like .feat files."""
 
     def __init__(self, IOfile="test.toml"):
-        self._feat_f = IOfile
+        self._toml_file = IOfile
         pass
 
-    def init_toml(self):
+    def init_feat_file(self):
         """Creates a structure in .feat file to add new information.
 
         If file exists, it updates time and data of last update.
@@ -25,7 +25,7 @@ class fileIO:
         """
         # Check if configuration toml already exist
         try:
-            open(self._feat_f, "r").close()
+            open(self._toml_file, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
@@ -53,7 +53,7 @@ class fileIO:
             dictionary: containing all data from toml file
         """
         print("hellupie")
-        with open(self._feat_f, "r", encoding="utf-8") as f:
+        with open(self._toml_file, "r", encoding="utf-8") as f:
             config = toml.load(f)
 
         return config
@@ -64,7 +64,7 @@ class fileIO:
         Args:
             dict (dictionary): All data to write in configuration file.
         """
-        with open(self._feat_f, "w", encoding="utf-8") as f:
+        with open(self._toml_file, "w", encoding="utf-8") as f:
             toml.dump(dict, f)
 
     def update_toml(self, key, value):
@@ -97,7 +97,7 @@ class configuration:
         self.fileioFeat = fileIO(IOfile=feat_f)
 
         # initialise configuration toml
-        self.fileioFeat.init_toml()
+        self.fileioFeat.init_feat_file()
 
     def add_students(self, student_filename="test2-studenten.txt"):
         """_summary_
