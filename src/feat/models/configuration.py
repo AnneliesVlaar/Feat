@@ -85,7 +85,7 @@ class fileIO:
 
 
 class configuration:
-    """Get information from toml-structured files like .feat file. Return specific information read from .feat file. Feedback lines, student specific feedback and sign-off text."""
+    """Get information .feat file. Return specific information read from .feat file. Feedback lines, student specific feedback and sign-off text."""
 
     def __init__(self, feat_f):
         """Initialize .feat file and create instance of fileIO to change information in .feat file.
@@ -94,7 +94,6 @@ class configuration:
             toml_f (string): file location of the .feat file
         """
 
-        self.toml_f = feat_f
         self.fileioFeat = fileIO(IOfile=feat_f)
 
         # initialise configuration toml
@@ -159,7 +158,7 @@ class configuration:
     def write_feat(self, key, value):
         self.fileioFeat.update_toml(key, value)
 
-     def set_feat(self, new_feat):
+    def set_feat(self, new_feat):
         self.feat = new_feat
 
     def get_feat(self):

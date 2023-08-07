@@ -53,7 +53,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self, caption="Open feat file", filter="feat files (*.feat)"
         )
         # configure feat file
-        self.config_toml()
+        self.config_feat_file()
 
         # initialise feedback windows
         self.init_feat()
@@ -68,7 +68,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self, caption="Choose save location", filter="feat files (*.feat)"
         )
         # configure feat file
-        self.config_toml()
+        self.config_feat_file()
 
         # load students names in toml file
         _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
@@ -98,7 +98,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # save sign-off text
         self.add_sign_off()
 
-    def config_toml(self):
+    def config_feat_file(self):
         """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
         # configure toml file
         self.config = configuration(self.config_file)
