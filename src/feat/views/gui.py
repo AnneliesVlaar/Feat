@@ -154,7 +154,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.annotation_sign_off = QtWidgets.QTextEdit()
         self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
 
-        sign_off_text = self.config.get_sign_off(self.feat_total)
+        sign_off_text = self.config.get_sign_off()
         if sign_off_text:
             self.annotation_sign_off.append(sign_off_text)
         else:

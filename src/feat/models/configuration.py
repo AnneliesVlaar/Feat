@@ -196,7 +196,7 @@ class configuration:
         feedback_all[type][student] = feedback
         self.write_feat("feedback", feedback_all)
 
-    def get_sign_off(self, feat):
+    def get_sign_off(self):
         """Return sign-off string saved in .feat file.
 
         Sign-off text is not student specific.
@@ -204,7 +204,7 @@ class configuration:
         Returns:
             str: Sign-off string from .feat file
         """
-        return feat["general text"]["sign-off"]
+        return self.feat["general text"]["sign-off"]
 
     def save_sign_off(self, sign_off):
         """Save sign-off text in .feat file.
