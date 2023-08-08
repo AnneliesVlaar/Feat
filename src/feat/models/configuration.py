@@ -140,7 +140,7 @@ class configuration:
 
         # initialise feedback per student
         self.read_feat()
-        feedback = self.feat['feedback']
+        feedback = self.get_feedback()
         # for checkboxes and annotations
         for type in feedback:
             for student in self.students:

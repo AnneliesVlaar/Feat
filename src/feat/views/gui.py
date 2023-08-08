@@ -197,7 +197,7 @@ class UserInterface(QtWidgets.QMainWindow):
         Display of feedback text in read_only field is done by self.text_add()
         """
         # feedback = self.config.get_feedback()
-        feedback = self.feat_total['feedback']
+        feedback = self.config.get_feedback()
         current_student = self.current_student()
 
         # add salutation in give feedback field
