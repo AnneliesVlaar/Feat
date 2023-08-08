@@ -67,7 +67,7 @@ class fileIO:
         with open(self._toml_file, "w", encoding="utf-8") as f:
             toml.dump(dict, f)
 
-    def update_toml(self, key, value):
+    def update_toml(self, feat, key, value):
         """Add information to configuration file.
 
         If information is added to a subkey of the configuration file. The key must be the name of the main key in the configuration file. And the value must be a dictionary containing all information belonging to that main key.
@@ -77,11 +77,11 @@ class fileIO:
             value (string or dictionary): information to add to file
         """
         # get data of toml file as dictionary
-        config = self.open_toml()
+        # config = self.open_toml()
         # add data to dictionary
-        config[key] = value
+        feat[key] = value
         # write new dictionary to toml file
-        self.dump_toml(config)
+        self.dump_toml(feat)
 
 
 class configuration:
@@ -98,6 +98,8 @@ class configuration:
 
         # initialise configuration toml
         self.fileioFeat.init_feat_file()
+
+        self.read_feat()
 
     def add_students(self, student_filename="test2-studenten.txt"):
         """_summary_
@@ -124,7 +126,7 @@ class configuration:
         # TODO if file does not exists it can't be skipped and will raise errors. Create better error handeling.
 
         # write student names to toml file
-        self.fileioFeat.update_toml("students", self.students)
+        self.update_feat("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
@@ -136,10 +138,9 @@ class configuration:
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
-        self.fileioFeat.update_toml("feedbackform", feedback_form)
+        self.update_feat("feedbackform", feedback_form)
 
         # initialise feedback per student
-        self.read_feat()
         feedback = self.get_feedback()
         # for checkboxes and annotations
         for type in feedback:
@@ -157,10 +158,10 @@ class configuration:
         self.feat = self.fileioFeat.open_toml()
         return self.feat
     
-    def write_feat(self, key, value):
-        self.fileioFeat.update_toml(key, value)
-
     def update_feat(self, key, value):
+        # save to .feat file
+        self.fileioFeat.update_toml(self.feat, key, value)
+        # update dictionary
         self.feat[key] = value
 
     def get_feat(self):
@@ -196,7 +197,7 @@ class configuration:
         feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
         self.update_feat("feedback", feedback_all)
-        self.write_feat("feedback", feedback_all)
+        self.update_feat("feedback", feedback_all)
 
     def get_sign_off(self):
         """Return sign-off string saved in .feat file.
@@ -216,7 +217,7 @@ class configuration:
         """
         sign_off_dict = {"sign-off": sign_off}
         self.update_feat("general text", sign_off_dict)
-        self.write_feat("general text", sign_off_dict)
+        self.update_feat("general text", sign_off_dict)
 
 
 

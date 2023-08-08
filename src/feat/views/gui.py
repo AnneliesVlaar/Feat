@@ -290,7 +290,6 @@ class UserInterface(QtWidgets.QMainWindow):
 
     def add_annotations(self):
         """Create list of annotations from annotation fields. Save annotation list to .feat file. Display annotations in read-only field with self.text_add()."""
-        print("hoi ik ben hier!")
         current_student = self.current_student()
 
         annotations = []
