@@ -282,6 +282,8 @@ class UserInterface(QtWidgets.QMainWindow):
         # save checked feedback lines in toml
         self.config.update_feedback(current_student, "checkbox", feedback)
 
+        self.feat_total = self.config.get_feat()
+
         # update read_only text field
         self.text_add()
 
@@ -297,6 +299,8 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # save annotations in toml
         self.config.update_feedback(current_student, "annotations", annotations)
+
+        self.feat_total = self.config.get_feat()
 
         # update read_only text field
         self.text_add()
