@@ -130,7 +130,8 @@ class configuration:
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
 
         Args:
-            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields. In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
+            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields. 
+            In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
         """
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
@@ -138,7 +139,8 @@ class configuration:
         self.fileioFeat.update_toml("feedbackform", feedback_form)
 
         # initialise feedback per student
-        feedback = self.get_feedback()
+        self.read_feat()
+        feedback = self.feat['feedback']
         # for checkboxes and annotations
         for type in feedback:
             for student in self.students:
