@@ -12,10 +12,10 @@ class fileIO:
     """Handle input and output of toml-structured files like .feat files."""
 
     def __init__(self, IOfile="test.toml"):
-        self._feat_f = IOfile
+        self._toml_file = IOfile
         pass
 
-    def init_toml(self):
+    def init_feat_file(self):
         """Creates a structure in .feat file to add new information.
 
         If file exists, it updates time and data of last update.
@@ -25,7 +25,7 @@ class fileIO:
         """
         # Check if configuration toml already exist
         try:
-            open(self._feat_f, "r").close()
+            open(self._toml_file, "r").close()
 
             # open toml to add time and date of last update
             config = self.open_toml()
@@ -42,7 +42,7 @@ class fileIO:
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
-                "general text": {"sign-off": {}},
+                "general text": {"sign-off": ""},
             }
             self.dump_toml(init_dict)
 
@@ -53,7 +53,7 @@ class fileIO:
             dictionary: containing all data from toml file
         """
         print("hellupie")
-        with open(self._feat_f, "r", encoding="utf-8") as f:
+        with open(self._toml_file, "r", encoding="utf-8") as f:
             config = toml.load(f)
 
         return config
@@ -64,10 +64,10 @@ class fileIO:
         Args:
             dict (dictionary): All data to write in configuration file.
         """
-        with open(self._feat_f, "w", encoding="utf-8") as f:
+        with open(self._toml_file, "w", encoding="utf-8") as f:
             toml.dump(dict, f)
 
-    def update_toml(self, key, value):
+    def update_toml(self, feat, key, value):
         """Add information to configuration file.
 
         If information is added to a subkey of the configuration file. The key must be the name of the main key in the configuration file. And the value must be a dictionary containing all information belonging to that main key.
@@ -77,15 +77,15 @@ class fileIO:
             value (string or dictionary): information to add to file
         """
         # get data of toml file as dictionary
-        config = self.open_toml()
+        # config = self.open_toml()
         # add data to dictionary
-        config[key] = value
+        feat[key] = value
         # write new dictionary to toml file
-        self.dump_toml(config)
+        self.dump_toml(feat)
 
 
 class configuration:
-    """Get information from toml-structured files like .feat file. Return specific information read from .feat file. Feedback lines, student specific feedback and sign-off text."""
+    """Get information .feat file. Return specific information read from .feat file. Feedback lines, student specific feedback and sign-off text."""
 
     def __init__(self, feat_f):
         """Initialize .feat file and create instance of fileIO to change information in .feat file.
@@ -94,11 +94,12 @@ class configuration:
             feat_f (string): file location of the .feat file
         """
 
-        self.toml_f = feat_f
-        self.fileioToml = fileIO(IOfile=feat_f)
+        self.fileioFeat = fileIO(IOfile=feat_f)
 
         # initialise configuration toml
-        self.fileioToml.init_toml()
+        self.fileioFeat.init_feat_file()
+
+        self.read_feat()
 
     def open_toml(self):
         return self.fileioToml.open_toml()
@@ -128,21 +129,21 @@ class configuration:
             # TODO: create a good error message and return to main window
 
         # write student names to toml file
-        self.fileioToml.update_toml("students", self.students)
+        self.update_feat("students", self.students)
 
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
 
         Args:
-            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields. In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
+            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields.
+            In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
         """
         # add feedback form to toml file
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
         # TODO: create a good error message and return to main window
 
-        self.fileioToml.update_toml("feedbackform", feedback_form)
-        feat = self.fileioToml.open_toml()
+        self.update_feat("feedbackform", feedback_form)
 
         # initialise feedback per student
         feedback = self.get_feedback(feat)
@@ -159,7 +160,20 @@ class configuration:
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
-    def get_feedback_form(self, feat):
+    def read_feat(self):
+        self.feat = self.fileioFeat.open_toml()
+        return self.feat
+
+    def update_feat(self, key, value):
+        # save to .feat file
+        self.fileioFeat.update_toml(self.feat, key, value)
+        # update dictionary
+        self.feat[key] = value
+
+    def get_feat(self):
+        return self.feat
+
+    def get_feedback_form(self):
         """Read feedback form from .feat file.
 
         Args:
@@ -169,7 +183,7 @@ class configuration:
             dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
         """
 
-        return feat["feedbackform"]
+        return self.feat["feedbackform"]
 
     def get_feedback(self, feat):
         """Read configurations of checkboxes and annotations from all students in .feat file.
@@ -180,7 +194,7 @@ class configuration:
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
         """
-        return feat["feedback"]
+        return self.feat["feedback"]
 
     def update_feedback(self, feat, student, type, feedback):
         """Update the feedback in .feat file.
@@ -193,11 +207,11 @@ class configuration:
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
         """
-        feat["feedback"][type][student] = feedback
-        self.fileioToml.dump_toml(feat)
-        return feat
+        feedback_all = self.get_feedback()
+        feedback_all[type][student] = feedback
+        self.update_feat("feedback", feedback_all)
 
-    def get_sign_off(self, feat):
+    def get_sign_off(self):
         """Return sign-off string saved in .feat file.
 
         Sign-off text is not student specific.
@@ -205,7 +219,7 @@ class configuration:
         Returns:
             str: Sign-off string from .feat file
         """
-        return feat["general text"]["sign-off"]
+        return self.feat["general text"]["sign-off"]
 
     def save_sign_off(self, sign_off):
         """Save sign-off text in .feat file.
@@ -214,7 +228,7 @@ class configuration:
             sign_off (str): Sign-off text to send your kind regards to students.
         """
         sign_off_dict = {"sign-off": sign_off}
-        self.fileioToml.update_toml("general text", sign_off_dict)
+        self.update_feat("general text", sign_off_dict)
 
     def get_main_annotation(self, feat, student):
         """Return main annotation string saved in .feat file.
@@ -227,7 +241,7 @@ class configuration:
             str: main annotation string from .feat file for the specific student
         """
         try:
-            main = feat["feedback"]["annotations"][student][0]
+            main = self.feat["feedback"]["annotations"][student][0]
         except IndexError:
             main = ""
 

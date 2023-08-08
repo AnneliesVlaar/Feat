@@ -141,12 +141,52 @@ class UserInterface(QtWidgets.QMainWindow):
             return
         else:
             # configure feat file
-            self.config_toml(file_path=self.config_file)
+            self.config_feat_file(file_path=self.config_file)
 
             # initialise feedback windows
             self.init_feat()
 
-    def config_toml(self, file_path):
+    def new_feat_file(self):
+        """Menu option New. Create a new .feat file.
+
+        3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
+        """
+        # Get file location of toml file
+        self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
+            self, caption="Choose save location", filter="feat files (*.feat)"
+        )
+        # configure feat file
+        self.config_toml()
+
+        # load students names in toml file
+        _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, caption="Open student list", filter="txt files (*.txt)"
+        )
+        self.config.add_students(_student_f)
+
+        # load feedback file in toml file.
+        _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
+            self, caption="Open feedback form", filter="toml files (*.toml)"
+        )
+        self.config.init_feedback(_feedback_f)
+
+        # initialise feedback windows
+        self.init_feat()
+
+    def save_feat_file(self):
+        """Menu option Save. Feat application auto-saves adjustments immediately.
+
+        This save option is for the user to have a sense of control.
+        """
+
+        # save configurations of check-boxes
+        self.check_box()
+        # save annotations
+        self.add_annotations()
+        # save sign-off text
+        self.add_sign_off()
+
+    def config_toml(self):
         """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
         # configure toml file
         self.config = configuration(file_path)
@@ -157,10 +197,9 @@ class UserInterface(QtWidgets.QMainWindow):
         From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add students to combobox. Displays feedback in text field based on .feat file.
         Slots and signals for check boxes and annotation fields are coupled."""
         # load data from toml file
-        self.feat_total = self.config.open_toml()
-
+        self.feat_total = self.config.read_feat()
         # add feedback lines and annotation fields to interface
-        self.fblines = self.config.get_feedback_form(self.feat_total)
+        self.fblines = self.config.get_feedback_form()
         self.headline = {"head": {}}
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
@@ -170,10 +209,10 @@ class UserInterface(QtWidgets.QMainWindow):
         self.headline_salutation.setFont(FONT_STYLE_BUTTONS)
         self.vbox.addWidget(self.headline_salutation)
 
-        # add main annotation
-        self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
-        self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
-        self.vbox.addWidget(self.annotation["annot"]["main"])
+        # # add main annotation
+        # self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
+        # self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
+        # self.vbox.addWidget(self.annotation["annot"]["main"])
 
         for head in self.fblines:
             # add subject title to interface
@@ -202,7 +241,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.annotation_sign_off = QtWidgets.QTextEdit()
         self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
 
-        sign_off_text = self.config.get_sign_off(self.feat_total)
+        sign_off_text = self.config.get_sign_off()
         if sign_off_text:
             self.annotation_sign_off.append(sign_off_text)
         else:
@@ -215,8 +254,8 @@ class UserInterface(QtWidgets.QMainWindow):
             self.student_comboBox.addItem(full_name, student)
 
         # initialise text box
-        self.update_student()
         self.add_sign_off()
+        self.update_student()
         self.text_add()
 
         # slots and signals
@@ -244,24 +283,38 @@ class UserInterface(QtWidgets.QMainWindow):
 
         Display of feedback text in read_only field is done by self.text_add()
         """
-        feedback = self.config.get_feedback(self.feat_total)
+        # feedback = self.config.get_feedback()
+        feedback = self.config.get_feedback()
         current_student = self.current_student()
 
+        # add salutation in give feedback field
+        first_line = (
+            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
+        )
+        self.headline_salutation.setText(first_line)
+
         for head in self.headline["head"]:
-            # uncheck all checkboxes, check when checkbox name is in toml file
+            # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
-                self.button["check"][head][box].setChecked(False)
                 if box in feedback["checkbox"][current_student]:
                     self.button["check"][head][box].setChecked(True)
 
-        # clear all annotations and show annotations from toml file
+                else:
+                    self.button["check"][head][box].setChecked(False)
+
+        # clear annotation and show annotations from feat file
         for i, field in enumerate(self.annotation["annot"]):
+            self.annotation["annot"][field].blockSignals(True)
             self.annotation["annot"][field].clear()
             try:
                 text = feedback["annotations"][current_student][i]
+                self.annotation["annot"][field].append(text)
             except:
-                text = None
-            self.annotation["annot"][field].append(text)
+                pass
+            self.annotation["annot"][field].blockSignals(False)
+
+        # set salutations and main annotation in give feedback field
+        self.update_give_feedback_field()
 
         # set salutations and main annotation in give feedback field
         self.update_give_feedback_field()
@@ -296,6 +349,9 @@ class UserInterface(QtWidgets.QMainWindow):
         # clear text field
         self.read_only.clear()
 
+        # get dictionary
+        self.feat_total = self.config.get_feat()
+
         # index of current selected student
         current_student = self.current_student()
 
@@ -304,7 +360,8 @@ class UserInterface(QtWidgets.QMainWindow):
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
-        self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
+        # print(self.feat_total["feedback"]["annotations"][current_student][0])
+        # self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
 
         # add headline to textfield
         for head in self.headline["head"]:
@@ -312,6 +369,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
             # add annotations right under headline
             self.read_only.append(self.annotation["annot"][head].toPlainText())
+            # TODO: read annotations from feat file
 
             # add feedback lines to text field
             for line in self.button["check"][head]:
@@ -321,7 +379,7 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        self.read_only.append("\r" + self.annotation_sign_off.toPlainText())
+        self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
 
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
@@ -334,12 +392,9 @@ class UserInterface(QtWidgets.QMainWindow):
                     feedback.append(box)
 
         # save checked feedback lines in toml
-        feat_new = self.config.update_feedback(
-            self.feat_total, current_student, "checkbox", feedback
-        )
+        self.config.update_feedback(current_student, "checkbox", feedback)
 
-        # update feat data
-        self.feat_total = feat_new
+        self.feat_total = self.config.get_feat()
 
         # update read_only text field
         self.text_add()
@@ -354,12 +409,9 @@ class UserInterface(QtWidgets.QMainWindow):
             annotations.append(text)
 
         # save annotations in toml
-        feat_new = self.config.update_feedback(
-            self.feat_total, current_student, "annotations", annotations
-        )
+        self.config.update_feedback(current_student, "annotations", annotations)
 
-        # update feat data
-        self.feat_total = feat_new
+        self.feat_total = self.config.get_feat()
 
         # update read_only text field
         self.text_add()
