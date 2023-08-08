@@ -181,8 +181,7 @@ class configuration:
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
         """
-        config = self.read_feat()
-        return config['feedback']
+        return self.feat['feedback']
 
     def update_feedback(self, student, type, feedback):
         """Update the feedback in .feat file.
@@ -194,8 +193,7 @@ class configuration:
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
         """
-        # feedback_all = self.get_feedback()
-        feedback_all = self.feat['feedback']
+        feedback_all = self.get_feedback()
         feedback_all[type][student] = feedback
         self.update_feat("feedback", feedback_all)
         self.write_feat("feedback", feedback_all)
