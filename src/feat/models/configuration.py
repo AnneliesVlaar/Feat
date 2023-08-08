@@ -42,7 +42,7 @@ class fileIO:
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
-                "general text": {"sign-off": {}},
+                "general text": {"sign-off": ""},
             }
             self.dump_toml(init_dict)
 

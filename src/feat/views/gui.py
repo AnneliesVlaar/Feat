@@ -268,10 +268,7 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        try:
-            self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
-        except TypeError:
-            pass
+        self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
 
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
