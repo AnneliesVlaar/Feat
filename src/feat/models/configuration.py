@@ -192,7 +192,8 @@ class configuration:
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
         """
-        feedback_all = self.get_feedback()
+        # feedback_all = self.get_feedback()
+        feedback_all = self.feat['feedback']
         feedback_all[type][student] = feedback
         self.update_feat("feedback", feedback_all)
         self.write_feat("feedback", feedback_all)

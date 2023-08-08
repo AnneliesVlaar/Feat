@@ -199,12 +199,13 @@ class UserInterface(QtWidgets.QMainWindow):
         feedback = self.config.get_feedback()
         current_student = self.current_student()
 
-        # add salutation in feedback fields
+        # add salutation in give feedback field
         first_line = (
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.headline_salutation.setText(first_line)
 
+        
         for head in self.headline["head"]:
             # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
@@ -216,13 +217,14 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # clear annotation and show annotations from feat file
         for i, field in enumerate(self.annotation["annot"]):
+            self.annotation["annot"][field].blockSignals(True)
             self.annotation["annot"][field].clear()
             try:
                 text = feedback["annotations"][current_student][i]
                 self.annotation["annot"][field].append(text)
             except:
-                text = None
-            
+                pass
+            self.annotation["annot"][field].blockSignals(False)
 
         # update read_only text field
         self.text_add()
@@ -285,6 +287,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
     def add_annotations(self):
         """Create list of annotations from annotation fields. Save annotation list to .feat file. Display annotations in read-only field with self.text_add()."""
+        print("hoi ik ben hier!")
         current_student = self.current_student()
 
         annotations = []
