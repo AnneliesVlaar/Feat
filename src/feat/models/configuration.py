@@ -146,7 +146,7 @@ class configuration:
         self.update_feat("feedbackform", feedback_form)
 
         # initialise feedback per student
-        feedback = self.get_feedback(feat)
+        feedback = self.get_feedback()
         print(feedback)
         # for checkboxes and annotations
         for type in feedback:
@@ -156,7 +156,7 @@ class configuration:
                     feedback[type][student]
                 except:
                     # create student feedback key if not already excist
-                    self.update_feedback(feat, student, type, [])
+                    self.update_feedback(student, type, [])
 
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
@@ -185,7 +185,7 @@ class configuration:
 
         return self.feat["feedbackform"]
 
-    def get_feedback(self, feat):
+    def get_feedback(self):
         """Read configurations of checkboxes and annotations from all students in .feat file.
 
         Args:
@@ -196,7 +196,7 @@ class configuration:
         """
         return self.feat["feedback"]
 
-    def update_feedback(self, feat, student, type, feedback):
+    def update_feedback(self, student, type, feedback):
         """Update the feedback in .feat file.
 
         Read feedback in .feat file. Update feedback and write it to .feat file. For 1 student and 1 feedback type (checkbox or annotations) at the time.
@@ -230,7 +230,7 @@ class configuration:
         sign_off_dict = {"sign-off": sign_off}
         self.update_feat("general text", sign_off_dict)
 
-    def get_main_annotation(self, feat, student):
+    def get_main_annotation(self, student):
         """Return main annotation string saved in .feat file.
 
         Args:
@@ -254,6 +254,7 @@ class configuration:
             feat (dict): dictionary of the feat file
         """
         self.fileioToml.dump_toml(feat)
+        # TODO: check if save_feat_file is not the same as update_feat
 
 
 if __name__ == "__main__":
