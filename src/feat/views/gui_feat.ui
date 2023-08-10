@@ -144,8 +144,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>513</width>
-               <height>248</height>
+               <width>512</width>
+               <height>199</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -154,6 +154,27 @@
               </item>
              </layout>
             </widget>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="font">
+             <font>
+              <family>FiraCode NF</family>
+              <pointsize>16</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -273,7 +294,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>220</width>
+              <width>247</width>
               <height>16777215</height>
              </size>
             </property>
@@ -357,7 +378,7 @@
      <x>0</x>
      <y>0</y>
      <width>1079</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="font">
