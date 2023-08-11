@@ -1,7 +1,6 @@
 import toml
 import datetime
 import re
-import pandas as pd
 from pathlib import Path
 
 
@@ -38,7 +37,7 @@ class fileIO:
         except IOError:
             # initialize toml file with time, date of creation, key for students and feedback
             init_dict = {
-                "title": "Feedback Realisatie Experiment Automatisering Konfiguratie",
+                "title": "Feedback Realisatie Experiment Aansturing Konfiguratie",
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
                 "feedback": {"checkbox": {}, "annotations": {}},
@@ -47,37 +46,38 @@ class fileIO:
             self.dump_toml(init_dict)
 
     def open_toml(self):
-        """Returns dictionary of data in toml file.
+        """Opens toml file and creates dictionary from content.
 
         Returns:
             dictionary: containing all data from toml file
         """
-        print("hellupie")
         with open(self._toml_file, "r", encoding="utf-8") as f:
-            config = toml.load(f)
+            content = toml.load(f)
 
-        return config
+        return content
 
     def dump_toml(self, dict):
-        """Writes data from dict to configuration file.
+        """Writes data from dictionary to toml file.
 
         Args:
-            dict (dictionary): All data to write in configuration file.
+            dict (dictionary): All data to write in toml file.
         """
         with open(self._toml_file, "w", encoding="utf-8") as f:
             toml.dump(dict, f)
 
     def update_toml(self, feat, key, value):
-        """Add information to configuration file.
+        """Add information to toml file.
 
-        If information is added to a subkey of the configuration file. The key must be the name of the main key in the configuration file. And the value must be a dictionary containing all information belonging to that main key.
+        If information is added to a subkey of the toml file,
+        the key must be the name of the main key in the toml file
+        and the value must be a dictionary containing all information belonging to that main key.
 
         Args:
-            key (string): Name of the main key in configuration file
+            feat (dictionary): compleet content of the toml file
+            key (string): Name of the main key in toml file
             value (string or dictionary): information to add to file
         """
-        # get data of toml file as dictionary
-        # config = self.open_toml()
+
         # add data to dictionary
         feat[key] = value
         # write new dictionary to toml file
@@ -93,32 +93,30 @@ class configuration:
         Args:
             feat_f (string): file location of the .feat file
         """
-
+        # create instance of fileIO to open en dump content of feat file.
         self.fileioFeat = fileIO(IOfile=feat_f)
 
-        # initialise configuration toml
+        # initialise feat file
         self.fileioFeat.init_feat_file()
 
+        # create dictionary from feat file
         self.read_feat()
 
-    def open_toml(self):
-        return self.fileioToml.open_toml()
+    def add_students(self, student_filename):
+        """Add students to feat file.
 
-    def add_students(self, student_filename="teststudenten.txt"):
-        """_summary_
+        Read students from seperate text file. Structure: first_name lastname (student_id).
+        Lines with # will be skipped. First names with spaces must be connected with "_" .
 
         Args:
-            student_filename (str, optional): List of students names with sis_user_ids. Structure: first_name lastname (student_id).
-            Lines with # will be skipped. First names with spaces must be connected with "_" . Defaults to "test2-studenten.txt".
+            student_filename (str): List of students names with sis_user_ids.
         """
         # create dictionary of student data were key is the sis_user_id
         if Path(student_filename).is_file():
             self.students = {}
             with open(student_filename, "r", encoding="utf-8") as f:
                 for line in f.readlines():
-                    print(line)
                     m = re.match(RE_FIRST_LAST_NAME_ID, line)
-                    print(m)
                     if m:
                         first_name, last_name, sis_user_id = m.group(1, 2, 3)
                         first_name = first_name.replace("_", " ")
@@ -134,22 +132,23 @@ class configuration:
         # write student names to toml file
         self.update_feat("students", self.students)
 
-    def init_feedback(self, feedback_filename="feedbackpunten.toml"):
+    def init_feedback(self, feedback_filename):
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
 
-        A "main" headline is added to create an annotation for main feedback.
+        Feedback form is in toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique.
+        A "main" headline is added to create an annotation for main feedback, which is unique per student.
 
         Args:
-            feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields.
-            In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
+            feedback_filename (str): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields.
         """
-        # add feedback form to toml file
+        # Open feedback form and create feedback form dictionary
         self.fileioFB = fileIO(feedback_filename)
         feedback_form = self.fileioFB.open_toml()
         # TODO: create a good error message and return to main window
 
+        # add main headline as first item in feedback form dictionary
         feedback_form = {"main": {}} | feedback_form
-        # TODO: combine main and feedback_form such that main is the first item in dictionary
+        # add feedback form to feat file
         self.update_feat("feedbackform", feedback_form)
 
         # initialise feedback per student
@@ -168,23 +167,41 @@ class configuration:
         # TODO If init_feedback is only called with new file. Feedback key cannot already exist. And we do not allow updating the feedback form (yet?)
 
     def read_feat(self):
+        """Read feat file and return dictionary from content.
+
+        Returns:
+            dictionary: compleet content from feat file
+
+        """
         self.feat = self.fileioFeat.open_toml()
         return self.feat
 
+        # TODO: check if this function is needed
+
     def update_feat(self, key, value):
+        """Update information in feat file.
+
+        Args:
+            key (string): Name of the main key in toml file
+            value (string or dictionary): information to add to file
+        """
         # save to .feat file
         self.fileioFeat.update_toml(self.feat, key, value)
         # update dictionary
         self.feat[key] = value
 
+        # TODO new dictionary is created twice, here and in update_toml. See if it can be simpeler.
+
     def get_feat(self):
+        """Get dictionary of feat file without opening feat file.
+
+        Returns:
+            dictionary: compleet content of feat file
+        """
         return self.feat
 
     def get_feedback_form(self):
         """Read feedback form from .feat file.
-
-        Args:
-            feat (dict): dictonary of feat file
 
         Returns:
             dictionary: Containing feedback subject (main key) and feedback lines (key) -> dict[subject][line]
@@ -194,9 +211,6 @@ class configuration:
 
     def get_feedback(self):
         """Read configurations of checkboxes and annotations from all students in .feat file.
-
-        Args:
-            feat (dict): dictonary of feat file
 
         Returns:
             dictionary: containing per student list of checked boxes and annotations to construct feedback.
@@ -209,7 +223,6 @@ class configuration:
         Read feedback in .feat file. Update feedback and write it to .feat file. For 1 student and 1 feedback type (checkbox or annotations) at the time.
 
         Args:
-            feat (dict): dictonary of feat file
             student (int): student_id of student to update feedback
             type (str): key of feedback type, checkbox or annotations
             feedback (str): value of the feedback
@@ -237,30 +250,10 @@ class configuration:
         sign_off_dict = {"sign-off": sign_off}
         self.update_feat("general text", sign_off_dict)
 
-    def get_main_annotation(self, student):
-        """Return main annotation string saved in .feat file.
+    def save_feat_file(self):
+        """Save the information to the feat file."""
+        self.fileioFeat.dump_toml(self.feat)
 
-        Args:
-            feat (dict): dictonary of feat file
-            student (str): student_id of student
-
-        Returns:
-            str: main annotation string from .feat file for the specific student
-        """
-        try:
-            main = self.feat["feedback"]["annotations"][student][0]
-        except IndexError:
-            main = ""
-
-        return main
-
-    def save_feat_file(self, feat):
-        """Save the information to the feat file.
-
-        Args:
-            feat (dict): dictionary of the feat file
-        """
-        self.fileioToml.dump_toml(feat)
         # TODO: check if save_feat_file is not the same as update_feat
 
 

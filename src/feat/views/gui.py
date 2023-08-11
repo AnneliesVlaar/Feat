@@ -15,6 +15,8 @@ FONT_STYLE_TEXT = QFont("Firacode NF", 9)
 class NewFileWindow(QtWidgets.QWidget):
     """
     This window appears when new file is selected from the menu.
+
+    The file contains three line edits to provide the paths to 1) save the feat file 2) get the student file and 3) the feedback form.
     """
 
     def __init__(self):
@@ -33,7 +35,6 @@ class NewFileWindow(QtWidgets.QWidget):
         self.save_location.clicked.connect(self.get_file_location)
         self.students_location.clicked.connect(self.get_student_location)
         self.feedbackform_location.clicked.connect(self.get_feedbackform_location)
-        # self.create_new_file.clicked.connect(self.get_files)
 
     def get_file_location(self):
         # Get file location of toml file
@@ -82,14 +83,14 @@ class UserInterface(QtWidgets.QMainWindow):
         # set icon
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
 
-        # Enable Text field edit
+        # Enable show feedback panel edit
         self.read_only.setReadOnly(True)
         self.read_only.setFont(FONT_STYLE_TEXT)
 
         # slots and signals
         # menu
         self.actionOpen.triggered.connect(self.open_feat_file)
-        self.actionNew.triggered.connect(self.show_new_window)
+        self.actionNew.triggered.connect(self.new_file_window)
         self.actionSave.triggered.connect(self.save_feat_file)
 
         # student selection
@@ -102,36 +103,42 @@ class UserInterface(QtWidgets.QMainWindow):
         # buttons
         self.copy_button.clicked.connect(self.copy)
 
-    def show_new_window(self):
+    def new_file_window(self):
+        """Open a second window where the user can provide information about the paths where file can be saved and found."""
+        # open second window
         self.w = NewFileWindow()
         self.w.show()
+
+        # connect the create button in the second window to new_feat_file function in UserInterface class
         self.w.create_new_file.clicked.connect(self.new_feat_file)
 
     def new_feat_file(self):
         """Menu option New. Create a new .feat file.
 
-        3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
+        In the second window 3 loctions are provided for save location of .feat file, for student names and feedback form.
         """
 
+        # get locations from new file window
         files_locs = self.w.get_files()
 
-        # # create .feat file
+        # create .feat file
         self.config_feat_file(files_locs["save"])
 
-        # # load students names in toml file
+        # load students names in toml file
         self.config.add_students(files_locs["students"])
 
-        # # load feedback file in toml file.
+        # load feedback file in toml file.
         self.config.init_feedback(files_locs["feedbackform"])
 
-        # # initialise feedback windows
+        # initialise give feedback panel
         self.init_feat()
 
         # close new file window
         self.w.close()
 
     def open_feat_file(self):
-        """Menu option New. Open .feat file to construct windows with list of students, feedback form and annotation fields."""
+        """Menu option New. Open .feat file to construct panels with list of students, feedback form and annotation fields."""
+
         # open file
         self.config_file, _ = QtWidgets.QFileDialog.getOpenFileName(
             self, caption="Open feat file", filter="feat files (*.feat)"
@@ -140,51 +147,10 @@ class UserInterface(QtWidgets.QMainWindow):
             return
         else:
             # configure feat file
-            self.config_feat_file(file_path=self.config_file)
+            self.config_feat_file(self.config_file)
 
-            # initialise feedback windows
+            # initialise give feedback panel
             self.init_feat()
-
-    # def new_feat_file(self):
-    #     """Menu option New. Create a new .feat file.
-
-    #     3 Dialogue windows open to ask for save location of .feat file. Get student names and feedback form, in this order.
-    #     """
-    #     # Get file location of toml file
-    #     self.config_file, _ = QtWidgets.QFileDialog.getSaveFileName(
-    #         self, caption="Choose save location", filter="feat files (*.feat)"
-    #     )
-    #     # configure feat file
-    #     self.config_toml()
-
-    #     # load students names in toml file
-    #     _student_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-    #         self, caption="Open student list", filter="txt files (*.txt)"
-    #     )
-    #     self.config.add_students(_student_f)
-
-    #     # load feedback file in toml file.
-    #     _feedback_f, _ = QtWidgets.QFileDialog.getOpenFileName(
-    #         self, caption="Open feedback form", filter="toml files (*.toml)"
-    #     )
-    #     self.config.init_feedback(_feedback_f)
-
-    #     # initialise feedback windows
-    #     self.init_feat()
-
-    def save_feat_file(self):
-        """Menu option Save. Feat application auto-saves adjustments immediately.
-
-        This save option is for the user to have a sense of control.
-        """
-
-        # save configurations of check-boxes
-        self.check_box()
-        # save annotations
-        self.add_annotations()
-        # save sign-off text
-        self.add_sign_off()
-        # TODO: Do not do auto-save? Create a real save option?
 
     def config_feat_file(self, file_path):
         """Configure .feat file. Create Toml structure if file is new, otherwise update date-data."""
@@ -194,8 +160,10 @@ class UserInterface(QtWidgets.QMainWindow):
     def init_feat(self):
         """Initialize feat application.
 
-        From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add students to combobox. Displays feedback in text field based on .feat file.
-        Slots and signals for check boxes and annotation fields are coupled."""
+        From data in .feat file add check boxes with feedback lines. Add annotation field per feedback subject. Add greeting annotation field.
+        Add students to combobox. Slots and signals for check boxes and annotation fields are coupled.
+        """
+
         # load data from toml file
         self.feat_total = self.config.read_feat()
         # add feedback lines and annotation fields to interface
@@ -216,9 +184,11 @@ class UserInterface(QtWidgets.QMainWindow):
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
             for line in self.fblines[head]:
+                # manualy create multiline feedback lines
                 text = self.fblines[head][line]
                 split_text = textwrap.wrap(text, width=65)
                 combine_text = "\n".join(split_text)
+
                 self.button["check"][head][line] = QtWidgets.QCheckBox(combine_text)
                 self.button["check"][head][line].setFont(FONT_STYLE_TEXT)
                 self.vbox.addWidget(self.button["check"][head][line])
@@ -231,11 +201,14 @@ class UserInterface(QtWidgets.QMainWindow):
         self.annotation_sign_off = QtWidgets.QTextEdit()
         self.annotation_sign_off.setFont(FONT_STYLE_TEXT)
 
+        # check if sign off text is present in feat file otherwise set placeholder text
         sign_off_text = self.config.get_sign_off()
         if sign_off_text:
             self.annotation_sign_off.append(sign_off_text)
         else:
             self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
+
+        # add sign off annotation field to give feedback panel
         self.vbox.addWidget(self.annotation_sign_off)
 
         # add student names to combobox
@@ -244,9 +217,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self.student_comboBox.addItem(full_name, student)
 
         # initialise text box
-        self.add_sign_off()
         self.update_student()
-        self.text_add()
 
         # slots and signals
         self.annotation_sign_off.textChanged.connect(self.add_sign_off)
@@ -301,7 +272,7 @@ class UserInterface(QtWidgets.QMainWindow):
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
 
-        # update read_only text field
+        # update read_only show feedback panel
         self.text_add()
 
     def text_add(self):
@@ -309,17 +280,17 @@ class UserInterface(QtWidgets.QMainWindow):
 
         Based on the check boxes and annotation field the feedback text is constructed.
         """
-        # clear text field
+        # clear show feedback panel
         self.read_only.clear()
 
         # get dictionary
         self.feat_total = self.config.get_feat()
-        # TODO: check if updating feat_total is needed here and if it should be earlier
+        # TODO: check if updating feat_total is needed here and if it should be placed earlier
 
         # index of current selected student
         current_student = self.current_student()
 
-        # add salutation text to text field
+        # add salutation text to show feedback panel
         first_line = (
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
@@ -334,15 +305,15 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.annotation["annot"][head].setPlaceholderText(
                         "Laat in een of twee regels weten wat je algehele indruk is."
                     )
-            # add headline to textfield
             else:
+                # add headline to textfield
                 self.read_only.append(f"[{head}]")
 
             # add annotations in show feedback field
             self.read_only.append(self.annotation["annot"][head].toPlainText())
             # TODO: read annotations from feat file
 
-            # add feedback lines to text field
+            # add feedback lines to show feedback panel
             for line in self.button["check"][head]:
                 if self.button["check"][head][line].isChecked():
                     self.read_only.append(
@@ -369,10 +340,11 @@ class UserInterface(QtWidgets.QMainWindow):
         # save checked feedback lines in toml
         self.config.update_feedback(current_student, "checkbox", feedback)
 
+        # update feat dictionary to match current feat file
         self.feat_total = self.config.get_feat()
-        # TODO: check if this is needed here or if it is implicitly done somewhere else
+        # TODO: check if this is needed here or if it is (implicitly) done somewhere else
 
-        # update read_only text field
+        # update read_only show feedback panel
         self.text_add()
 
     def add_annotations(self):
@@ -387,9 +359,11 @@ class UserInterface(QtWidgets.QMainWindow):
         # save annotations in toml
         self.config.update_feedback(current_student, "annotations", annotations)
 
+        # update feat dictionary to match current feat file
         self.feat_total = self.config.get_feat()
+        # TODO: check if this is needed here or if it is (implicitly) done somewhere else
 
-        # update read_only text field
+        # update read_only show feedback panel
         self.text_add()
 
     def add_sign_off(self):
@@ -397,7 +371,7 @@ class UserInterface(QtWidgets.QMainWindow):
         # get sign-off text and save to toml
         sign_off = self.annotation_sign_off.toPlainText()
         self.config.save_sign_off(sign_off)
-        # add sign-off to read_only text field
+        # add sign-off to read_only show feedback panel
         self.text_add()
 
     def next_student(self):
@@ -446,7 +420,8 @@ class UserInterface(QtWidgets.QMainWindow):
         """
 
         # save configurations of check-boxes
-        self.config.save_feat_file(self.feat_total)
+        self.config.save_feat_file()
+        # TODO: Do not do auto-save? Create a real save option?
 
 
 def main():
