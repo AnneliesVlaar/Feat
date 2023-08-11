@@ -1,43 +1,25 @@
-[Varname]
-VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+["Structuur en Organisatie"]
+structuur01 = "Goed gedaan met het toepassen van het MVC-patroon om de code te structureren."
+structuur02 = "De scheiding tussen model, view en controller maakt de code overzichtelijk en onderhoudsvriendelijk."
+structuur03 = "Ik merk wat inconsistentie in de benaming van klassen en functies, wat de leesbaarheid kan beïnvloeden." 
+structuur04 = "Er lijkt enige overlap te zijn tussen het model en de controller; laten we ervoor zorgen dat de taken goed verdeeld zijn."
 
-[Classes]
-CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
+["Leesbaarheid en Stijl"]
+leesbaarheid01 = "Je hebt goed gebruik gemaakt van betekenisvolle variabelenamen die de functionaliteit verduidelijken."
+leesbaarheid02 = "De code is netjes geformatteerd en gemakkelijk te volgen."
+leesbaarheid03 = "Er zijn een paar stukken code die lang zijn en enigszins moeilijk te begrijpen; laten we overwegen ze op te splitsen in kleinere functies."
+leesbaarheid04 = "In sommige gevallen is er inconsistentie in inspringing, laten we ervoor zorgen dat alles consequent is geïndenteerd."
 
-[Test1]
-test101 = "Een eerste test"
-test102 = "Meer testen."
+["Efficiëntie"]
+efficiëntie01 = "Je code lijkt over het algemeen goed te presteren, zelfs bij grotere datasets."
+efficiëntie02 = "Het gebruik van enkele ingebouwde Python-functies en -methoden is slim en verbetert de leesbaarheid."
+efficiëntie03 = "Bij enkele complexe berekeningen zou het helpen om wat commentaar toe te voegen om de logica te verduidelijken."
+efficiëntie04 = "Er zijn enkele herhalingen in de code die kunnen worden vermeden door gebruik te maken van functies of methoden."
 
-[test2]
-test201 = "Een tweede test"
-test202 = "We blijven testen"
-test203 = "Ik wil meer hokjes"
+["Foutafhandeling"]
+foutafhandeling01 = "Je hebt enkele try-except-blokken geïmplementeerd om mogelijke fouten op te vangen, wat een goede praktijk is."
+foutafhandeling02 = "Bij bepaalde inputscenario's lijkt de code vast te lopen of te crashen. Laten we proberen deze gevallen te identificeren en beter af te handelen."
 
-["Een titel met spaties"]
-spaties01 = "zin met spaties"
-spaties02 = "Ach ja"
-spaties03 = "Ach ja"
-spaties04 = "Ach ja"
-spaties05 = "Ach ja"
-
-["Meer testen"]
-meertest1 = "meer"
-meertest2 = "nog meer"
-meertest3 = "Als maar meer"
-
-["meer feedback nog meer feedback!"]
-special01 = "test uitroepteken"
-special02 = "dan werkt % vast ook"
-special03 = "meer meer meer hokjesssss"
-special04 = "meer meer meer hokjesssss"
-special05 = "5 meer meer meer hokjesssss"
-special06 = "6 meer meer meer hokjesssss"
-special07 = "7 meer meer meer hokjesssss"
-special08 = "8 meer meer meer hokjesssss"
-special09 = "9 meer meer meer hokjesssss"
-special10 = "10 meer meer meer hokjesssss"
-special11 = "11 meer meer meer hokjesssss"
-special12 = "12 meer meer meer hokjesssss"
-special13 = "13 meer meer meer hokjesssss"
-special14 = "14 meer meer meer hokjesssss"
-special15 = "15 meer meer meer hokjesssss"
+["Documentatie"]
+documentatie01 = "Je hebt sommige functies en klassen gedocumenteerd, wat de leesbaarheid voor anderen verbetert."
+documentatie02 = "Het zou nuttig zijn om meer uitgebreide documentatie toe te voegen, vooral voor complexere delen van de code, om anderen te helpen begrijpen hoe ze de code kunnen gebruiken en bijdragen."

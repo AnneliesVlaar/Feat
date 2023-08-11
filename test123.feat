@@ -1,33 +1,35 @@
 title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
 
 [data]
-created = 2022-11-07T11:53:44.369897
-"last update" = 2023-08-03T14:52:24.060705
+created = 2023-08-11T14:00:39.561269
 
-[students."(123)"]
-first_name = "Rénco"
-last_name = "Hoefnagel"
-full_name = "Rénco Hoefnagel"
+["general text"]
+sign-off = ""
 
 [students."(456)"]
 first_name = "Nouh"
-last_name = "Zielman"
-full_name = "Nouh Zielman"
+last_name = "Ziëlman"
+full_name = "Nouh Ziëlman"
 
 [students."(789)"]
-first_name = "Mario"
+first_name = "Mário"
 last_name = "Meij"
-full_name = "Mario Meij"
+full_name = "Mário Meij"
 
 [students."(101)"]
 first_name = "Beerd"
-last_name = "Rodriguez"
-full_name = "Beerd Rodriguez"
+last_name = "Rodríguez"
+full_name = "Beerd Rodríguez"
 
 [students."(102)"]
 first_name = "Pytsje"
 last_name = "Zevenbergen"
 full_name = "Pytsje Zevenbergen"
+
+[students."(555)"]
+first_name = "Olivier"
+last_name = "Çorbet"
+full_name = "Olivier Çorbet"
 
 [students."(304)"]
 first_name = "Kathelijn"
@@ -44,68 +46,57 @@ first_name = "Oumnia"
 last_name = "Lemmen"
 full_name = "Oumnia Lemmen"
 
+[students."(123)"]
+first_name = "Rènco"
+last_name = "Hoefnagel"
+full_name = "Rènco Hoefnagel"
+
 [feedback.checkbox]
-"(123)" = [ "VARNAME01", "CLASSES01",]
-"(456)" = []
-"(789)" = []
+"(456)" = [ "structuur01", "leesbaarheid02", "efficiëntie03", "foutafhandeling01", "documentatie02",]
+"(789)" = [ "structuur02", "leesbaarheid01", "efficiëntie04", "foutafhandeling02", "documentatie01",]
 "(101)" = []
 "(102)" = []
+"(555)" = []
 "(304)" = []
 "(509)" = []
 "(6789)" = []
+"(123)" = []
 
 [feedback.annotations]
-"(123)" = [ "En als we hier ë op doen is dat geen probleem. ", "", "", "", "", "", "",]
-"(456)" = []
-"(789)" = []
+"(456)" = [ "", "De bestanden hebben nu een logische naam gekregen, dat maakt je repository een stuk overzichtelijker. ", "", "", "", "",]
+"(789)" = [ "Ondanks dat je code niet meer werkte vlak voor de deadline ziet het er allemaal al heel netjes uit, ik denk dat we de error nu gemakkelijk gaan oplossen. ", "", "", "", "", "",]
 "(101)" = []
 "(102)" = []
+"(555)" = []
 "(304)" = []
 "(509)" = []
 "(6789)" = []
+"(123)" = []
 
-["general text".sign-off]
+[feedbackform.main]
 
-[feedbackform.Varname]
-VARNAME01 = "Misschien kun je je variabelenaam 'i' een betere naam geven zodat hij betekenis krijgt. Iets als 'output_value' bijvoorbeeld, of gewoon 'value'."
+[feedbackform."Structuur en Organisatie"]
+structuur01 = "Goed gedaan met het toepassen van het MVC-patroon om de code te structureren."
+structuur02 = "De scheiding tussen model, view en controller maakt de code overzichtelijk en onderhoudsvriendelijk."
+structuur03 = "Ik merk wat inconsistentie in de benaming van klassen en functies, wat de leesbaarheid kan beïnvloeden."
+structuur04 = "Er lijkt enige overlap te zijn tussen het model en de controller; laten we ervoor zorgen dat de taken goed verdeeld zijn."
 
-[feedbackform.Classes]
-CLASSES01 = "Probeer wel om in een controller class *alle* firmwarecommando's te implementeren. Je kunt ze nog een keer nodig hebben, al is het tijdens het testen van een script."
+[feedbackform."Leesbaarheid en Stijl"]
+leesbaarheid01 = "Je hebt goed gebruik gemaakt van betekenisvolle variabelenamen die de functionaliteit verduidelijken."
+leesbaarheid02 = "De code is netjes geformatteerd en gemakkelijk te volgen."
+leesbaarheid03 = "Er zijn een paar stukken code die lang zijn en enigszins moeilijk te begrijpen; laten we overwegen ze op te splitsen in kleinere functies."
+leesbaarheid04 = "In sommige gevallen is er inconsistentie in inspringing, laten we ervoor zorgen dat alles consequent is geïndenteerd."
 
-[feedbackform.Test1]
-test101 = "Een eerste test"
-test102 = "Meer testen."
+[feedbackform."Efficiëntie"]
+"efficiëntie01" = "Je code lijkt over het algemeen goed te presteren, zelfs bij grotere datasets."
+"efficiëntie02" = "Het gebruik van enkele ingebouwde Python-functies en -methoden is slim en verbetert de leesbaarheid."
+"efficiëntie03" = "Bij enkele complexe berekeningen zou het helpen om wat commentaar toe te voegen om de logica te verduidelijken."
+"efficiëntie04" = "Er zijn enkele herhalingen in de code die kunnen worden vermeden door gebruik te maken van functies of methoden."
 
-[feedbackform.test2]
-test201 = "Een tweede test"
-test202 = "We blijven testen"
-test203 = "Ik wil meer hokjes"
+[feedbackform.Foutafhandeling]
+foutafhandeling01 = "Je hebt enkele try-except-blokken geïmplementeerd om mogelijke fouten op te vangen, wat een goede praktijk is."
+foutafhandeling02 = "Bij bepaalde inputscenario's lijkt de code vast te lopen of te crashen. Laten we proberen deze gevallen te identificeren en beter af te handelen."
 
-[feedbackform."Een titel met spaties"]
-spaties01 = "zin met spaties"
-spaties02 = "Ach ja"
-spaties03 = "Ach ja"
-spaties04 = "Ach ja"
-spaties05 = "Ach ja"
-
-[feedbackform."Meer testen"]
-meertest1 = "meer"
-meertest2 = "nog meer"
-meertest3 = "Als maar meer"
-
-[feedbackform."meer feedback nog meer feedback!"]
-special01 = "test uitroepteken"
-special02 = "dan werkt % vast ook"
-special03 = "meer meer meer hokjesssss"
-special04 = "meer meer meer hokjesssss"
-special05 = "5 meer meer meer hokjesssss"
-special06 = "6 meer meer meer hokjesssss"
-special07 = "7 meer meer meer hokjesssss"
-special08 = "8 meer meer meer hokjesssss"
-special09 = "9 meer meer meer hokjesssss"
-special10 = "10 meer meer meer hokjesssss"
-special11 = "11 meer meer meer hokjesssss"
-special12 = "12 meer meer meer hokjesssss"
-special13 = "13 meer meer meer hokjesssss"
-special14 = "14 meer meer meer hokjesssss"
-special15 = "15 meer meer meer hokjesssss"
+[feedbackform.Documentatie]
+documentatie01 = "Je hebt sommige functies en klassen gedocumenteerd, wat de leesbaarheid voor anderen verbetert."
+documentatie02 = "Het zou nuttig zijn om meer uitgebreide documentatie toe te voegen, vooral voor complexere delen van de code, om anderen te helpen begrijpen hoe ze de code kunnen gebruiken en bijdragen."
