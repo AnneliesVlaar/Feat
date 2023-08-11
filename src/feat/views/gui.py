@@ -205,17 +205,6 @@ class UserInterface(QtWidgets.QMainWindow):
         self.annotation = {"annot": {}}
         self.button = {"check": {}}
 
-        # add salutation
-        self.headline_salutation = QtWidgets.QLabel("Hoi Student,")
-        self.headline_salutation.setFont(FONT_STYLE_BUTTONS)
-        self.vbox.addWidget(self.headline_salutation)
-
-        # # add main annotation
-        # self.annotation["annot"]["main"] = QtWidgets.QTextEdit()
-        # self.annotation["annot"]["main"].setFont(FONT_STYLE_TEXT)
-        # self.vbox.addWidget(self.annotation["annot"]["main"])
-        # TODO: re-activate main annotation
-
         for head in self.fblines:
             # add subject title to interface
             self.headline["head"][head] = QtWidgets.QLabel(head)
@@ -285,15 +274,9 @@ class UserInterface(QtWidgets.QMainWindow):
 
         Display of feedback text in read_only field is done by self.text_add()
         """
-        # feedback = self.config.get_feedback()
+
         feedback = self.config.get_feedback()
         current_student = self.current_student()
-
-        # add salutation in give feedback field
-        first_line = (
-            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
-        )
-        self.headline_salutation.setText(first_line)
 
         for head in self.headline["head"]:
             # check when checkbox name is in feat file, uncheck otherwise
@@ -334,10 +317,10 @@ class UserInterface(QtWidgets.QMainWindow):
         first_line = (
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
-        self.headline_salutation.setText(first_line)
+        # self.headline_salutation.setText(first_line)
 
         # set text in main annotation
-        main = self.config.get_main_annotation(current_student)
+        # main = self.config.get_main_annotation(current_student)
 
         # if main == "":
         #     self.annotation["annot"]["main"].setPlaceholderText(
@@ -365,14 +348,25 @@ class UserInterface(QtWidgets.QMainWindow):
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
+        # self.annotation["annot"][head]
+
         # print(self.feat_total["feedback"]["annotations"][current_student][0])
         # self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
 
-        # add headline to textfield
         for head in self.headline["head"]:
-            self.read_only.append(f"[{head}]")
+            # set headline main to salutation in give feedback field
+            if head == "main":
+                self.headline["head"][head].setText(first_line)
+                if self.annotation["annot"][head].toPlainText() == "":
+                    # set placeholder text if main annotation is empty
+                    self.annotation["annot"][head].setPlaceholderText(
+                        "Laat in een of twee regels weten wat je algehele indruk is."
+                    )
+            # add headline to textfield
+            else:
+                self.read_only.append(f"[{head}]")
 
-            # add annotations right under headline
+            # add annotations in show feedback field
             self.read_only.append(self.annotation["annot"][head].toPlainText())
             # TODO: read annotations from feat file
 
