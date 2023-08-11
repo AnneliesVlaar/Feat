@@ -1,7 +1,7 @@
 import sys
 import pkg_resources
 
-from PyQt5.QtGui import QFont, QIcon
+from PyQt5.QtGui import QFont, QIcon, QMovie
 from PyQt5 import QtWidgets, uic
 
 import textwrap
@@ -80,8 +80,11 @@ class UserInterface(QtWidgets.QMainWindow):
         # load feat gui design
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
-        # set icon
+        # set icons
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
+        self.actionNew.setIcon(QIcon("plus-solid.svg"))
+        self.actionOpen.setIcon(QIcon("folder-open-regular.svg"))
+        self.actionSave.setIcon(QIcon("floppy-disk-solid.svg"))
 
         # Enable show feedback panel edit
         self.read_only.setReadOnly(True)
