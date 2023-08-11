@@ -116,6 +116,7 @@ class configuration:
             with open(student_filename, "r") as f:
                 for line in f.readlines():
                     m = re.match(RE_FIRST_LAST_NAME_ID, line)
+                    print(m)
                     if m:
                         first_name, last_name, sis_user_id = m.group(1, 2, 3)
                         first_name = first_name.replace("_", " ")
@@ -151,7 +152,7 @@ class configuration:
 
         # initialise feedback per student
         feedback = self.get_feedback()
-        print(feedback)
+
         # for checkboxes and annotations
         for type in feedback:
             for student in self.students:
