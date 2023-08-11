@@ -302,31 +302,8 @@ class UserInterface(QtWidgets.QMainWindow):
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
 
-        # set salutations and main annotation in give feedback field
-        self.update_give_feedback_field()
-
         # update read_only text field
         self.text_add()
-
-    def update_give_feedback_field(self):
-        """The name of the student is displayed in the give feedback field. If there is no main annotation a placeholder text is set."""
-
-        current_student = self.current_student()
-
-        # add salutation in give feedback field
-        first_line = (
-            "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
-        )
-        # self.headline_salutation.setText(first_line)
-
-        # set text in main annotation
-        # main = self.config.get_main_annotation(current_student)
-
-        # if main == "":
-        #     self.annotation["annot"]["main"].setPlaceholderText(
-        #         "Laat in een of twee regels weten wat je algehele indruk is."
-        #     )
-        # TODO: complete if statement
 
     def text_add(self):
         """Add text to display feedback text in read-only field.
@@ -348,10 +325,6 @@ class UserInterface(QtWidgets.QMainWindow):
             "Hoi " + self.feat_total["students"][current_student]["first_name"] + ","
         )
         self.read_only.append(first_line + "\r")
-        # self.annotation["annot"][head]
-
-        # print(self.feat_total["feedback"]["annotations"][current_student][0])
-        # self.read_only.append(self.annotation["annot"]["main"].toPlainText() + "\r")
 
         for head in self.headline["head"]:
             # set headline main to salutation in give feedback field
@@ -378,7 +351,11 @@ class UserInterface(QtWidgets.QMainWindow):
                     )
 
         # add sign-off
-        self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
+        sign_off_text = self.config.get_sign_off()
+        if sign_off_text:
+            self.read_only.append("\r" + self.feat_total["general text"]["sign-off"])
+        else:
+            self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
 
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
