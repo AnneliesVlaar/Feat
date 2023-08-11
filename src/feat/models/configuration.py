@@ -134,6 +134,8 @@ class configuration:
     def init_feedback(self, feedback_filename="feedbackpunten.toml"):
         """Initialize feedback in .feat file to get the right structure for saving feedback per student. Feedback form is saved within .feat file.
 
+        A "main" headline is added to create an annotation for main feedback.
+
         Args:
             feedback_filename (str, optional): Feedback form containing headlines and feedback lines to connect to checkboxes and annotation fields.
             In toml-structure where headlines with spaces must be put between " ", keys for feedback lines must be unique. Defaults to "feedbackpunten.toml".
@@ -143,6 +145,8 @@ class configuration:
         feedback_form = self.fileioFB.open_toml()
         # TODO: create a good error message and return to main window
 
+        feedback_form = {"main": {}} | feedback_form
+        # TODO: combine main and feedback_form such that main is the first item in dictionary
         self.update_feat("feedbackform", feedback_form)
 
         # initialise feedback per student

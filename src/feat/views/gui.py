@@ -298,11 +298,13 @@ class UserInterface(QtWidgets.QMainWindow):
         for head in self.headline["head"]:
             # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
+                self.button["check"][head][box].blockSignals(True)
                 if box in feedback["checkbox"][current_student]:
                     self.button["check"][head][box].setChecked(True)
 
                 else:
                     self.button["check"][head][box].setChecked(False)
+                self.button["check"][head][box].blockSignals(False)
 
         # clear annotation and show annotations from feat file
         for i, field in enumerate(self.annotation["annot"]):
