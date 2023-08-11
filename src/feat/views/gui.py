@@ -114,7 +114,6 @@ class UserInterface(QtWidgets.QMainWindow):
         """
 
         files_locs = self.w.get_files()
-        print(files_locs)
 
         # # create .feat file
         self.config_feat_file(files_locs["save"])

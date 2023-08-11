@@ -108,13 +108,15 @@ class configuration:
         """_summary_
 
         Args:
-            student_filename (str, optional): List of students names with sis_user_ids. Structure: first_name lastname (student_id). Lines with # will be skipped. First names with spaces must be connected with "_" . Defaults to "test2-studenten.txt".
+            student_filename (str, optional): List of students names with sis_user_ids. Structure: first_name lastname (student_id).
+            Lines with # will be skipped. First names with spaces must be connected with "_" . Defaults to "test2-studenten.txt".
         """
         # create dictionary of student data were key is the sis_user_id
         if Path(student_filename).is_file():
             self.students = {}
-            with open(student_filename, "r") as f:
+            with open(student_filename, "r", encoding="utf-8") as f:
                 for line in f.readlines():
+                    print(line)
                     m = re.match(RE_FIRST_LAST_NAME_ID, line)
                     print(m)
                     if m:
