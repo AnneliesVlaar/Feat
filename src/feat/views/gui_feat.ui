@@ -419,10 +419,6 @@
    <addaction name="actionSave"/>
   </widget>
   <action name="actionOpen">
-   <property name="icon">
-    <iconset>
-     <normaloff>../../../../../../Downloads/folder-open-regular.svg</normaloff>../../../../../../Downloads/folder-open-regular.svg</iconset>
-   </property>
    <property name="text">
     <string>Open</string>
    </property>
@@ -436,10 +432,6 @@
    </property>
   </action>
   <action name="actionNew">
-   <property name="icon">
-    <iconset>
-     <normaloff>../../../../../../Downloads/plus-solid.svg</normaloff>../../../../../../Downloads/plus-solid.svg</iconset>
-   </property>
    <property name="text">
     <string>New</string>
    </property>
@@ -453,10 +445,6 @@
    </property>
   </action>
   <action name="actionSave">
-   <property name="icon">
-    <iconset>
-     <normaloff>../../../floppy-disk-solid.svg</normaloff>../../../floppy-disk-solid.svg</iconset>
-   </property>
    <property name="text">
     <string>Save</string>
    </property>

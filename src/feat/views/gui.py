@@ -423,7 +423,10 @@ class UserInterface(QtWidgets.QMainWindow):
         """
 
         # save configurations of check-boxes
-        self.config.save_feat_file()
+        try:
+            self.config.save_feat_file()
+        except:
+            pass
         # TODO: Do not do auto-save? Create a real save option?
 
 
