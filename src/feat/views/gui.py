@@ -31,6 +31,25 @@ class NewFileWindow(QtWidgets.QWidget):
         # set icon
         self.setWindowIcon(QIcon("FT-logo128.jpg"))
 
+        # add icon to line edit and connect to file dialogs
+        # savelocation icon-action
+        save_action = self.line_save_location.addAction(
+            QIcon("folder-open-regular.svg"), 0
+        )
+        save_action.triggered.connect(self.get_file_location)
+
+        # studentlist icon-action
+        student_action = self.line_students.addAction(
+            QIcon("folder-open-regular.svg"), 0
+        )
+        student_action.triggered.connect(self.get_student_location)
+
+        # feedbackform icon-action
+        feedbackform_action = self.line_feedbackform.addAction(
+            QIcon("folder-open-regular.svg"), 0
+        )
+        feedbackform_action.triggered.connect(self.get_feedbackform_location)
+
         # slots and signals
         self.save_location.clicked.connect(self.get_file_location)
         self.students_location.clicked.connect(self.get_student_location)
