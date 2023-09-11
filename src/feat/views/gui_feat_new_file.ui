@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>369</width>
-    <height>138</height>
+    <width>470</width>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>369</width>
-    <height>138</height>
+    <width>470</width>
+    <height>350</height>
    </size>
   </property>
   <property name="font">
    <font>
-    <family>FiraCode NF</family>
-    <weight>75</weight>
+    <family>Consolas</family>
     <bold>true</bold>
    </font>
   </property>

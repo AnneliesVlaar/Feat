@@ -1,15 +1,14 @@
 import sys
-import pkg_resources
-
-from PyQt5.QtGui import QFont, QIcon, QMovie
-from PyQt5 import QtWidgets, uic
-
 import textwrap
+
+import pkg_resources
+from PyQt6 import QtWidgets, uic
+from PyQt6.QtGui import QFont, QIcon, QMovie
 
 from feat.models.configuration import configuration
 
-FONT_STYLE_BUTTONS = QFont("Firacode NF", 12, QFont.Bold)
-FONT_STYLE_TEXT = QFont("Firacode NF", 9)
+FONT_STYLE_BUTTONS = QFont("Consolas", 12, weight=QFont.Weight.Bold)
+FONT_STYLE_TEXT = QFont("Consolas", 12)
 
 
 class NewFileWindow(QtWidgets.QWidget):
@@ -34,19 +33,22 @@ class NewFileWindow(QtWidgets.QWidget):
         # add icon to line edit and connect to file dialogs
         # savelocation icon-action
         save_action = self.line_save_location.addAction(
-            QIcon("folder-open-regular.svg"), 0
+            QIcon("folder-open-regular.svg"),
+            QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         save_action.triggered.connect(self.get_file_location)
 
         # studentlist icon-action
         student_action = self.line_students.addAction(
-            QIcon("folder-open-regular.svg"), 0
+            QIcon("folder-open-regular.svg"),
+            QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         student_action.triggered.connect(self.get_student_location)
 
         # feedbackform icon-action
         feedbackform_action = self.line_feedbackform.addAction(
-            QIcon("folder-open-regular.svg"), 0
+            QIcon("folder-open-regular.svg"),
+            QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         feedbackform_action.triggered.connect(self.get_feedbackform_location)
 
