@@ -19,7 +19,7 @@ Create fast feedback messages based on your own prewritten feedback file and add
 ## Screenshots
 Select **file > new**, a new window appears. 
 
-.. figure:: docs/images/screenshot_new.png
+![Screenshot new file](docs/images/screenshot_new.png)
 
 * Select the location and give the name of the new file.
 * Select the file with student names.
@@ -27,7 +27,7 @@ Select **file > new**, a new window appears.
 
 Select **file > open** to open a .feat file. 
 
-.. figure:: docs/images/screenshot_open.png
+![Screenshot new file](docs/images/screenshot_open.png)
 
 ## Install
 Clone the repository.
