@@ -2,6 +2,7 @@ import sys
 import textwrap
 
 import pkg_resources
+from importlib import resources
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QFont, QIcon, QMovie
 
@@ -28,26 +29,28 @@ class NewFileWindow(QtWidgets.QWidget):
         )
 
         # set icon
-        self.setWindowIcon(QIcon("FT-logo128.jpg"))
+        self.setWindowIcon(
+            QIcon(str(resources.files("feat.resources") / "FT-logo128.jpg"))
+        )
 
         # add icon to line edit and connect to file dialogs
         # savelocation icon-action
         save_action = self.line_save_location.addAction(
-            QIcon("folder-open-regular.svg"),
+            QIcon(str(resources.files("feat.resources") / "folder-open-regular.svg")),
             QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         save_action.triggered.connect(self.get_file_location)
 
         # studentlist icon-action
         student_action = self.line_students.addAction(
-            QIcon("folder-open-regular.svg"),
+            QIcon(str(resources.files("feat.resources") / "folder-open-regular.svg")),
             QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         student_action.triggered.connect(self.get_student_location)
 
         # feedbackform icon-action
         feedbackform_action = self.line_feedbackform.addAction(
-            QIcon("folder-open-regular.svg"),
+            QIcon(str(resources.files("feat.resources") / "folder-open-regular.svg")),
             QtWidgets.QLineEdit.ActionPosition.LeadingPosition,
         )
         feedbackform_action.triggered.connect(self.get_feedbackform_location)
@@ -102,10 +105,18 @@ class UserInterface(QtWidgets.QMainWindow):
         uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
 
         # set icons
-        self.setWindowIcon(QIcon("FT-logo128.jpg"))
-        self.actionNew.setIcon(QIcon("plus-solid.svg"))
-        self.actionOpen.setIcon(QIcon("folder-open-regular.svg"))
-        self.actionSave.setIcon(QIcon("floppy-disk-solid.svg"))
+        self.setWindowIcon(
+            QIcon(str(resources.files("feat.resources") / "FT-logo128.jpg"))
+        )
+        self.actionNew.setIcon(
+            QIcon(str(resources.files("feat.resources") / "plus-solid.svg"))
+        )
+        self.actionOpen.setIcon(
+            QIcon(str(resources.files("feat.resources") / "folder-open-regular.svg"))
+        )
+        self.actionSave.setIcon(
+            QIcon(str(resources.files("feat.resources") / "floppy-disk-solid.svg"))
+        )
 
         # Enable show feedback panel edit
         self.read_only.setReadOnly(True)

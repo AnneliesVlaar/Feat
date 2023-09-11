@@ -1,8 +1,9 @@
 [tool.poetry]
-name = "Feat"
-version = "0.2.0"
+name = "feat-feedback-tool"
+version = "0.3.1"
 description = ""
 authors = ["AnneliesVlaar <66774020+AnneliesVlaar@users.noreply.github.com>"]
+packages = [{include="feat", from="src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
