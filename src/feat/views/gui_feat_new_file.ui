@@ -6,25 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>350</height>
+    <width>369</width>
+    <height>140</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>470</width>
-    <height>350</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="font">
    <font>
     <family>Consolas</family>
+    <weight>75</weight>
     <bold>true</bold>
    </font>
   </property>
@@ -50,13 +51,19 @@
          <property name="minimumSize">
           <size>
            <width>260</width>
-           <height>0</height>
+           <height>22</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="save_location">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>23</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
@@ -83,13 +90,19 @@
          <property name="minimumSize">
           <size>
            <width>260</width>
-           <height>0</height>
+           <height>22</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="students_location">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>23</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
@@ -116,13 +129,19 @@
          <property name="minimumSize">
           <size>
            <width>260</width>
-           <height>0</height>
+           <height>22</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="feedbackform_location">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>23</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
@@ -153,6 +172,12 @@
        </item>
        <item>
         <widget class="QPushButton" name="create_new_file">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>23</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
