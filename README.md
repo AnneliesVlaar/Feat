@@ -1,4 +1,4 @@
-.. image:: FT-logo128.png
+![FEAT Logo](FT-logo128.png)
 
 # Feat
 Feedback Experiment Aansturing Tool
