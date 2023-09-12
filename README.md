@@ -42,6 +42,9 @@ Or with pipx:
 pipx install feat-feedback-tool
 ```
 
+### development instructions
+Clone the repository
+
 Create a new conda environment with python
 ```
 conda create -n feat python
