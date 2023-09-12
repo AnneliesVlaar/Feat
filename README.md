@@ -21,16 +21,26 @@ Select **file > new**, a new window appears.
 
 ![Screenshot new file](docs/images/Screenshot_new.png)
 
-* Select the location and give the name of the new file.
+* Select the location to save the .feat file and give it a name.
 * Select the file with student names.
 * select the file with feedback.
+
+Click create to create the .feat file and start composing feedback. 
 
 Select **file > open** to open a .feat file. 
 
 ![Screenshot new file](docs/images/Screenshot_open.png)
 
 ## Install
-Clone the repository.
+In a virtual environment:
+```
+pip install feat-feedback-tool
+```
+
+Or with pipx:
+```
+pipx install feat-feedback-tool
+```
 
 Create a new conda environment with python
 ```
