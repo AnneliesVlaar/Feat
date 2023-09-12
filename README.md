@@ -1,4 +1,4 @@
-<img src="FT-logo128.jpg" alt="FEAT Logo" width="80" height="80">
+<img src="src/feat/resources/FT-logo128.jpg" alt="FEAT Logo" width="80" height="80">
 
 # Feat
 Feedback Experiment Aansturing Tool
