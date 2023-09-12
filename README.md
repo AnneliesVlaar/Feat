@@ -42,6 +42,11 @@ Or with pipx:
 pipx install feat-feedback-tool
 ```
 
+Open Feat with ft. 
+```
+ft.
+```
+
 ### development instructions
 Clone the repository
 
