@@ -32,7 +32,7 @@ Select **file > open** to open a .feat file.
 ![Screenshot new file](docs/images/Screenshot_open.png)
 
 ## File Format Specifications
-### student file
+### Student file
 The file(.txt) with student names should be designed in the following way:
 ```
 # Teaching assistant (information)
@@ -42,7 +42,7 @@ first_name lastname (unique_student_id)
 Text after '#' can be arbitrary since lines with '#' will be skipped. First names with spaces must be connected with "_".
 There is an [example student file](teststudenten.txt) available. 
 
-### feedback form
+### Feedback form
 The file(.toml) with feedback should be designed in the following way:
 ```
 ["Section 1"]
@@ -77,7 +77,7 @@ Open Feat with ft.
 ft.
 ```
 
-### development instructions
+### Development instructions
 Clone the repository
 
 Create a new conda environment with python
