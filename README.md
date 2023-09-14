@@ -32,7 +32,8 @@ Select **file > open** to open a .feat file.
 ![Screenshot new file](docs/images/Screenshot_open.png)
 
 ## File Format Specifications
-The file with student names should be designed in the following way:
+### student file
+The file(.txt) with student names should be designed in the following way:
 ```
 # Teaching assistant (information)
 first_name lastname (unique_student_id)
@@ -41,6 +42,24 @@ first_name lastname (unique_student_id)
 Text after '#' can be arbitrary since lines with '#' will be skipped. First names with spaces must be connected with "_".
 There is an [example student file](teststudenten.txt) available. 
 
+### feedback form
+The file(.toml) with feedback should be designed in the following way:
+```
+["Section 1"]
+Unique_id = "Feedbackline 1"
+Unique_id = "Feedbackline 2"
+Unique_id = "Feedbackline 3" 
+Unique_id = "Feedbackline 4"
+
+["Section 2"]
+Unique_id = "Feedbackline 1"
+Unique_id = "Feedbackline 2"
+Unique_id = "Feedbackline 3"
+Unique_id = "Feedbackline 4"
+
+```
+The unique IDs must be unique within the feedback form.
+There is an [example feedback form](feedbackpunten.toml) available. 
 
 ## Install
 In a virtual environment:
