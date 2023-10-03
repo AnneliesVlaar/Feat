@@ -1,4 +1,4 @@
-<img src="src/feat/resources/FT-logo128.jpg" alt="FEAT Logo" width="80" height="80">
+<img src="https://github.com/AnneliesVlaar/Feat/blob/main/src/feat/resources/FT-logo128.jpg?raw=true" alt="FEAT Logo" width="80" height="80">
 
 # Feat
 Feedback Experiment Aansturing Tool
@@ -19,7 +19,7 @@ Create fast feedback messages based on your own prewritten feedback file and add
 ## Screenshots
 Select **file > new**, a new window appears. 
 
-![Screenshot new file](docs/images/Screenshot_new.png)
+![Screenshot new file](https://github.com/AnneliesVlaar/Feat/blob/main/docs/images/Screenshot_new.png?raw=true)
 
 * Select the location to save the .feat file and give it a name.
 * Select the file with student names.
@@ -29,7 +29,7 @@ Click create to create the .feat file and start composing feedback.
 
 Select **file > open** to open a .feat file. 
 
-![Screenshot new file](docs/images/Screenshot_open.png)
+![Screenshot new file](https://github.com/AnneliesVlaar/Feat/blob/main/docs/images/Screenshot_open.png?raw=true)
 
 ## File Format Specifications
 ### Student file

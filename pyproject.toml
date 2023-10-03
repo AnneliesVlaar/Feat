@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "feat-feedback-tool"
-version = "0.3.1"
+version = "0.3.4"
 description = "Create fast feedback based on prewritten sentences combined with personalised messages."
 readme = "README.md"
 authors = ["AnneliesVlaar <66774020+AnneliesVlaar@users.noreply.github.com>"]
