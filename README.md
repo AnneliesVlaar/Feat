@@ -40,7 +40,7 @@ first_name lastname (unique_student_id)
 first_name lastname (unique_student_id)
 ```
 Text after '#' can be arbitrary since lines with '#' will be skipped. First names with spaces must be connected with "_".
-There is an [example student file](teststudenten.txt) available. 
+There is an [example student file](https://github.com/AnneliesVlaar/Feat/blob/main/teststudenten.txt) available. 
 
 ### Feedback form
 The file(.toml) with feedback should be designed in the following way:
@@ -59,7 +59,7 @@ Unique_id = "Feedbackline 4"
 
 ```
 The unique IDs must be unique within the feedback form.
-There is an [example feedback form](feedbackpunten.toml) available. 
+There is an [example feedback form](https://github.com/AnneliesVlaar/Feat/blob/main/feedbackpunten.toml) available. 
 
 ## Install
 In a virtual environment:
