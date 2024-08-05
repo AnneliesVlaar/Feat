@@ -1,8 +1,7 @@
 import sys
 import textwrap
-
-import pkg_resources
 from importlib import resources
+
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtGui import QFont, QIcon, QMovie
 
@@ -25,7 +24,7 @@ class NewFileWindow(QtWidgets.QWidget):
 
         # load feat gui design
         uic.loadUi(
-            pkg_resources.resource_stream("feat.views", "gui_feat_new_file.ui"), self
+            resources.files("feat.views") / "gui_feat_new_file.ui", self
         )
 
         # set icon
@@ -102,7 +101,7 @@ class UserInterface(QtWidgets.QMainWindow):
         super().__init__()
 
         # load feat gui design
-        uic.loadUi(pkg_resources.resource_stream("feat.views", "gui_feat.ui"), self)
+        uic.loadUi(resources.files("feat.views") / "gui_feat.ui", self)
 
         # set icons
         self.setWindowIcon(
