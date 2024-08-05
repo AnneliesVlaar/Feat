@@ -117,9 +117,12 @@ class UserInterface(QtWidgets.QMainWindow):
             QIcon(str(resources.files("feat.resources") / "floppy-disk-solid.svg"))
         )
 
-        # Enable show feedback panel edit
+        # Disable show feedback panel edit
         self.read_only.setReadOnly(True)
         self.read_only.setFont(FONT_STYLE_TEXT)
+
+        # Disable grade center temporarly
+        self.grade_center.setReadOnly(True)
 
         # slots and signals
         # menu
@@ -253,8 +256,16 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise text box
         self.update_student()
 
+        # Enable grade center
+        self.grade_center.setReadOnly(False)
+
+        # check if grade is present in feat file otherwise set placeholder text
+        # TODO: check if grade is present in feat file
+        self.grade_center.setPlaceholderText("voorlopig cijfer")
+
         # slots and signals
         self.annotation_sign_off.textChanged.connect(self.add_sign_off)
+        self.grade_center.textChanged.connect(self.add_grade)
 
         for head in self.headline["head"]:
             for box in self.button["check"][head]:
@@ -305,12 +316,12 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].blockSignals(False)
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
-
+       
         # update read_only show feedback panel
         self.text_add()
 
     def text_add(self):
-        """Add text to display feedback text in read-only field.
+        """Add text to display feedback text in read-only field. Display grade.
 
         Based on the check boxes and annotation field the feedback text is constructed.
         """
@@ -361,6 +372,15 @@ class UserInterface(QtWidgets.QMainWindow):
         else:
             self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
 
+        # add grade to grade center
+        try:
+            grade = self.feat_total["feedback"]["grades"][current_student]
+            self.grade_center.clear()
+            self.grade_center.setText(grade)
+        except:
+            # grade is not a string
+            self.grade_center.setPlaceholderText("voorlopig cijfer")
+
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
         current_student = self.current_student()
@@ -407,6 +427,17 @@ class UserInterface(QtWidgets.QMainWindow):
         self.config.save_sign_off(sign_off)
         # add sign-off to read_only show feedback panel
         self.text_add()
+
+    def add_grade(self):
+        """Save grade to .feat file"""
+        current_student = self.current_student()
+        grade = self.grade_center.text()
+        self.config.update_feedback(current_student, "grades", grade)
+
+        # update feat dictionary to match current feat file
+        self.feat_total = self.config.get_feat()
+        # TODO: check if this is needed here or if it is (implicitly) done somewhere else
+
 
     def next_student(self):
         """Displays feedback for next student below current student.
