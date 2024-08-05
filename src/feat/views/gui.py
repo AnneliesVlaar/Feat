@@ -374,9 +374,8 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
 
         # add grade to grade center
-        grade = self.feat_total["feedback"]["grades"][current_student]
-        print(grade)
         try:
+            grade = self.feat_total["feedback"]["grades"][current_student]
             self.grade_center.clear()
             self.grade_center.setText(grade)
         except:
