@@ -318,6 +318,15 @@ class UserInterface(QtWidgets.QMainWindow):
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
 
+        # add grade to grade center
+        try:
+            grade = feedback["grades"][current_student]
+            self.grade_center.clear()
+            self.grade_center.setText(grade)
+        except:
+            # grade is not a string
+            self.grade_center.setPlaceholderText("voorlopig cijfer")
+        
         # update read_only show feedback panel
         self.text_add()
 
