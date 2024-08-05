@@ -2,6 +2,7 @@ title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
 
 [data]
 created = 2023-08-11T14:00:39.561269
+"last update" = 2024-08-05T16:43:48.227657
 
 ["general text"]
 sign-off = ""
@@ -70,6 +71,17 @@ full_name = "Rènco Hoefnagel"
 "(555)" = []
 "(304)" = []
 "(509)" = []
+"(6789)" = []
+"(123)" = []
+
+[feedback.grades]
+"(456)" = "Goed"
+"(789)" = "1"
+"(101)" = "C"
+"(102)" = []
+"(555)" = []
+"(304)" = []
+"(509)" = "7.5"
 "(6789)" = []
 "(123)" = []
 
