@@ -421,7 +421,9 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def add_grade(self):
-        print("grade")
+        current_student = self.current_student()
+        grade = self.grade_center.text()
+        self.config.update_feedback(current_student, "grades", grade)
 
     def next_student(self):
         """Displays feedback for next student below current student.
