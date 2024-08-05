@@ -256,6 +256,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # slots and signals
         self.annotation_sign_off.textChanged.connect(self.add_sign_off)
+        self.grade_center.textChanged.connect(self.add_grade)
 
         for head in self.headline["head"]:
             for box in self.button["check"][head]:
@@ -408,6 +409,9 @@ class UserInterface(QtWidgets.QMainWindow):
         self.config.save_sign_off(sign_off)
         # add sign-off to read_only show feedback panel
         self.text_add()
+
+    def add_grade(self):
+        print("grade")
 
     def next_student(self):
         """Displays feedback for next student below current student.
