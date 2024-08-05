@@ -254,6 +254,10 @@ class UserInterface(QtWidgets.QMainWindow):
         # initialise text box
         self.update_student()
 
+        # check if grade is present in feat file otherwise set placeholder text
+        # TODO: check if grade is present in feat file
+        self.grade_center.setPlaceholderText("voorlopig cijfer")
+
         # slots and signals
         self.annotation_sign_off.textChanged.connect(self.add_sign_off)
         self.grade_center.textChanged.connect(self.add_grade)
