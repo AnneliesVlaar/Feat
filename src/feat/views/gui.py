@@ -425,6 +425,11 @@ class UserInterface(QtWidgets.QMainWindow):
         grade = self.grade_center.text()
         self.config.update_feedback(current_student, "grades", grade)
 
+        # update feat dictionary to match current feat file
+        self.feat_total = self.config.get_feat()
+        # TODO: check if this is needed here or if it is (implicitly) done somewhere else
+
+
     def next_student(self):
         """Displays feedback for next student below current student.
 
