@@ -118,9 +118,12 @@ class UserInterface(QtWidgets.QMainWindow):
             QIcon(str(resources.files("feat.resources") / "floppy-disk-solid.svg"))
         )
 
-        # Enable show feedback panel edit
+        # Disable show feedback panel edit
         self.read_only.setReadOnly(True)
         self.read_only.setFont(FONT_STYLE_TEXT)
+
+        # Disable grade center temporarly
+        self.grade_center.setReadOnly(True)
 
         # slots and signals
         # menu
@@ -253,6 +256,9 @@ class UserInterface(QtWidgets.QMainWindow):
 
         # initialise text box
         self.update_student()
+
+        # Enable grade center
+        self.grade_center.setReadOnly(False)
 
         # check if grade is present in feat file otherwise set placeholder text
         # TODO: check if grade is present in feat file
