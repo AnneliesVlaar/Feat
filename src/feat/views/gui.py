@@ -317,21 +317,12 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].blockSignals(False)
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
-
-        # add grade to grade center
-        try:
-            grade = feedback["grades"][current_student]
-            self.grade_center.clear()
-            self.grade_center.setText(grade)
-        except:
-            # grade is not a string
-            self.grade_center.setPlaceholderText("voorlopig cijfer")
-        
+       
         # update read_only show feedback panel
         self.text_add()
 
     def text_add(self):
-        """Add text to display feedback text in read-only field.
+        """Add text to display feedback text in read-only field. Display grade.
 
         Based on the check boxes and annotation field the feedback text is constructed.
         """
@@ -382,6 +373,16 @@ class UserInterface(QtWidgets.QMainWindow):
         else:
             self.annotation_sign_off.setPlaceholderText("Doe hier de groetjes")
 
+        # add grade to grade center
+        grade = self.feat_total["feedback"]["grades"][current_student]
+        print(grade)
+        try:
+            self.grade_center.clear()
+            self.grade_center.setText(grade)
+        except:
+            # grade is not a string
+            self.grade_center.setPlaceholderText("voorlopig cijfer")
+
     def check_box(self):
         """Create list of checked boxes, save configuration of check boxes in .feat file. And display feedback lines of checked boxes in read-only field with self.text_add()."""
         current_student = self.current_student()
@@ -430,6 +431,7 @@ class UserInterface(QtWidgets.QMainWindow):
         self.text_add()
 
     def add_grade(self):
+        """Save grade to .feat file"""
         current_student = self.current_student()
         grade = self.grade_center.text()
         self.config.update_feedback(current_student, "grades", grade)
