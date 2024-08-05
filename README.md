@@ -13,6 +13,7 @@ Create fast feedback messages based on your own prewritten feedback file and add
 * Add personalised feedback for each feedback section
 * Add personalised feedback in a general section
 * Add general complimentary close
+* Save each student's grade in various formats (numeric, letters, or words)
 * Save the feedback messages
 * Copy the feedback messages to the clipboard
 
