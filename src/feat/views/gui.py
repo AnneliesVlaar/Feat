@@ -299,7 +299,7 @@ class UserInterface(QtWidgets.QMainWindow):
             # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
                 self.button["check"][head][box].blockSignals(True)
-                if box in feedback["checkbox"][current_student]:
+                if box in feedback["checkbox"][current_student] or box in feedback["achievements"][current_student]:
                     self.button["check"][head][box].setChecked(True)
 
                 else:
