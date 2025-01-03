@@ -215,11 +215,10 @@ class UserInterface(QtWidgets.QMainWindow):
             self.headline["head"][head].setFont(FONT_STYLE_BUTTONS)
             self.vbox.addWidget(self.headline["head"][head])
 
-            # add annotation field per subject title
-            if head != "Achievements":
-                self.annotation["annot"][head] = QtWidgets.QTextEdit()
-                self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
-                self.vbox.addWidget(self.annotation["annot"][head])
+            # add annotation field per subject titl
+            self.annotation["annot"][head] = QtWidgets.QTextEdit()
+            self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
+            self.vbox.addWidget(self.annotation["annot"][head])
 
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
@@ -346,6 +345,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         for head in self.headline["head"]:
             # set headline main to salutation in give feedback field
+
             if head == "main":
                 self.headline["head"][head].setText(first_line)
                 if self.annotation["annot"][head].toPlainText() == "":
@@ -353,20 +353,25 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.annotation["annot"][head].setPlaceholderText(
                         "Laat in een of twee regels weten wat je algehele indruk is."
                     )
-            elif head != "Achievements":
+
+
+
+            else:
                 # add headline to textfield
                 self.read_only.append(f"[{head}]")
 
                 # add annotations in show feedback field
+
                 self.read_only.append(self.annotation["annot"][head].toPlainText())
                 # TODO: read annotations from feat file
 
                 # add feedback lines to show feedback panel
-                for line in self.button["check"][head]:
-                    if self.button["check"][head][line].isChecked():
-                        self.read_only.append(
-                            self.feat_total["feedbackform"][head][line] + "\r"
-                        )
+                if head != "Achievements":
+                    for line in self.button["check"][head]:
+                        if self.button["check"][head][line].isChecked():
+                            self.read_only.append(
+                                self.feat_total["feedbackform"][head][line] + "\r"
+                            )
 
         # add UUID text field
         self.read_only.append("Bekijk je achievements op de site!" + "\r" + "[placeholder site]"
