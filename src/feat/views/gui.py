@@ -3,7 +3,7 @@ import textwrap
 from importlib import resources
 
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtGui import QFont, QIcon, QMovie
+from PyQt6.QtGui import QFont, QIcon, QMovie, QGuiApplication
 
 from feat.models.configuration import configuration
 
@@ -136,9 +136,40 @@ class UserInterface(QtWidgets.QMainWindow):
         self.NextButton2.clicked.connect(self.next_student)
         self.PreviousButton.clicked.connect(self.previous_student)
         self.PreviousButton2.clicked.connect(self.previous_student)
+        self.summary_builder.clicked.connect(self.build_summary)
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
+
+
+    def build_summary(self):
+        """Build summary and copy to clipy
+        """
+
+        # get updated total feat file
+        self.feat_total = self.config.get_feat()
+        summary = ""
+        grades = self.feat_total["feedback"]["grades"]
+        students = self.feat_total["students"]
+        annotations = self.feat_total["feedback"]["annotations"]
+
+
+        for student_id in students:
+            summary += f"**{students[student_id]["full_name"]} **" + ": "
+
+            if grades[student_id] == []:
+                summary += "geen cijfer - "
+            else:
+                summary += grades[student_id] + " - "
+
+            if annotations[student_id] == []:
+                summary += "-\r"
+            else:
+                summary += annotations[student_id][0] + "\r"
+
+
+        clipboard = QGuiApplication.clipboard()
+        clipboard.setText(summary)
 
     def new_file_window(self):
         """Open a second window where the user can provide information about the paths where file can be saved and found."""
@@ -360,17 +391,17 @@ class UserInterface(QtWidgets.QMainWindow):
                 # add headline to textfield
                 self.read_only.append(f"[{head}]")
 
-                # add annotations in show feedback field
+            # add annotations in show feedback field
 
-                self.read_only.append(self.annotation["annot"][head].toPlainText())
-                # TODO: read annotations from feat file
+            self.read_only.append(self.annotation["annot"][head].toPlainText())
+            # TODO: read annotations from feat file
 
-                # add feedback lines to show feedback panel
-                if head != "Achievements":
-                    for line in self.button["check"][head]:
-                        if self.button["check"][head][line].isChecked():
-                            self.read_only.append(
-                                self.feat_total["feedbackform"][head][line] + "\r"
+            # add feedback lines to show feedback panel
+            if head != "Achievements":
+                for line in self.button["check"][head]:
+                    if self.button["check"][head][line].isChecked():
+                        self.read_only.append(
+                            self.feat_total["feedbackform"][head][line] + "\r"
                             )
 
         # add UUID text field
@@ -509,6 +540,8 @@ class UserInterface(QtWidgets.QMainWindow):
         except:
             pass
         # TODO: Do not do auto-save? Create a real save option?
+
+
 
 
 def main():
