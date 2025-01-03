@@ -316,7 +316,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].blockSignals(False)
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
-       
+
         # update read_only show feedback panel
         self.text_add()
 
@@ -364,6 +364,12 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.read_only.append(
                         self.feat_total["feedbackform"][head][line] + "\r"
                     )
+
+        # add UUID text field
+        self.read_only.append("Bekijk je achievements op de site!" + "\r" + "[placeholder site]"
+                              + "\r" + "door in te loggen met je unieke code:\r"
+                              + self.feat_total["students"][current_student]["UUID"]+ "\r")
+
 
         # add sign-off
         sign_off_text = self.config.get_sign_off()

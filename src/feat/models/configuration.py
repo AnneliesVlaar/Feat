@@ -2,9 +2,28 @@ import toml
 import datetime
 import re
 from pathlib import Path
+import hashlib
 
 
 RE_FIRST_LAST_NAME_ID = r"([\w'-]+) ([\w' -]+) (\(\d+\))"
+
+
+
+def create_uuid(first_name, last_name, sis_user_id, tag):
+    """Create a uuid based on first, last and user id with a special tag to differentiate different groups of students.
+    Uuid is based on sha1 hashing.
+
+    Args:
+        first_name (str): first name of the student
+        last_name (str): last name of the student
+        sis_user_id (int): user id of the student
+        tag (int): tag to differentiate different groups of students.
+
+    Returns:
+        str: uuid
+    """
+    uuid = hashlib.sha1((last_name+" "+str(sis_user_id)+" "+first_name+" "+str(tag)).encode()).hexdigest()
+    return uuid
 
 
 class fileIO:
@@ -102,6 +121,8 @@ class configuration:
         # create dictionary from feat file
         self.read_feat()
 
+
+
     def add_students(self, student_filename):
         """Add students to feat file.
 
@@ -118,12 +139,16 @@ class configuration:
                 for line in f.readlines():
                     m = re.match(RE_FIRST_LAST_NAME_ID, line)
                     if m:
+                        # get unique tag from the year toml file was created
+                        tag = self.feat["data"]["created"].year
+
                         first_name, last_name, sis_user_id = m.group(1, 2, 3)
                         first_name = first_name.replace("_", " ")
                         self.students[sis_user_id] = {
                             "first_name": first_name,
                             "last_name": last_name,
                             "full_name": first_name + " " + last_name,
+                            "UUID": create_uuid(first_name, last_name, sis_user_id, tag)
                         }
         else:
             print(f"File {student_filename} does not exits, skipping.")
