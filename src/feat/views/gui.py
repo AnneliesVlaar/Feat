@@ -214,10 +214,13 @@ class UserInterface(QtWidgets.QMainWindow):
             self.headline["head"][head] = QtWidgets.QLabel(head)
             self.headline["head"][head].setFont(FONT_STYLE_BUTTONS)
             self.vbox.addWidget(self.headline["head"][head])
+
             # add annotation field per subject title
-            self.annotation["annot"][head] = QtWidgets.QTextEdit()
-            self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
-            self.vbox.addWidget(self.annotation["annot"][head])
+            if head != "Achievements":
+                self.annotation["annot"][head] = QtWidgets.QTextEdit()
+                self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
+                self.vbox.addWidget(self.annotation["annot"][head])
+
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
             for line in self.fblines[head]:
@@ -350,20 +353,20 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.annotation["annot"][head].setPlaceholderText(
                         "Laat in een of twee regels weten wat je algehele indruk is."
                     )
-            else:
+            elif head != "Achievements":
                 # add headline to textfield
                 self.read_only.append(f"[{head}]")
 
-            # add annotations in show feedback field
-            self.read_only.append(self.annotation["annot"][head].toPlainText())
-            # TODO: read annotations from feat file
+                # add annotations in show feedback field
+                self.read_only.append(self.annotation["annot"][head].toPlainText())
+                # TODO: read annotations from feat file
 
-            # add feedback lines to show feedback panel
-            for line in self.button["check"][head]:
-                if self.button["check"][head][line].isChecked():
-                    self.read_only.append(
-                        self.feat_total["feedbackform"][head][line] + "\r"
-                    )
+                # add feedback lines to show feedback panel
+                for line in self.button["check"][head]:
+                    if self.button["check"][head][line].isChecked():
+                        self.read_only.append(
+                            self.feat_total["feedbackform"][head][line] + "\r"
+                        )
 
         # add UUID text field
         self.read_only.append("Bekijk je achievements op de site!" + "\r" + "[placeholder site]"
@@ -392,13 +395,18 @@ class UserInterface(QtWidgets.QMainWindow):
         current_student = self.current_student()
 
         feedback = []
+        achievements = []
         for head in self.headline["head"]:
             for box in self.button["check"][head]:
                 if self.button["check"][head][box].isChecked():
-                    feedback.append(box)
+                    if head != "Achievements":
+                        feedback.append(box)
+                    else:
+                        achievements.append(box)
 
         # save checked feedback lines in toml
         self.config.update_feedback(current_student, "checkbox", feedback)
+        self.config.update_feedback(current_student, "achievements", achievements)
 
         # update feat dictionary to match current feat file
         self.feat_total = self.config.get_feat()

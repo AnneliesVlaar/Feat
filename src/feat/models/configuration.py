@@ -59,7 +59,7 @@ class fileIO:
                 "title": "Feedback Realisatie Experiment Aansturing Konfiguratie",
                 "data": {"created": datetime.datetime.now()},
                 "students": {},
-                "feedback": {"checkbox": {}, "annotations": {}, "grades": {}},
+                "feedback": {"checkbox": {}, "annotations": {}, "grades": {}, "achievements": {}},
                 "general text": {"sign-off": ""},
             }
             self.dump_toml(init_dict)
