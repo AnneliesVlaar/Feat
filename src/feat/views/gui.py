@@ -232,6 +232,11 @@ class UserInterface(QtWidgets.QMainWindow):
         Add students to combobox. Slots and signals for check boxes and annotation fields are coupled.
         """
 
+
+        # remove old feat file (del child)
+        for i in reversed(range(self.vbox.count())):
+            self.vbox.itemAt(i).widget().deleteLater()
+
         # load data from toml file
         self.feat_total = self.config.read_feat()
         # add feedback lines and annotation fields to interface
