@@ -1,8 +1,7 @@
-title = "Feedback Realisatie Experiment Automatisering Konfiguratie"
+title = "Feedback Realisatie Experiment Aansturing Konfiguratie"
 
 [data]
-created = 2023-08-11T14:00:39.561269
-"last update" = 2024-08-05T16:43:48.227657
+created = 2025-01-28T16:19:39.905404
 
 ["general text"]
 sign-off = ""
@@ -11,49 +10,58 @@ sign-off = ""
 first_name = "Nouh"
 last_name = "Ziëlman"
 full_name = "Nouh Ziëlman"
+UUID = "cb8c797acd616d1d862b39e8d263b995c7b6152d"
 
 [students."(789)"]
 first_name = "Mário"
 last_name = "Meij"
 full_name = "Mário Meij"
+UUID = "2091da78c1db9638c2b6efd2565bf6b42cf17a33"
 
 [students."(101)"]
 first_name = "Beerd"
 last_name = "Rodríguez"
 full_name = "Beerd Rodríguez"
+UUID = "697a7893c6fbe9e06fc19d3aca78edad4a90b5cd"
 
 [students."(102)"]
 first_name = "Pytsje"
 last_name = "Zevenbergen"
 full_name = "Pytsje Zevenbergen"
+UUID = "53c62f6f438b2381095ae3027206102dcff5f3d4"
 
 [students."(555)"]
-first_name = "Olivier"
+first_name = "Olivier Kees"
 last_name = "Çorbet"
-full_name = "Olivier Çorbet"
+full_name = "Olivier Kees Çorbet"
+UUID = "4d57b1208218de39d3475e113ea7405006887f96"
 
 [students."(304)"]
 first_name = "Kathelijn"
 last_name = "Masselink"
 full_name = "Kathelijn Masselink"
+UUID = "53c43a3d0950fa40bcd74f3c646f7f94d5080b3e"
 
 [students."(509)"]
 first_name = "Alida"
 last_name = "Eppink"
 full_name = "Alida Eppink"
+UUID = "d5676851220ca3ef7b1e885b9baccd7174939089"
 
 [students."(6789)"]
 first_name = "Oumnia"
 last_name = "Lemmen"
 full_name = "Oumnia Lemmen"
+UUID = "5deb77b14bc79e8a2af77555d2fadfe67fdacde8"
 
 [students."(123)"]
 first_name = "Rènco"
 last_name = "Hoefnagel"
 full_name = "Rènco Hoefnagel"
+UUID = "ac9b5e397e1ac4d93e51cdf000d78d3c2ae24f20"
 
 [feedback.checkbox]
-"(456)" = [ "structuur01", "leesbaarheid02", "efficiëntie03", "foutafhandeling01", "documentatie02",]
+"(456)" = [ "structuur01", "leesbaarheid01", "efficiëntie03", "foutafhandeling01", "documentatie02",]
 "(789)" = [ "structuur02", "leesbaarheid01", "efficiëntie04", "foutafhandeling02", "documentatie01",]
 "(101)" = []
 "(102)" = []
@@ -64,9 +72,9 @@ full_name = "Rènco Hoefnagel"
 "(123)" = []
 
 [feedback.annotations]
-"(456)" = [ "", "De bestanden hebben nu een logische naam gekregen, dat maakt je repository een stuk overzichtelijker. ", "", "", "", "",]
-"(789)" = [ "Ondanks dat je code niet meer werkte vlak voor de deadline ziet het er allemaal al heel netjes uit, ik denk dat we de error nu gemakkelijk gaan oplossen. ", "", "", "", "", "",]
-"(101)" = []
+"(456)" = [ "", "De bestanden hebben nu een logische naam gekregen, dat maakt je repository een stuk overzichtelijker.", "", "", "", "", "",]
+"(789)" = [ "Ondanks dat je code niet meer werkte vlak voor de deadline ziet het er allemaal al heel netjes uit, ik denk dat we de error nu gemakkelijk gaan oplossen.", "", "", "", "", "", "",]
+"(101)" = [ "", "", "", "", "", "", "",]
 "(102)" = []
 "(555)" = []
 "(304)" = []
@@ -78,10 +86,21 @@ full_name = "Rènco Hoefnagel"
 "(456)" = "Goed"
 "(789)" = "1"
 "(101)" = "C"
+"(102)" = "7.5"
+"(555)" = []
+"(304)" = []
+"(509)" = []
+"(6789)" = []
+"(123)" = ""
+
+[feedback.achievements]
+"(456)" = []
+"(789)" = []
+"(101)" = []
 "(102)" = []
 "(555)" = []
 "(304)" = []
-"(509)" = "7.5"
+"(509)" = []
 "(6789)" = []
 "(123)" = []
 
@@ -112,3 +131,7 @@ foutafhandeling02 = "Bij bepaalde inputscenario's lijkt de code vast te lopen of
 [feedbackform.Documentatie]
 documentatie01 = "Je hebt sommige functies en klassen gedocumenteerd, wat de leesbaarheid voor anderen verbetert."
 documentatie02 = "Het zou nuttig zijn om meer uitgebreide documentatie toe te voegen, vooral voor complexere delen van de code, om anderen te helpen begrijpen hoe ze de code kunnen gebruiken en bijdragen."
+
+[feedbackform.Achievements]
+achivtag01 = "LED there be light"
+achivtag02 = "Noah en zijn arc"

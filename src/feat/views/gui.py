@@ -3,24 +3,25 @@ import textwrap
 from importlib import resources
 
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtGui import QFont, QIcon, QMovie
+from PyQt6.QtGui import QFont, QIcon, QMovie, QGuiApplication
 
 from feat.models.configuration import configuration
 
-FONT_STYLE_BUTTONS = QFont("Consolas", 12, weight=QFont.Weight.Bold)
-FONT_STYLE_TEXT = QFont("Consolas", 12)
+FONT_STYLE_BUTTONS = QFont("Menlo", 13, weight=QFont.Weight.Bold)
+FONT_STYLE_BUTTONS.setStyleHint(QFont.StyleHint.Monospace)
+FONT_STYLE_TEXT = QFont("Menlo", 13)
+FONT_STYLE_TEXT.setStyleHint(QFont.StyleHint.Monospace)
 
-
-class NewFileWindow(QtWidgets.QWidget):
+class NewFileWindow(QtWidgets.QDialog):
     """
     This window appears when new file is selected from the menu.
 
     The file contains three line edits to provide the paths to 1) save the feat file 2) get the student file and 3) the feedback form.
     """
 
-    def __init__(self):
+    def __init__(self, parent=None):
         # call __init__ of parent class
-        super().__init__()
+        super().__init__(parent)
 
         # load feat gui design
         uic.loadUi(
@@ -136,18 +137,50 @@ class UserInterface(QtWidgets.QMainWindow):
         self.NextButton2.clicked.connect(self.next_student)
         self.PreviousButton.clicked.connect(self.previous_student)
         self.PreviousButton2.clicked.connect(self.previous_student)
+        self.summary_builder.clicked.connect(self.build_summary)
 
         # buttons
         self.copy_button.clicked.connect(self.copy)
 
+
+    def build_summary(self):
+        """Build summary and copy to clipy
+        """
+
+        # get updated total feat file
+        self.feat_total = self.config.get_feat()
+        summary = ""
+        grades = self.feat_total["feedback"]["grades"]
+        students = self.feat_total["students"]
+        annotations = self.feat_total["feedback"]["annotations"]
+
+
+        for student_id in students:
+            summary += f"**{students[student_id]["full_name"]} **" + ": "
+
+            if grades[student_id] == []:
+                summary += "geen cijfer - "
+            else:
+                summary += grades[student_id] + " - "
+
+            if annotations[student_id] == []:
+                summary += "-\r"
+            else:
+                summary += annotations[student_id][0] + "\r"
+
+
+        clipboard = QGuiApplication.clipboard()
+        clipboard.setText(summary)
+
     def new_file_window(self):
         """Open a second window where the user can provide information about the paths where file can be saved and found."""
         # open second window
-        self.w = NewFileWindow()
-        self.w.show()
+        self.w = NewFileWindow(self)
 
         # connect the create button in the second window to new_feat_file function in UserInterface class
         self.w.create_new_file.clicked.connect(self.new_feat_file)
+
+        self.w.exec()
 
     def new_feat_file(self):
         """Menu option New. Create a new .feat file.
@@ -201,6 +234,11 @@ class UserInterface(QtWidgets.QMainWindow):
         Add students to combobox. Slots and signals for check boxes and annotation fields are coupled.
         """
 
+
+        # remove old feat file (del child)
+        for i in reversed(range(self.vbox.count())):
+            self.vbox.itemAt(i).widget().deleteLater()
+
         # load data from toml file
         self.feat_total = self.config.read_feat()
         # add feedback lines and annotation fields to interface
@@ -214,10 +252,12 @@ class UserInterface(QtWidgets.QMainWindow):
             self.headline["head"][head] = QtWidgets.QLabel(head)
             self.headline["head"][head].setFont(FONT_STYLE_BUTTONS)
             self.vbox.addWidget(self.headline["head"][head])
-            # add annotation field per subject title
+
+            # add annotation field per subject titl
             self.annotation["annot"][head] = QtWidgets.QTextEdit()
             self.annotation["annot"][head].setFont(FONT_STYLE_TEXT)
             self.vbox.addWidget(self.annotation["annot"][head])
+
             # add checkboxes with feedback lines
             self.button["check"][head] = {}
             for line in self.fblines[head]:
@@ -297,7 +337,7 @@ class UserInterface(QtWidgets.QMainWindow):
             # check when checkbox name is in feat file, uncheck otherwise
             for box in self.button["check"][head]:
                 self.button["check"][head][box].blockSignals(True)
-                if box in feedback["checkbox"][current_student]:
+                if box in feedback["checkbox"][current_student] or box in feedback["achievements"][current_student]:
                     self.button["check"][head][box].setChecked(True)
 
                 else:
@@ -316,7 +356,7 @@ class UserInterface(QtWidgets.QMainWindow):
             self.annotation["annot"][field].blockSignals(False)
             # TODO: create dictionary for annotation field, then check if annotation is present like with checkbox. Then blockSignals
             # is not needed anymore
-       
+
         # update read_only show feedback panel
         self.text_add()
 
@@ -343,6 +383,7 @@ class UserInterface(QtWidgets.QMainWindow):
 
         for head in self.headline["head"]:
             # set headline main to salutation in give feedback field
+
             if head == "main":
                 self.headline["head"][head].setText(first_line)
                 if self.annotation["annot"][head].toPlainText() == "":
@@ -350,20 +391,31 @@ class UserInterface(QtWidgets.QMainWindow):
                     self.annotation["annot"][head].setPlaceholderText(
                         "Laat in een of twee regels weten wat je algehele indruk is."
                     )
+
+
+
             else:
                 # add headline to textfield
                 self.read_only.append(f"[{head}]")
 
             # add annotations in show feedback field
+
             self.read_only.append(self.annotation["annot"][head].toPlainText())
             # TODO: read annotations from feat file
 
             # add feedback lines to show feedback panel
-            for line in self.button["check"][head]:
-                if self.button["check"][head][line].isChecked():
-                    self.read_only.append(
-                        self.feat_total["feedbackform"][head][line] + "\r"
-                    )
+            if head != "Achievements":
+                for line in self.button["check"][head]:
+                    if self.button["check"][head][line].isChecked():
+                        self.read_only.append(
+                            self.feat_total["feedbackform"][head][line] + "\r"
+                            )
+
+        # add UUID text field
+        self.read_only.append("Bekijk je achievements op de site!" + "\r" + "[placeholder site]"
+                              + "\r" + "door in te loggen met je unieke code:\r"
+                              + self.feat_total["students"][current_student]["UUID"]+ "\r")
+
 
         # add sign-off
         sign_off_text = self.config.get_sign_off()
@@ -386,13 +438,18 @@ class UserInterface(QtWidgets.QMainWindow):
         current_student = self.current_student()
 
         feedback = []
+        achievements = []
         for head in self.headline["head"]:
             for box in self.button["check"][head]:
                 if self.button["check"][head][box].isChecked():
-                    feedback.append(box)
+                    if head != "Achievements":
+                        feedback.append(box)
+                    else:
+                        achievements.append(box)
 
         # save checked feedback lines in toml
         self.config.update_feedback(current_student, "checkbox", feedback)
+        self.config.update_feedback(current_student, "achievements", achievements)
 
         # update feat dictionary to match current feat file
         self.feat_total = self.config.get_feat()
@@ -490,6 +547,8 @@ class UserInterface(QtWidgets.QMainWindow):
         except:
             pass
         # TODO: Do not do auto-save? Create a real save option?
+
+
 
 
 def main():

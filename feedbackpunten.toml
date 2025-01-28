@@ -1,7 +1,7 @@
 ["Structuur en Organisatie"]
 structuur01 = "Goed gedaan met het toepassen van het MVC-patroon om de code te structureren."
 structuur02 = "De scheiding tussen model, view en controller maakt de code overzichtelijk en onderhoudsvriendelijk."
-structuur03 = "Ik merk wat inconsistentie in de benaming van klassen en functies, wat de leesbaarheid kan beïnvloeden." 
+structuur03 = "Ik merk wat inconsistentie in de benaming van klassen en functies, wat de leesbaarheid kan beïnvloeden."
 structuur04 = "Er lijkt enige overlap te zijn tussen het model en de controller; laten we ervoor zorgen dat de taken goed verdeeld zijn."
 
 ["Leesbaarheid en Stijl"]
@@ -23,3 +23,7 @@ foutafhandeling02 = "Bij bepaalde inputscenario's lijkt de code vast te lopen of
 ["Documentatie"]
 documentatie01 = "Je hebt sommige functies en klassen gedocumenteerd, wat de leesbaarheid voor anderen verbetert."
 documentatie02 = "Het zou nuttig zijn om meer uitgebreide documentatie toe te voegen, vooral voor complexere delen van de code, om anderen te helpen begrijpen hoe ze de code kunnen gebruiken en bijdragen."
+
+["Achievements"]
+achivtag01 = "LED there be light"
+achivtag02 = "Noah en zijn arc"
