@@ -10,17 +10,16 @@ from feat.models.configuration import configuration
 FONT_STYLE_BUTTONS = QFont("Consolas", 12, weight=QFont.Weight.Bold)
 FONT_STYLE_TEXT = QFont("Consolas", 12)
 
-
-class NewFileWindow(QtWidgets.QWidget):
+class NewFileWindow(QtWidgets.QDialog):
     """
     This window appears when new file is selected from the menu.
 
     The file contains three line edits to provide the paths to 1) save the feat file 2) get the student file and 3) the feedback form.
     """
 
-    def __init__(self):
+    def __init__(self, parent=None):
         # call __init__ of parent class
-        super().__init__()
+        super().__init__(parent)
 
         # load feat gui design
         uic.loadUi(
@@ -174,11 +173,12 @@ class UserInterface(QtWidgets.QMainWindow):
     def new_file_window(self):
         """Open a second window where the user can provide information about the paths where file can be saved and found."""
         # open second window
-        self.w = NewFileWindow()
-        self.w.show()
+        self.w = NewFileWindow(self)
 
         # connect the create button in the second window to new_feat_file function in UserInterface class
         self.w.create_new_file.clicked.connect(self.new_feat_file)
+
+        self.w.exec()
 
     def new_feat_file(self):
         """Menu option New. Create a new .feat file.
