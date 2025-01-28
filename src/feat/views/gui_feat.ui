@@ -6,14 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1071</width>
-    <height>669</height>
+    <width>1072</width>
+    <height>670</height>
    </rect>
   </property>
   <property name="font">
    <font>
-    <family>Consolas</family>
-    <pointsize>11</pointsize>
+    <family>Menlo</family>
+    <pointsize>13</pointsize>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -25,7 +26,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <property name="sizeConstraint">
-     <enum>QLayout::SetDefaultConstraint</enum>
+     <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
     </property>
     <property name="leftMargin">
      <number>20</number>
@@ -48,7 +49,7 @@
        <number>6</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
       </property>
       <item>
        <widget class="QComboBox" name="student_comboBox">
@@ -66,24 +67,23 @@
         </property>
         <property name="font">
          <font>
-          <family>Consolas</family>
-          <pointsize>12</pointsize>
-          <weight>75</weight>
+          <family>Menlo</family>
+          <pointsize>13</pointsize>
           <bold>true</bold>
          </font>
         </property>
         <property name="insertPolicy">
-         <enum>QComboBox::NoInsert</enum>
+         <enum>QComboBox::InsertPolicy::NoInsert</enum>
         </property>
         <property name="sizeAdjustPolicy">
-         <enum>QComboBox::AdjustToContents</enum>
+         <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
         </property>
        </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -98,7 +98,7 @@
         <item>
          <spacer name="horizontalSpacer_5">
           <property name="orientation">
-           <enum>Qt::Horizontal</enum>
+           <enum>Qt::Orientation::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -112,9 +112,8 @@
          <widget class="QLabel" name="grade">
           <property name="font">
            <font>
-            <family>Consolas</family>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
+            <family>Menlo</family>
+            <pointsize>13</pointsize>
             <bold>true</bold>
            </font>
           </property>
@@ -140,7 +139,7 @@
     <item row="2" column="0">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -148,6 +147,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
+            </property>
             <item>
              <widget class="QLabel" name="give_feedback">
               <property name="sizePolicy">
@@ -158,9 +160,8 @@
               </property>
               <property name="font">
                <font>
-                <family>Consolas</family>
+                <family>Menlo</family>
                 <pointsize>16</pointsize>
-                <weight>75</weight>
                 <bold>true</bold>
                </font>
               </property>
@@ -171,17 +172,10 @@
             </item>
             <item>
              <widget class="QPushButton" name="PreviousButton">
-              <property name="maximumSize">
-               <size>
-                <width>22</width>
-                <height>28</height>
-               </size>
-              </property>
               <property name="font">
                <font>
-                <family>Consolas</family>
-                <pointsize>16</pointsize>
-                <weight>75</weight>
+                <family>Menlo</family>
+                <pointsize>13</pointsize>
                 <bold>true</bold>
                </font>
               </property>
@@ -192,17 +186,10 @@
             </item>
             <item>
              <widget class="QPushButton" name="NextButton">
-              <property name="maximumSize">
-               <size>
-                <width>22</width>
-                <height>28</height>
-               </size>
-              </property>
               <property name="font">
                <font>
-                <family>Consolas</family>
-                <pointsize>16</pointsize>
-                <weight>75</weight>
+                <family>Menlo</family>
+                <pointsize>13</pointsize>
                 <bold>true</bold>
                </font>
               </property>
@@ -214,10 +201,7 @@
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Expanding</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -239,8 +223,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>260</width>
-               <height>395</height>
+               <width>447</width>
+               <height>196</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_2">
@@ -255,14 +239,6 @@
            <widget class="QPushButton" name="pushButton">
             <property name="enabled">
              <bool>false</bool>
-            </property>
-            <property name="font">
-             <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
             </property>
             <property name="text">
              <string/>
@@ -290,9 +266,8 @@
             </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
+              <family>Menlo</family>
               <pointsize>16</pointsize>
-              <weight>75</weight>
               <bold>true</bold>
              </font>
             </property>
@@ -303,17 +278,10 @@
           </item>
           <item>
            <widget class="QPushButton" name="PreviousButton2">
-            <property name="maximumSize">
-             <size>
-              <width>22</width>
-              <height>28</height>
-             </size>
-            </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
+              <family>Menlo</family>
+              <pointsize>13</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -324,17 +292,10 @@
           </item>
           <item>
            <widget class="QPushButton" name="NextButton2">
-            <property name="maximumSize">
-             <size>
-              <width>22</width>
-              <height>28</height>
-             </size>
-            </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
+              <family>Menlo</family>
+              <pointsize>13</pointsize>
               <bold>true</bold>
              </font>
             </property>
@@ -346,7 +307,7 @@
           <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -359,7 +320,15 @@
          </layout>
         </item>
         <item>
-         <widget class="QTextEdit" name="read_only"/>
+         <widget class="QTextEdit" name="read_only">
+          <property name="font">
+           <font>
+            <family>Menlo</family>
+            <pointsize>13</pointsize>
+            <bold>false</bold>
+           </font>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2"/>
@@ -369,7 +338,7 @@
           <item>
            <spacer name="horizontalSpacer_4">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+             <enum>Qt::Orientation::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -389,14 +358,13 @@
             </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
+              <family>Menlo</family>
+              <pointsize>13</pointsize>
               <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string>Build Summary</string>
+             <string>Copy all summaries</string>
             </property>
            </widget>
           </item>
@@ -416,14 +384,13 @@
             </property>
             <property name="font">
              <font>
-              <family>Consolas</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
+              <family>Menlo</family>
+              <pointsize>13</pointsize>
               <bold>true</bold>
              </font>
             </property>
             <property name="text">
-             <string>Copy to Clippy</string>
+             <string>Copy student feedback</string>
             </property>
            </widget>
           </item>
@@ -440,23 +407,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1071</width>
+     <width>1072</width>
      <height>24</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Consolas</family>
-     <pointsize>9</pointsize>
-    </font>
-   </property>
    <widget class="QMenu" name="menuFile">
-    <property name="font">
-     <font>
-      <family>Consolas</family>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
     <property name="title">
      <string>File</string>
     </property>
@@ -487,7 +442,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Consolas</family>
+     <family>Menlo</family>
+     <bold>true</bold>
     </font>
    </property>
    <property name="shortcut">
@@ -500,7 +456,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Consolas</family>
+     <family>Menlo</family>
+     <bold>true</bold>
     </font>
    </property>
    <property name="shortcut">
@@ -513,7 +470,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Consolas</family>
+     <family>Menlo</family>
+     <bold>true</bold>
     </font>
    </property>
    <property name="shortcut">
