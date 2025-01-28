@@ -7,8 +7,10 @@ from PyQt6.QtGui import QFont, QIcon, QMovie, QGuiApplication
 
 from feat.models.configuration import configuration
 
-FONT_STYLE_BUTTONS = QFont("Consolas", 12, weight=QFont.Weight.Bold)
-FONT_STYLE_TEXT = QFont("Consolas", 12)
+FONT_STYLE_BUTTONS = QFont("Menlo", 13, weight=QFont.Weight.Bold)
+FONT_STYLE_BUTTONS.setStyleHint(QFont.StyleHint.Monospace)
+FONT_STYLE_TEXT = QFont("Menlo", 13)
+FONT_STYLE_TEXT.setStyleHint(QFont.StyleHint.Monospace)
 
 class NewFileWindow(QtWidgets.QDialog):
     """
