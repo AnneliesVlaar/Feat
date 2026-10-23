@@ -73,6 +73,11 @@ Or with pipx:
 pipx install feat-feedback-tool
 ```
 
+Or with uv:
+```
+uv tool install feat-feedback-tool
+```
+
 Open Feat with ft. 
 ```
 ft.
